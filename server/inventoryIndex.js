@@ -5,6 +5,9 @@ const massive = require('massive');
 const chalk = require('chalk');
 require('dotenv').config();
 
+const dummyTestData = require('./dummyTestData');
+
+
 const {SERVER_PORT, CONNECTION_STRING } = process.env;
 
 const app = express();
@@ -17,5 +20,9 @@ massive(CONNECTION_STRING).then( (postgresDatabase) => {
 app.use(express.static(`${__dirname}/../build`));
 app.use( bodyParser.json() );
 
+
+app.get('/testArray', (req, res) => {
+    res.status(200).send(dummyTestData);
+})
 
 app.listen(SERVER_PORT, () => { console.log( `Port ${SERVER_PORT} is on`)});

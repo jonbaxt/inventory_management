@@ -1,21 +1,33 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
-
+import { Link } from 'react-router-dom';
 class NavBar extends Component {
     constructor(){
         super();
-
+        this.state = {
+            navBarOpen: true,
+        }
     }
 
     render(){
         return (
             <div className={css(st.navMain)}>
-                <h3 className={css(st.h1Rev)}>The Inventory Warehouse</h3>
+                <Link className={css(st.linkReformat)} to='/'><h3 className={css(st.h1Rev)}>The Inventory Warehouse</h3></Link>
                 <div className={css(st.rightSide)}>
+                
                 <h3 className={css(st.h1Rev)}>Add Product</h3>
+                <Link className={css(st.linkReformat)} to='/users'>
                 <h3 className={css(st.h1Rev)}>Users</h3>
+                </Link>
+                
+                <Link className={css(st.linkReformat)} to='/clients' >
                 <h3 className={css(st.h1Rev)}>Clients</h3>
+                </Link>
+                
+                <Link className={css(st.linkReformat)} to='/orders'>
                 <h3 className={css(st.h1Rev)}>Orders</h3>
+                </Link>
+                
                 </div>
             </div>
         )
@@ -44,7 +56,12 @@ const st = StyleSheet.create({
     padding: 0,
     marginLeft: '10px',
     marginRight: '30px'
-    }
+    },
+    linkReformat: {
+        color: 'white',
+        pointer: 'cursor',
+        textDecorationLine: 'none'
+    },  
 });
 
 export default NavBar;

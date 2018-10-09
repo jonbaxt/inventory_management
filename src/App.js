@@ -12,7 +12,6 @@ class App extends Component {
         <header>
         <NavBar />
         <Routes />
-          <h1>App.js</h1>
         </header>
       </div>
     );
