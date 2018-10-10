@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
-export default function InventoryItem(prop) {
-
+export default function InventoryItem(props) {
+// Dummy Data, will be replaced by actual data with passing propss.
     let productName = 'Grapes';
     let partNumber = '000EF';
     let inStock = 5;
@@ -11,15 +11,16 @@ export default function InventoryItem(prop) {
     let imageAddress = 'https://www.fast-growing-trees.com/images/P/Concord-Grape-450w.jpg';
     let label = 'Yummy delicious grapes that anybody would enjoy. Grandmas love them, babies love them, lovers love them, everybody loves them. That and they are healthy part of a balanced meal for each day of the week. Make sure you get your fruit in with grapes!';
 
-    console.log(prop.currentInfo);
-    productName = prop.currentInfo.product_name;
-    partNumber = prop.currentInfo.part_number;
-    inStock = prop.currentInfo.current_count;
-    minRequired = prop.currentInfo.minimum_stock;
-    itemPrice = prop.currentInfo.price;
-    imageAddress = prop.currentInfo.product_image;
-    label = prop.currentInfo.product_label;
-    let alertBelowMin = prop.currentInfo.alert_when_low;
+    // console.log(props.currentInfo);
+    // console.log(props)
+    productName = props.currentInfo.product_name;
+    partNumber = props.currentInfo.part_number;
+    inStock = props.currentInfo.current_count;
+    minRequired = props.currentInfo.minimum_stock;
+    itemPrice = props.currentInfo.price;
+    imageAddress = props.currentInfo.product_image;
+    label = props.currentInfo.product_label;
+    let alertBelowMin = props.currentInfo.alert_when_low;
     let currentAlertStatus = alertBelowMin ? 'Alert when below minimum' : 'Will not alert when below minimum';
 
     return(
@@ -41,6 +42,14 @@ export default function InventoryItem(prop) {
             <h6 className={css(itemCSS.h6Reform)}>Label Information: {label}</h6>
             <span className={css(itemCSS.breakLine)} ></span>
             <h4 className={css(itemCSS.h4Reform)} >{currentAlertStatus}</h4>
+
+            <div className={css(itemCSS.bottomButtons)}>
+                <button className={css(itemCSS.buttonRedesign)}
+                    onClick={()=> {console.log('Button Clicked')
+                    props.giveBackFunction(props.currentInfo.inventory_id);
+                    }}>Edit</button>
+            </div>
+
         </div>
     )
 }
@@ -54,8 +63,7 @@ const itemCSS = StyleSheet.create({
         background: 'rgba(47,79,79, 0.8)',
         color: 'white',
         width: '315px',
-        // height: '280px',
-        border: 'solid 1px green',     
+        boxShadow: '1px 1px 2px rgb(119,136,153)',
     },
     h4Reform: {
         margin: 0,
@@ -69,15 +77,27 @@ const itemCSS = StyleSheet.create({
         marginBottom: '15px',
     },
     imgRes: {
-        width: '80px',
+        width: '150px',
         margin: '0 auto',
-        // display: 'flex',
-        // justifyContent: 'center',
     },
     breakLine: {
         width: '290px',
         height: '1.5px',
         background: 'white',
         margin: '0 auto'
+    },
+    bottomButtons: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    buttonRedesign: {
+        background: 'lightgray',
+        color: 'white',
+        border: 'none',
+        cursor: 'pointer',
+        fontWeight: 'bold',
+
+
     },
 });

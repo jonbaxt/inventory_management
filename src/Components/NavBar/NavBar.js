@@ -43,7 +43,8 @@ const st = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingTop: '10px'
+        paddingTop: '14px',
+        position: 'fixed',
         // margin: 0,
         // padding: 0    
     },
@@ -55,7 +56,8 @@ const st = StyleSheet.create({
     margin: 0,
     padding: 0,
     marginLeft: '10px',
-    marginRight: '30px'
+    marginRight: '30px',
+    textShadow: '2px 2px 4px black',
     },
     linkReformat: {
         color: 'white',
