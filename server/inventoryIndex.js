@@ -6,7 +6,7 @@ const chalk = require('chalk');
 require('dotenv').config();
 
 const dummyTestData = require('./dummyTestData');
-
+const con = require('./controller');
 
 const {SERVER_PORT, CONNECTION_STRING } = process.env;
 
@@ -24,5 +24,7 @@ app.use( bodyParser.json() );
 app.get('/testArray', (req, res) => {
     res.status(200).send(dummyTestData);
 })
+
+app.get('/getProducts', con.getInventory );
 
 app.listen(SERVER_PORT, () => { console.log( `Port ${SERVER_PORT} is on`)});
