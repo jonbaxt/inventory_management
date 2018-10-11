@@ -52,7 +52,7 @@ class Inventory extends Component {
                         currentInventoryItem={this.state.currentProductNumber}
                         editorVisibility={this.state.itemEditorVisible}
                         toggleItemEditor={this.toggleItemEditor} />
-                <h2 className={css(invCSS.h2Reformat)} >Current Inventory</h2>
+                <h1 className={css(invCSS.h2Reformat)} >Current Inventory</h1>
                 <div className={css(invCSS.main)} >
                     {inventoryList}
                 </div>
