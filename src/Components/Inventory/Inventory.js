@@ -13,17 +13,17 @@ class Inventory extends Component {
             itemEditorVisible: false,
             currentProductNumber: 1,
         }
-        this.toggleItemEditor = this.toggleItemEditor.bind( this );
-        this.retrieveCurrentProductNumber = this.retrieveCurrentProductNumber.bind( this );
+        this.toggleItemEditor = this.toggleItemEditor.bind(this);
+        this.retrieveCurrentProductNumber = this.retrieveCurrentProductNumber.bind(this);
     }
 
     componentDidMount() {
-        axios.get('/getProducts').then( (result) => {
-        // axios.get('/testArray').then( (result) => {
+        axios.get('/getProducts').then((result) => {
+            // axios.get('/testArray').then( (result) => {
             // console.log(result.data);
             // console.log(result.data.dummyTestData);
             this.setState({ currentInventory: result.data });
-        } ).catch( err => console.log(`Didn't work ${err}`))
+        }).catch(err => console.log(`Didn't work ${err}`))
     }
 
     toggleItemEditor() {
@@ -40,19 +40,22 @@ class Inventory extends Component {
     render() {
         // console.log(this.state.currentInventory);
         // console.log(this.props)
-        let inventoryList = this.state.currentInventory.map( (element, index) => {
-            return (<InventoryItem key={element.inventory_id} 
+        let inventoryList = this.state.currentInventory.map((element, index) => {
+            return (<InventoryItem key={element.inventory_id}
                 currentInfo={element}
                 // itemEditorVis={this.state.itemEditorVisible}
                 giveBackFunction={this.retrieveCurrentProductNumber} />)
         })
         return (
-            <div className={css(invCSS.main)} >
-                <ItemEditor inventory={this.state.currentInventory }
-                    currentInventoryItem={ this.state.currentProductNumber}
-                    editorVisibility={ this.state.itemEditorVisible }
-                    toggleItemEditor={ this.toggleItemEditor } />
-                { inventoryList }
+            <div>
+                    <ItemEditor inventory={this.state.currentInventory}
+                        currentInventoryItem={this.state.currentProductNumber}
+                        editorVisibility={this.state.itemEditorVisible}
+                        toggleItemEditor={this.toggleItemEditor} />
+                <h2 className={css(invCSS.h2Reformat)} >Current Inventory</h2>
+                <div className={css(invCSS.main)} >
+                    {inventoryList}
+                </div>
             </div>
         )
     }
@@ -62,9 +65,15 @@ const invCSS = StyleSheet.create({
     main: {
         display: 'flex',
         justifyContent: 'center',
-        border: 'solid 1px black',
         flexWrap: 'wrap',
+        // paddingTop: '50px',
+    },
+    h2Reformat: {
+        margin: 0,
+        marginBottom: '15px',
         paddingTop: '50px',
+        color: 'white',
+        textShadow: '2px 2px 4px black',
     }
 });
 
