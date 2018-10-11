@@ -74,6 +74,9 @@ const invCSS = StyleSheet.create({
         paddingTop: '50px',
         color: 'white',
         textShadow: '2px 2px 4px black',
+        // ':hover': {
+        //     color: 'green',
+        // }
     }
 });
 

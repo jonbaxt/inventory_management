@@ -58,6 +58,10 @@ const st = StyleSheet.create({
     marginLeft: '10px',
     marginRight: '30px',
     textShadow: '2px 2px 4px black',
+    ':hover': {
+        color: 'rgb(169,169,169)',
+        transition: '0.5s all ease',
+    }
     },
     linkReformat: {
         color: 'white',

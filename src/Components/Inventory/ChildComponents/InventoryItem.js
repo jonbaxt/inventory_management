@@ -97,7 +97,9 @@ const itemCSS = StyleSheet.create({
         border: 'none',
         cursor: 'pointer',
         fontWeight: 'bold',
-
-
+        ':hover': {
+            color: 	'rgb(169,169,169)',
+            transition: '0.5s all ease',
+        },
     },
 });
