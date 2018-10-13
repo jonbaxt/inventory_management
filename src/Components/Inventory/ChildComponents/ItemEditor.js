@@ -139,7 +139,8 @@ const editorCSS = StyleSheet.create({
         height: '100vh',
         background: 'rgba(112,128,144, 0.8)',
         visibility: 'visible',
-        marginTop: '50px',
+        // marginTop: '50px',
+        marginTop: '-26px',
         color: 'white',
     },
     editorHide: {
@@ -154,7 +155,7 @@ const editorCSS = StyleSheet.create({
         width: '75vw',
         height: '90vh',
         margin: '0 auto',
-        marginTop: '5px',
+        // marginTop: '5px',
         background: 'rgb(192,192,192)',
         boxShadow: '2px 2px 4px white',
         zIndex: '10',

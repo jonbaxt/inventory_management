@@ -12,10 +12,11 @@ class NavBar extends Component {
     render(){
         return (
             <div className={css(st.navMain)}>
-                <Link className={css(st.linkReformat)} to='/'><h3 className={css(st.h1Rev)}>The Inventory Warehouse</h3></Link>
+                <Link className={css(st.linkReformat)} to='/'><h3 className={css(st.h1Rev)}>Inventory Warehouse</h3></Link>
                 <div className={css(st.rightSide)}>
                 
-                <h3 className={css(st.h1Rev)}>Add Product</h3>
+                {/* <h3 className={css(st.h1Rev)}>Add Product</h3> */}
+
                 <Link className={css(st.linkReformat)} to='/users'>
                 <h3 className={css(st.h1Rev)}>Users</h3>
                 </Link>
