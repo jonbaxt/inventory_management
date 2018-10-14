@@ -68,7 +68,17 @@ INSERT INTO InventoryClients
 (first_name, last_name, phone_number, email, company, company_address_line_1, company_address_line_2, mailing_address_line_1, mailing_address_line_2)
 VALUES
 ('Rod', 'Ferdinand', '801-899-2456', 'rodboy@generalgoods.com', 'General Goods', '123 South 23 East', 'Houston TX 77001', '123 South 23 East', 'Houston TX 77001'),
-('Dean', 'Thomas', '414-000-3213', 'dthomas@disney.go.com', 'Disney Enterprises', '100 South Buena Vista Road', '', '', '');
+('Dean', 'Thomas', '414-000-3213', 'dthomas@disney.go.com', 'Disney Enterprises', '100 South Buena Vista Road', 'Los Angeles CA 90001', '100 South Buena Vista Road', 'Los Angeles CA 90001'),
+('Rand', 'Paul', '921-222-9009', 'rand@randpaul.com', 'Senator of the USA', '10 E. Capitol Hill', 'Washington DC 20001', '1000 W. 1400 S.', 'Louisville, KY 40018'),
+('Todd', 'Christensen', '801-202-4715', 'todd201827@yahoo.com', 'Orem Walmart', '100 E Sandhill RD', 'Orem, UT 84058', '100 E Sandhill RD', 'Orem, UT 84058'),
+('Rudy', 'Anderson', '801-812-2000', 'rudyinorem@target.com', 'Orem Target', '100 E Center St', 'Orem, UT 84058', '100 E Center St', 'Orem, UT 84058'),
+('Chance', 'Sharp', '801-200-2121', 'chance@jpmmorganc.com', 'JP Morgan Salt Lake City', '5 W 200 S', 'Salt Lake Ciy, UT 84044', '5 W 200 S', 'Salt Lake Ciy, UT 84044'),
+('Devan', 'Oswald', '801-592-4561', 'oswald@wellsfargo.com', 'Wells Fargo Salt Lake City Headquarters', '1200 E 500 N', 'Salt Lake City, UT 84044', '1200 E 500 N', 'Salt Lake City, UT 84044'),
+('George', 'Costansa', '801-100-1999', 'costansa@burtonmurdoch.com', 'Burton Murdoch Salt Lake', '1162 W 100 S', 'Salt Lake City, UT 84044', '1162 W 100 S', 'Salt Lake City, UT 84044'),
+('Barholemew', 'Rudy', '801-451-4856', 'rudy@gmail.com', 'Rizzo Repairs Salt Lake', '300 W 4015 S', 'Salt Lake City, UT 84044', '300 W 4015 S', 'Salt Lake City, UT 84044'),
+('Rick', 'Grimes', '801-888-7898', 'grimes@saltlakepolice.org', 'Salt Lake Police Department', '5 E 120 N', 'Salt Lake City, UT 84044', '5 E 120 N', 'Salt Lake City, UT 84044'),
+('Ted', 'Mosby', '801-100-1000', 'ted@mosbyindustries.com', 'Mosby Industries', '2100 W 1600 N', 'Salt Lake City, UT 84044', '2100 W 1600 N', 'Salt Lake City, UT 84044');
+
 CREATE TABLE IF NOT EXISTS InventoryEmployees (
     employee_id SERIAL PRIMARY KEY,
     first_name TEXT,
@@ -87,18 +97,37 @@ VALUES
 ('Dave', 'Thomas', 'https://amp.businessinsider.com/images/51ca1b176bb3f76b0e000004-750-563.jpg', '801-888-2541', 'dave@wendys.com', '123 E Wendys Lane', 'Provo, UT 84601', 'Shelf Stocker'),
 ('Thomas', 'Cat', 'https://banner2.kisspng.com/20171218/38b/tom-and-jerry-png-5a37adb327b907.5548566515135983871627.jpg', 'no number', 'tommy@cat.me', 'Backyard of Owners House', 'Provo, UT 84601', 'Security');
 
-
 CREATE TABLE IF NOT EXISTS InventoryOrders (
     order_id SERIAL PRIMARY KEY,
     date_ordered DATE,
     date_shipped DATE,
     date_recieved DATE,
     completed BOOLEAN,
+    order_notes TEXT,
     product_sold_id INTEGER REFERENCES InventoryProducts(inventory_id) ON DELETE CASCADE,
+    employee_who_entered_id INTEGER REFERENCES InventoryEmployees(employee_id) ON DELETE CASCADE,
     client_id INTEGER REFERENCES InventoryClients(client_id) ON DELETE CASCADE
 );
 
+INSERT INTO InventoryOrders
+( date_ordered,
+    date_shipped,
+    date_recieved,
+    completed,
+    order_notes,
+    product_sold_id,
+    employee_who_entered_id,
+    client_id )
+VALUES
+(CURRENT_DATE, CURRENT_DATE, CURRENT_DATE, TRUE, 'no notes', 1, 1, 1),
+('2018-10-1', '2018-10-3', NULL, FALSE, 'Wanted, one day shipping, it was unfortunately before a holdiay.', 3, 1, 2),
+('2018-10-2', '2018-10-4', NULL, FALSE, '', 4, 1, 5),
+('2018-10-5', '2018-10-7', NULL, FALSE, '', 2, 2, 3),
+('2018-9-1', '2018-9-3', '2018-9-5', TRUE, '', 1, 2, 6),
+('2018-9-3', '2018-9-5', '2018-9-7', TRUE, '', 1, 2, 4);
+
 SELECT * FROM InventoryProducts;
 SELECT * FROM InventoryClients;
+SELECT * FROM InventoryEmployees;
 SELECT * FROM InventoryOrders;
 
