@@ -21,7 +21,7 @@ class Inventory extends Component {
     }
 
     componentDidMount() {
-        axios.get('/getProducts').then((result) => {
+        axios.get('/api/getProducts').then((result) => {
             // axios.get('/testArray').then( (result) => {
             // console.log(result.data);
             // console.log(result.data.dummyTestData);

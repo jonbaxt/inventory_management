@@ -1,14 +1,32 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
+import axios from 'axios';
 
 
-export default function Users() {
-    return (
-        <div className={css(userCSS.usersMain)}>
-            <h1 className={css(userCSS.h1Text)}>Users</h1>
-        </div>
-    )
+export default class Users extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            employeesArray: []
+        }
+    }
+
+    componentDidMount() {
+        axios.get('/api/getEmployees').then( (axiosResults) => {
+            console.log( axiosResults.data );
+            this.setState({ employeesArray: axiosResults.data });
+        }).catch( (err) => { console.log(err) });
+    }
+
+    render() {
+
+        return (
+            <div className={css(userCSS.usersMain)}>
+                <h1 className={css(userCSS.h1Text)}>Users</h1>
+            </div>
+        )
+    }
 }
 
 const userCSS = StyleSheet.create({

@@ -1,14 +1,31 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
+import axios from 'axios';
 
-export default function Clients() {
+export default class Clients extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            clientsArray: [],
+        }
+    }
 
-    return (
-        <div className={css(clientCSS.clientMain)}>
-            <h1 className={css(clientCSS.h1Text)}>Clients</h1>
-        </div>
-    )
+    componentDidMount() {
+        axios.get('/api/getClients').then( (axiosResults) => {
+            console.log( axiosResults.data );
+            this.setState({ clientsArray: axiosResults.data });
+        }).catch( (err) => console.log( err) );
+    }
+
+    render() {
+        return (
+            <div className={css(clientCSS.clientMain)}>
+                <h1 className={css(clientCSS.h1Text)}>Clients</h1>
+            </div>
+        )
+
+    }
 }
 
 const clientCSS = StyleSheet.create({

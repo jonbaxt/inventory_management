@@ -8,3 +8,5 @@ INSERT INTO InventoryEmployees (
     address_line_2,
     employee_role
 ) VALUES ( $1, $2, $3, $4, $5, $6, $7, $8 );
+
+SELECT * FROM InventoryEmployees;

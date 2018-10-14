@@ -17,3 +17,5 @@ VALUES
     $7,
     $8
     );
+
+SELECT * FROM InventoryProducts;

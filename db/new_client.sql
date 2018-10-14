@@ -9,3 +9,5 @@ INSERT INTO InventoryClients (
     mailing_address_line_1,
     mailing_address_line_2 ) 
     VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9 );
+
+SELECT * FROM InventoryClients;

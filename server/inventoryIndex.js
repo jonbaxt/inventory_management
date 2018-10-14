@@ -25,6 +25,14 @@ app.get('/testArray', (req, res) => {
     res.status(200).send(dummyTestData);
 })
 
-app.get('/getProducts', con.getInventory );
+app.get('/api/getProducts', con.getInventory );
+app.post('/api/newproduct/insert', con.postNewProduct );
+
+app.get('/api/getClients', con.getClients);
+
+app.get('/api/getEmployees', con.getEmployees);
+
+app.get('/api/getOrders', con.getOrders);
+
 
 app.listen(SERVER_PORT, () => { console.log( `Port ${SERVER_PORT} is on`)});

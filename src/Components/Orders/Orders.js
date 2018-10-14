@@ -1,14 +1,30 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
+import axios from 'axios';
 
+export default class Orders extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            ordersArray: [],
+        };
 
-export default function Orders() {
+    }
 
-    return (
-        <div className={css(orderCSS.ordersMain)}>
-            <h1 className={css(orderCSS.h1Text)}>Orders</h1>
-        </div>
-    )
+    componentDidMount() {
+        axios.get('/api/getOrders').then((axiosResults)=> {
+            console.log(axiosResults.data);
+            this.setState({ ordersArray: axiosResults.data });
+        }).catch(err => console.log(err));
+    }
+
+    render() {
+        return (
+            <div className={css(orderCSS.ordersMain)}>
+                <h1 className={css(orderCSS.h1Text)}>Orders</h1>
+            </div>
+        )
+    }
 }
 
 const orderCSS = StyleSheet.create({
