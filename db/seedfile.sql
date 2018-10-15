@@ -95,7 +95,15 @@ INSERT INTO InventoryEmployees
 (first_name, last_name, id_pic, phone_number, email, address_line_1, address_line_2, employee_role)
 VALUES
 ('Dave', 'Thomas', 'https://amp.businessinsider.com/images/51ca1b176bb3f76b0e000004-750-563.jpg', '801-888-2541', 'dave@wendys.com', '123 E Wendys Lane', 'Provo, UT 84601', 'Shelf Stocker'),
-('Thomas', 'Cat', 'https://banner2.kisspng.com/20171218/38b/tom-and-jerry-png-5a37adb327b907.5548566515135983871627.jpg', 'no number', 'tommy@cat.me', 'Backyard of Owners House', 'Provo, UT 84601', 'Security');
+('Thomas', 'Cat', 'https://banner2.kisspng.com/20171218/38b/tom-and-jerry-png-5a37adb327b907.5548566515135983871627.jpg', 'no number', 'tommy@cat.me', 'Backyard of Owners House', 'Provo, UT 84601', 'Security'),
+('Bugs', 'Bunny', 'https://upload.wikimedia.org/wikipedia/en/thumb/1/17/Bugs_Bunny.svg/220px-Bugs_Bunny.svg.png', '801-111-1545', 'bugs@toon.com', '20 E 20 S', 'Provo, UT 84601', 'Shelf Stocker'),
+('Daffy', 'Duck', 'https://upload.wikimedia.org/wikipedia/en/thumb/f/f4/Daffy_Duck.svg/1200px-Daffy_Duck.svg.png', '801-123-1555', 'daff@toon.com', '45 E 20 S', 'Provo, UT 84601', 'Shelf Stocker'),
+('Michael', 'Jordan', 'https://cdn.nba.net/nba-drupal-prod/styles/landscape/http/i2.cdn.turner.com/nba/nba/dam/assets/130828123801-michael-jordan-iso-1998-all-star-game.video-player.jpg?itok=6H7vzj5I', '801-454-8598', 'mike@thebulls.com', '50 E 20 S', 'Provo, UT 84601', 'Shelf Stocker'),
+('Porky', 'Pig', 'https://upload.wikimedia.org/wikipedia/en/thumb/8/88/Porky_Pig.svg/1200px-Porky_Pig.svg.png', '801-789-9874', 'porky@toon.com', '85 E 20 S', 'Provo, UT 84601', 'Shelf Stocker'),
+('Taz', 'Devil', 'https://upload.wikimedia.org/wikipedia/en/thumb/c/c4/Taz-Looney_Tunes.svg/220px-Taz-Looney_Tunes.svg.png', '801-100-1000', 'taz@toon.com', '75 E 20 S0', 'Provo, UT 84601', 'Shelf Stocker'),
+('Buster', 'Bunny', 'https://vignette.wikia.nocookie.net/loveinterest/images/e/ef/Buster_bunny_standard_by_cheril59-danijzl.png/revision/latest?cb=20180405110250', '801-101-1001', 'buster@toon.com', '70 E 20 S', 'Provo, UT 84601', 'Shelf Stocker'),
+('Babs', 'Bunny', 'https://i.pinimg.com/originals/db/e1/d3/dbe1d335b7bcec2a35c6c201638e94b6.png', '801-102-1000', 'babs@toon.com', '70 E 20 S', 'Provo, UT 84601', 'Shelf Stocker'),
+('Jon', 'Baxter', 'https://ksassets.timeincuk.net/wp/uploads/sites/55/2018/09/bman-920x584.png', '801-800-1000', 'jon@inventory.com', '547 E 200 N', 'Provo, UT 84601', 'Web Manager');
 
 CREATE TABLE IF NOT EXISTS InventoryOrders (
     order_id SERIAL PRIMARY KEY,
@@ -119,7 +127,7 @@ INSERT INTO InventoryOrders
     employee_who_entered_id,
     client_id )
 VALUES
-(CURRENT_DATE, CURRENT_DATE, CURRENT_DATE, TRUE, 'no notes', 1, 1, 1),
+('2018-5-1', '2018-5-2', '2018-5-3', TRUE, 'no notes', 1, 1, 1),
 ('2018-10-1', '2018-10-3', NULL, FALSE, 'Wanted, one day shipping, it was unfortunately before a holdiay.', 3, 1, 2),
 ('2018-10-2', '2018-10-4', NULL, FALSE, '', 4, 1, 5),
 ('2018-10-5', '2018-10-7', NULL, FALSE, '', 2, 2, 3),
@@ -130,4 +138,3 @@ SELECT * FROM InventoryProducts;
 SELECT * FROM InventoryClients;
 SELECT * FROM InventoryEmployees;
 SELECT * FROM InventoryOrders;
-
