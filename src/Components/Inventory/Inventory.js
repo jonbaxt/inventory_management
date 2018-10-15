@@ -46,12 +46,12 @@ class Inventory extends Component {
     render() {
         // console.log(this.state.currentInventory);
         // console.log(this.props)
-        let inventoryList = this.state.currentInventory.map((element, index) => {
+        let inventoryList = this.state.currentInventory.length !== 0 ? this.state.currentInventory.map((element, index) => {
             return (<InventoryItem key={element.inventory_id}
                 currentInfo={element}
                 // itemEditorVis={this.state.itemEditorVisible}
                 giveBackFunction={this.retrieveCurrentProductNumber} />)
-        })
+        }) : <h3 className={css(invCSS.h2Reformat)} >No Products Found. Please Refresh Browser.</h3>
         return (
             <div>
                 <div className={css(invCSS.subNavBar)}>
@@ -110,12 +110,12 @@ const invCSS = StyleSheet.create({
         marginBottom: '15px',
         paddingTop: '2px',
         color: 'white',
-        cursor: 'pointer',
+        // cursor: 'pointer',
         textShadow: '2px 2px 4px black',
-        ':hover': {
-            color: 'rgb(169,169,169)',
-            transition: '0.5s all ease',
-        }
+        // ':hover': {
+            // color: 'rgb(169,169,169)',
+            // transition: '0.5s all ease',
+        // }
     }
 });
 
