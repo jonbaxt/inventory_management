@@ -20,17 +20,17 @@ export default class Users extends React.Component {
     }
 
     render() {
-        let dummyUser = {
-            employee_id: 1,
-            first_name: "Dave",
-            last_name: "Thomas",
-            id_pic: "https://amp.businessinsider.com/images/51ca1b176bb3f76b0e000004-750-563.jpg",
-            phone_number: "801-888-2541",
-            email: "dave@wendys.com",
-            address_line_1: "123 E Wendys Lane",
-            address_line_2: "Provo, UT 84601",
-            employee_role: "Shelf Stocker"
-        }
+        // let dummyUser = {
+        //     employee_id: 1,
+        //     first_name: "Dave",
+        //     last_name: "Thomas",
+        //     id_pic: "https://amp.businessinsider.com/images/51ca1b176bb3f76b0e000004-750-563.jpg",
+        //     phone_number: "801-888-2541",
+        //     email: "dave@wendys.com",
+        //     address_line_1: "123 E Wendys Lane",
+        //     address_line_2: "Provo, UT 84601",
+        //     employee_role: "Shelf Stocker"
+        // }
         let usersList = this.state.employeesArray.length !== 0 ?  this.state.employeesArray.map( element => {
             return (<UserTiles key={element.employee_id} userProfile={element} />)
         }) : <h3 className={css(userCSS.h1Text, userCSS.extraTextSpace)} >No Employees Found. Please Refresh Browser.</h3>
