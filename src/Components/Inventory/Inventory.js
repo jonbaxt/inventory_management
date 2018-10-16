@@ -12,7 +12,7 @@ class Inventory extends Component {
         this.state = {
             currentInventory: [],
             itemEditorVisible: false,
-            newItemVisible: false,
+            newItemVisible: true,  // Switch back to false
             currentProductNumber: 1,
         }
         this.toggleItemEditor = this.toggleItemEditor.bind(this);
@@ -55,7 +55,7 @@ class Inventory extends Component {
         return (
             <div>
                 <div className={css(invCSS.subNavBar)}>
-                    <h4 className={css(invCSS.h2Reformat)}
+                    <h4 className={css(invCSS.h2Reformat, invCSS.hand)}
                         onClick={()=> this.toggleNewInventoryModal()}>New Product</h4>
                 </div>
                 <ItemEditor inventory={this.state.currentInventory}
@@ -103,6 +103,9 @@ const invCSS = StyleSheet.create({
             color: 'rgb(169,169,169)',
             transition: '0.5s all ease',
         }
+    },
+    hand: {
+        cursor: 'pointer',
     },
     h2Reformat: {
         margin: 0,

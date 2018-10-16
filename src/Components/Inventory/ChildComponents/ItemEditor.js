@@ -10,9 +10,9 @@ export default class ItemEditor extends React.Component {
             nameTextBox: '',
             partTextBox: '',
             labelTextBox: '',
-            currentCountTextBox: 0,
-            minimumCountTextBox: 0,
-            priceTextBox: 0.00,
+            currentCountTextBox: '',
+            minimumCountTextBox: '',
+            priceTextBox: '',
             imageTextBox: '',
 
         }
@@ -197,8 +197,14 @@ const editorCSS = StyleSheet.create({
     inputBoxStyled: {
         width: '98%',
         marginLeft: '5px',
-        background: 'rgba(0,0,0, 0.6)',
+        // background: 'rgba(0,0,0, 0.6)',
+        background: 'rgba(169,169,169,0.8)',
         color: 'white',
+        textShadow: '1px 1px 2px black',
+        '::placeholder': {
+             color: 'white', 
+            //  fontSize: '1.5rem',
+            }
     }, 
     submitButton: {
         width: '125px',

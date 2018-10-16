@@ -25,23 +25,31 @@ export default function InventoryItem(props) {
 
     return(
         <div className={css(itemCSS.main)}>
-            <h4 className={css(itemCSS.h4Reform)}><span className={css(itemCSS.extraReform)}>Product:</span> {productName}</h4>
-            <span className={css(itemCSS.breakLine)} ></span>
-            <h4 className={css(itemCSS.h4Reform)}><span className={css(itemCSS.extraReform)}>Part Number:</span> {partNumber}</h4>
-            <span className={css(itemCSS.breakLine)} ></span>
-            <h4 className={css(itemCSS.h4Reform)}><span className={css(itemCSS.extraReform)}>How many in Stock:</span> {inStock}</h4>
-            <span className={css(itemCSS.breakLine)} ></span>
-            <h4 className={css(itemCSS.h4Reform)}><span className={css(itemCSS.extraReform)}>Minimum Required:</span> {minRequired}</h4>
-            <span className={css(itemCSS.breakLine)} ></span>
-            <h4 className={css(itemCSS.h4Reform)}><span className={css(itemCSS.extraReform)}>Price:</span> ${itemPrice}</h4>
-            <span className={css(itemCSS.breakLine)} ></span>
+            <p className={css(itemCSS.h4Reform)}><span className={css(itemCSS.extraReform)}>Product:</span> {productName}</p>
+
+            {/* <span className={css(itemCSS.breakLine)} ></span> */}
+            
+            <p className={css(itemCSS.h4Reform)}><span className={css(itemCSS.extraReform)}>Part Number:</span> {partNumber}</p>
+            
+            {/* <span className={css(itemCSS.breakLine)} ></span> */}
+            
+            <p className={css(itemCSS.h4Reform)}><span className={css(itemCSS.extraReform)}>How many in Stock:</span> {inStock}</p>
+            
+            {/* <span className={css(itemCSS.breakLine)} ></span> */}
+            <p className={css(itemCSS.h4Reform)}><span className={css(itemCSS.extraReform)}>Minimum Required:</span> {minRequired}</p>
+            
+            {/* <span className={css(itemCSS.breakLine)} ></span> */}
+            
+            <p className={css(itemCSS.h4Reform)}><span className={css(itemCSS.extraReform)}>Price:</span> ${itemPrice}</p>
+            
+            {/* <span className={css(itemCSS.breakLine)} ></span> */}
             
             <img className={css(itemCSS.imgRes)}
             src={imageAddress} alt='' />
-            <span className={css(itemCSS.breakLine)} ></span>
+            {/* <span className={css(itemCSS.breakLine)} ></span> */}
             <h6 className={css(itemCSS.h6Reform)}>Label Information: {label}</h6>
-            <span className={css(itemCSS.breakLine)} ></span>
-            <h4 className={css(itemCSS.h4Reform)} >{currentAlertStatus}</h4>
+            {/* <span className={css(itemCSS.breakLine)} ></span> */}
+            <h4 className={css(itemCSS.h4Reform, itemCSS.alignCentered)} >{currentAlertStatus}</h4>
 
             <div className={css(itemCSS.bottomButtons)}>
                 <button className={css(itemCSS.buttonRedesign)}
@@ -63,12 +71,20 @@ const itemCSS = StyleSheet.create({
         background: 'rgba(47,79,79, 0.8)',
         color: 'white',
         width: '315px',
-        boxShadow: '1px 1px 2px rgb(119,136,153)',
+        // boxShadow: '1px 1px 2px rgb(119,136,153)',
+        boxShadow: '1px 1px 2px grey',
     },
     h4Reform: {
         margin: 0,
         marginTop: '2px',
+        textAlign: 'left',
+        marginLeft: '10px',
+        marginRight: '10px',
+
     },
+    alignCentered: {
+        textAlign: 'center',
+    }, 
     extraReform: {
         textDecorationLine: 'underline',
     },

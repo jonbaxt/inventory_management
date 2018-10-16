@@ -4,8 +4,36 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 class NewInventoryItem extends Component {
+    constructor() {
+        super();
+        this.state = {
+            productName: '',
+            partNumber: '',
+            labelDescription: '',
+            productCount: 0,
+            minimumCount: 0,
+            imageURL: '',
+            alertWhenLow: false,
+        }
+        this.productNameEdit = this.productNameEdit.bind( this );
+        this.partNumberEdit = this.partNumberEdit.bind( this );
+        this.labelDescriptionEdit = this.labelDescriptionEdit.bind( this );
+        this.productCountEdit = this.productCountEdit.bind( this );
+        this.minimumCountEdit = this.minimumCountEdit.bind( this );
+        this.imageURLEdit = this.imageURLEdit.bind( this );
+        this.alertWhenLowEdit = this.alertWhenLowEdit.bind( this );
+    }
+
+    productNameEdit(e) { this.setState({ productName: e }); }
+    partNumberEdit(e) { this.setState({ partNumber: e }); }
+    labelDescriptionEdit(e) { this.setState({ labelDescription: e }); }
+    productCountEdit(e) { this.setState({ productCount: e }); }
+    minimumCountEdit(e) { this.setState({ minimumCount: e })};
+    imageURLEdit(e) { this.setState({ imageURL: e }); }
+    alertWhenLowEdit() { this.setState({ alertWhenLow: !this.state.alertWhenLow }); }
 
     render() {
+
         console.log(this.props)
         return (
             <div className={this.props.newInventoryItemVisibility ? css(subNavCSS.newInventoryMain) : css(subNavCSS.newInventoryMain, subNavCSS.editorHide)} >
@@ -22,39 +50,48 @@ class NewInventoryItem extends Component {
 
                     <div className={css(subNavCSS.flexRow)}>
                         <h4 className={css(subNavCSS.title)}>Name: </h4>
-                        <input type='text' 
-                        className={css(subNavCSS.inputBox)} />
+                        <input type='text'
+                            placeholder='New Product Name'
+                            className={css(subNavCSS.inputBox)} />
                     </div>
 
                     <div className={css(subNavCSS.flexRow)}>
                         <h4 className={css(subNavCSS.title)}>Part Number: </h4>
                         <input type='text'
-                        className={css(subNavCSS.inputBox)} />
+                            placeholder='New Part Number'
+                            className={css(subNavCSS.inputBox)} />
                     </div>
 
                     <div className={css(subNavCSS.flexRow)}>
                         <h4 className={css(subNavCSS.title)}>Description: </h4>
-                        <input type='text' 
-                        className={css(subNavCSS.inputBox)} />
+                        <textarea type='text'
+                            rows='5'
+                            placeholder='New Product Description'
+                            className={css(subNavCSS.inputBox)} />
                     </div>
 
                     <div className={css(subNavCSS.flexRow)}>
                         <h4 className={css(subNavCSS.title)}>Current Count of Product: </h4>
-                        <input type='text'
-                        className={css(subNavCSS.inputBox)} />
+                        <input type='number'
+                            placeholder='0'
+                            className={css(subNavCSS.inputBox)} />
                     </div>
 
                     <div className={css(subNavCSS.flexRow)}>
                         <h4 className={css(subNavCSS.title)}>Minimum Amount of Products needed on hand: </h4>
-                        <input type='text'
-                        className={css(subNavCSS.inputBox)} />
+                        <input type='number'
+                            placeholder='0'
+                            className={css(subNavCSS.inputBox)} />
                     </div>
 
                     <div className={css(subNavCSS.flexRow)}>
                         <h4 className={css(subNavCSS.title)}>Product Image: </h4>
                         <input type='text'
-                        className={css(subNavCSS.inputBox)} />
+                            placeholder='New Product Image URL'
+                            className={css(subNavCSS.inputBox)} />
                     </div>
+                
+                    <img className='' src='' alt='' />
 
                 </div>
             </div>
@@ -127,5 +164,15 @@ const subNavCSS = StyleSheet.create({
     },
     inputBox: {
         width: '50%',
+        marginLeft: '5px',
+        background: 'rgba(169,169,169,0.8)',
+        color: 'white',
+        border: 'none',
+        borderShadow: '2px 2px 4px white',
+        textShadow: '1px 1px 2px black',
+        '::placeholder': {
+            color: 'white',
+            //  fontSize: '1.5rem',
+        }
     }
 });
