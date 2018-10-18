@@ -52,14 +52,18 @@ class NewInventoryItem extends Component {
                         <h4 className={css(subNavCSS.title)}>Name: </h4>
                         <input type='text'
                             placeholder='New Product Name'
-                            className={css(subNavCSS.inputBox)} />
+                            className={css(subNavCSS.inputBox)}
+                            value={this.state.productName}
+                            onChange={(e) => this.productNameEdit(e.target.value)} />
                     </div>
 
                     <div className={css(subNavCSS.flexRow)}>
                         <h4 className={css(subNavCSS.title)}>Part Number: </h4>
                         <input type='text'
                             placeholder='New Part Number'
-                            className={css(subNavCSS.inputBox)} />
+                            className={css(subNavCSS.inputBox)}
+                            value={this.state.partNumber}
+                            onChange={(e)=> this.partNumberEdit(e.target.value)} />
                     </div>
 
                     <div className={css(subNavCSS.flexRow)}>
@@ -67,31 +71,39 @@ class NewInventoryItem extends Component {
                         <textarea type='text'
                             rows='5'
                             placeholder='New Product Description'
-                            className={css(subNavCSS.inputBox)} />
+                            className={css(subNavCSS.inputBox)}
+                            value={this.state.labelDescription}
+                            onChange={(e) => this.labelDescriptionEdit(e.target.value)} />
                     </div>
 
                     <div className={css(subNavCSS.flexRow)}>
                         <h4 className={css(subNavCSS.title)}>Current Count of Product: </h4>
                         <input type='number'
                             placeholder='0'
-                            className={css(subNavCSS.inputBox)} />
+                            className={css(subNavCSS.inputBox)}
+                            value={this.state.productCount}
+                            onChange={(e)=> this.productCountEdit(e.target.value)} />
                     </div>
 
                     <div className={css(subNavCSS.flexRow)}>
                         <h4 className={css(subNavCSS.title)}>Minimum Amount of Products needed on hand: </h4>
                         <input type='number'
                             placeholder='0'
-                            className={css(subNavCSS.inputBox)} />
+                            className={css(subNavCSS.inputBox)}
+                            value={this.state.minimumCount}
+                            onChange={(e)=> this.minimumCountEdit(e.target.value)} />
                     </div>
 
                     <div className={css(subNavCSS.flexRow)}>
                         <h4 className={css(subNavCSS.title)}>Product Image: </h4>
                         <input type='text'
                             placeholder='New Product Image URL'
-                            className={css(subNavCSS.inputBox)} />
+                            className={css(subNavCSS.inputBox)}
+                            value={this.state.imageURL}
+                            onChange={(e)=> this.imageURLEdit(e.target.value)} />
                     </div>
                 
-                    <img className='' src='' alt='' />
+                    <img className='' src={this.state.imageURL} alt='' />
 
                 </div>
             </div>
