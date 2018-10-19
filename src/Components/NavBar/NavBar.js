@@ -46,6 +46,9 @@ const st = StyleSheet.create({
         justifyContent: 'space-between',
         paddingTop: '14px',
         position: 'fixed',
+        '@media (max-width: 320px)': {
+            height: '30px',
+        },
         // margin: 0,
         // padding: 0    
     },
@@ -62,7 +65,12 @@ const st = StyleSheet.create({
     ':hover': {
         color: 'rgb(169,169,169)',
         transition: '0.5s all ease',
-    }
+    },
+    '@media (max-width: 320px)': {
+        fontSize: '12px',
+        marginRight: '5px',
+        marginLeft: '2px',
+    },
     },
     linkReformat: {
         color: 'white',
