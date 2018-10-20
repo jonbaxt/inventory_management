@@ -2,33 +2,33 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import { Link } from 'react-router-dom';
 class NavBar extends Component {
-    constructor(){
+    constructor() {
         super();
         this.state = {
             navBarOpen: true,
         }
     }
 
-    render(){
+    render() {
         return (
             <div className={css(st.navMain)}>
                 <Link className={css(st.linkReformat)} to='/'><h3 className={css(st.h1Rev)}>Inventory Warehouse</h3></Link>
                 <div className={css(st.rightSide)}>
-                
-                {/* <h3 className={css(st.h1Rev)}>Add Product</h3> */}
 
-                <Link className={css(st.linkReformat)} to='/users'>
-                <h3 className={css(st.h1Rev)}>Users</h3>
-                </Link>
-                
-                <Link className={css(st.linkReformat)} to='/clients' >
-                <h3 className={css(st.h1Rev)}>Clients</h3>
-                </Link>
-                
-                <Link className={css(st.linkReformat)} to='/orders'>
-                <h3 className={css(st.h1Rev)}>Orders</h3>
-                </Link>
-                
+                    {/* <h3 className={css(st.h1Rev)}>Add Product</h3> */}
+
+                    <Link className={css(st.linkReformat)} to='/users'>
+                        <h3 className={css(st.h1Rev)}>Users</h3>
+                    </Link>
+
+                    <Link className={css(st.linkReformat)} to='/clients' >
+                        <h3 className={css(st.h1Rev)}>Clients</h3>
+                    </Link>
+
+                    <Link className={css(st.linkReformat)} to='/orders'>
+                        <h3 className={css(st.h1Rev)}>Orders</h3>
+                    </Link>
+
                 </div>
             </div>
         )
@@ -46,37 +46,38 @@ const st = StyleSheet.create({
         justifyContent: 'space-between',
         paddingTop: '14px',
         position: 'fixed',
+        '@media (max-width: 700px)': {
+            height: '32px',
+        },
         '@media (max-width: 320px)': {
             height: '30px',
         },
-        // margin: 0,
-        // padding: 0    
     },
     rightSide: {
         display: 'flex',
         flexDirection: 'row',
     },
     h1Rev: {
-    margin: 0,
-    padding: 0,
-    marginLeft: '10px',
-    marginRight: '30px',
-    textShadow: '2px 2px 4px black',
-    ':hover': {
-        color: 'rgb(169,169,169)',
-        transition: '0.5s all ease',
-    },
-    '@media (max-width: 320px)': {
-        fontSize: '12px',
-        marginRight: '5px',
-        marginLeft: '2px',
-    },
+        margin: 0,
+        padding: 0,
+        marginLeft: '10px',
+        marginRight: '30px',
+        textShadow: '2px 2px 4px black',
+        ':hover': {
+            color: 'rgb(169,169,169)',
+            transition: '0.5s all ease',
+        },
+        '@media (max-width: 320px)': {
+            fontSize: '12px',
+            marginRight: '5px',
+            marginLeft: '2px',
+        },
     },
     linkReformat: {
         color: 'white',
         pointer: 'cursor',
         textDecorationLine: 'none'
-    },  
+    },
 });
 
 export default NavBar;
