@@ -8,7 +8,7 @@ class NewInventoryItem extends Component {
     constructor() {
         super();
         this.state = {
-            
+
             // Test Information:
 
             // productName: 'Kanye West Doll 16 Inches',
@@ -36,6 +36,7 @@ class NewInventoryItem extends Component {
         this.imageURLEdit = this.imageURLEdit.bind(this);
         this.priceEdit = this.priceEdit.bind(this);
         this.alertWhenLowEdit = this.alertWhenLowEdit.bind(this);
+        this.resetState = this.resetState.bind(this);
     }
 
     productNameEdit(e) { this.setState({ productName: e }); }
@@ -61,12 +62,25 @@ class NewInventoryItem extends Component {
         this.props.postNewProduct(newItem);
     }
 
+    resetState() {
+        this.setState({
+            productName: '',
+            partNumber: '',
+            labelDescription: '',
+            productCount: 1,
+            minimumCount: 0,
+            price: '',
+            imageURL: '',
+            alertWhenLow: false,
+        });
+    }
+
     isDisabled = () => {
         let currentState = '';
-        if(this.state.productName !== '' && 
-        this.state.partNumber !== '' && 
-        this.state.labelDescription !== '' && 
-        this.state.price !== ''){
+        if (this.state.productName !== '' &&
+            this.state.partNumber !== '' &&
+            this.state.labelDescription !== '' &&
+            this.state.price !== '') {
             currentState = true;
         } else {
             currentState = false;
@@ -76,7 +90,7 @@ class NewInventoryItem extends Component {
 
     render() {
         let alertMessage = this.state.alertWhenLow ? 'Send notification' : 'Do not send notification';
-        
+
 
         // console.log(this.props)
         return (
@@ -140,7 +154,7 @@ class NewInventoryItem extends Component {
 
                     <div className={css(subNavCSS.flexRow)}>
                         <h4 className={css(subNavCSS.title)}>Product Image: </h4>
-                        <input 
+                        <input
                             type='url'
                             // type='text'
                             placeholder='New Product Image URL'
@@ -169,13 +183,24 @@ class NewInventoryItem extends Component {
                     </div>
                     <h4 className={css(subNavCSS.title)}><span style={{ color: 'rgb(5,0,5)', textShadow: 'none' }}>{alertMessage}</span>  </h4>
 
-                    <button className={css(subNavCSS.buttonSubmit)}
-                        disabled={!this.isDisabled()}
-                        onClick={() => {
-                            this.submitNewItem()
-                            console.log('clickedSubmit');
-                            this.props.toggleNewInventory()
-                        }}>Save New Product</button>
+                    <div className={css(subNavCSS.flexRowMiddle)}>
+                        <button className={css(subNavCSS.buttonSubmit)}
+                            disabled={!this.isDisabled()}
+                            onClick={() => {
+                                this.submitNewItem()
+                                console.log('clickedSubmit');
+                                this.props.toggleNewInventory();
+                            }}>Save New Product</button>
+                        <button className={css(subNavCSS.buttonSubmit)}
+                            onClick={() => {
+                                this.resetState();
+                            }}>Reset</button>
+                        <button className={css(subNavCSS.buttonSubmit)}
+                            onClick={() => {
+                                this.resetState();
+                                this.props.toggleNewInventory();
+                            }}>Cancel</button>
+                    </div>
                 </div>
 
             </div>
@@ -229,16 +254,17 @@ const subNavCSS = StyleSheet.create({
         zIndex: '10',
     },
     buttonSubmit: {
-        margin: '0 auto',
+        margin: 0,
         width: '100px',
-        height: '70px',
+        marginLeft: '5px',
+        marginRight: '5px',
+        height: '35px',
         background: 'rgb(255,255,255)',
         boxShadow: '2px 2px 4px rgb(0,0,0)',
         border: 'none',
         marginTop: '10px',
         marginBottom: '15px',
         cursor: 'pointer',
-
     },
     onOffButtons: {
         width: '150px',
