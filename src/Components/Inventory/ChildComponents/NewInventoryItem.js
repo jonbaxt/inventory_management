@@ -22,9 +22,9 @@ class NewInventoryItem extends Component {
             productName: '',
             partNumber: '',
             labelDescription: '',
-            productCount: 0,
+            productCount: 1,
             minimumCount: 0,
-            price: 0.00,
+            price: '',
             imageURL: '',
             alertWhenLow: false,
         }
@@ -60,9 +60,25 @@ class NewInventoryItem extends Component {
         }
         this.props.postNewProduct(newItem);
     }
+
+    isDisabled = () => {
+        let currentState = '';
+        if(this.state.productName !== '' && 
+        this.state.partNumber !== '' && 
+        this.state.labelDescription !== '' && 
+        this.state.price !== ''){
+            currentState = true;
+        } else {
+            currentState = false;
+        }
+        return currentState;
+    }
+
     render() {
         let alertMessage = this.state.alertWhenLow ? 'Send notification' : 'Do not send notification';
-        console.log(this.props)
+        
+
+        // console.log(this.props)
         return (
             <div className={this.props.newInventoryItemVisibility ? css(subNavCSS.newInventoryMain) : css(subNavCSS.newInventoryMain, subNavCSS.editorHide)} >
                 <div className={css(subNavCSS.newItemModalMain)} >
@@ -138,8 +154,8 @@ class NewInventoryItem extends Component {
                     <div className={css(subNavCSS.flexRow)}>
                         <h5 className={css(subNavCSS.title)}>Price: $</h5>
                         <input type='number'
-                            min="0.01" step="0.01" max="2500"
-                            placeholder='New Price'
+                            // min="0.01" step="0.01" max="2500"
+                            placeholder='0.00'
                             className={css(subNavCSS.inputBox)}
                             value={this.state.price}
                             onChange={(e) => this.priceEdit(e.target.value)} />
@@ -154,7 +170,7 @@ class NewInventoryItem extends Component {
                     <h4 className={css(subNavCSS.title)}><span style={{ color: 'rgb(5,0,5)', textShadow: 'none' }}>{alertMessage}</span>  </h4>
 
                     <button className={css(subNavCSS.buttonSubmit)}
-                        disabled={!this.state.productName}
+                        disabled={!this.isDisabled()}
                         onClick={() => {
                             this.submitNewItem()
                             console.log('clickedSubmit');
