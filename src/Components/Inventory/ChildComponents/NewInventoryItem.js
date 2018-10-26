@@ -2,38 +2,66 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 class NewInventoryItem extends Component {
     constructor() {
         super();
         this.state = {
+            
+            // Test Information:
+
+            // productName: 'Kanye West Doll 16 Inches',
+            // partNumber: '000FD',
+            // labelDescription: 'Love the rapping? The greatness of the West. North West`s dad, loves to drop it like it`s  hot and he will deliver baby. Collect the Tickle Me Kim to complete your set today!',
+            // productCount: 50,
+            // minimumCount: 1,
+            // price: 20.00,
+            // imageURL: 'https://i.etsystatic.com/14555790/r/il/72d610/1432506963/il_570xN.1432506963_oke6.jpg',
+            // alertWhenLow: false,
             productName: '',
             partNumber: '',
             labelDescription: '',
             productCount: 0,
             minimumCount: 0,
+            price: 0.00,
             imageURL: '',
             alertWhenLow: false,
         }
-        this.productNameEdit = this.productNameEdit.bind( this );
-        this.partNumberEdit = this.partNumberEdit.bind( this );
-        this.labelDescriptionEdit = this.labelDescriptionEdit.bind( this );
-        this.productCountEdit = this.productCountEdit.bind( this );
-        this.minimumCountEdit = this.minimumCountEdit.bind( this );
-        this.imageURLEdit = this.imageURLEdit.bind( this );
-        this.alertWhenLowEdit = this.alertWhenLowEdit.bind( this );
+        this.productNameEdit = this.productNameEdit.bind(this);
+        this.partNumberEdit = this.partNumberEdit.bind(this);
+        this.labelDescriptionEdit = this.labelDescriptionEdit.bind(this);
+        this.productCountEdit = this.productCountEdit.bind(this);
+        this.minimumCountEdit = this.minimumCountEdit.bind(this);
+        this.imageURLEdit = this.imageURLEdit.bind(this);
+        this.priceEdit = this.priceEdit.bind(this);
+        this.alertWhenLowEdit = this.alertWhenLowEdit.bind(this);
     }
 
     productNameEdit(e) { this.setState({ productName: e }); }
     partNumberEdit(e) { this.setState({ partNumber: e }); }
     labelDescriptionEdit(e) { this.setState({ labelDescription: e }); }
     productCountEdit(e) { this.setState({ productCount: e }); }
-    minimumCountEdit(e) { this.setState({ minimumCount: e })};
+    minimumCountEdit(e) { this.setState({ minimumCount: e }) };
     imageURLEdit(e) { this.setState({ imageURL: e }); }
+    priceEdit(e) { this.setState({ price: e }); }
     alertWhenLowEdit() { this.setState({ alertWhenLow: !this.state.alertWhenLow }); }
 
+    submitNewItem() {
+        const newItem = {
+            product_name: this.state.productName,
+            part_number: this.state.partNumber,
+            product_label: this.state.labelDescription,
+            product_image: this.state.imageURL,
+            current_count: this.state.productCount,
+            minimum_stock: this.state.minimumCount,
+            price: this.state.price,
+            alert_when_low: this.state.alertWhenLow
+        }
+        this.props.postNewProduct(newItem);
+    }
     render() {
-
+        let alertMessage = this.state.alertWhenLow ? 'Send notification' : 'Do not send notification';
         console.log(this.props)
         return (
             <div className={this.props.newInventoryItemVisibility ? css(subNavCSS.newInventoryMain) : css(subNavCSS.newInventoryMain, subNavCSS.editorHide)} >
@@ -63,7 +91,7 @@ class NewInventoryItem extends Component {
                             placeholder='New Part Number'
                             className={css(subNavCSS.inputBox)}
                             value={this.state.partNumber}
-                            onChange={(e)=> this.partNumberEdit(e.target.value)} />
+                            onChange={(e) => this.partNumberEdit(e.target.value)} />
                     </div>
 
                     <div className={css(subNavCSS.flexRow)}>
@@ -71,7 +99,7 @@ class NewInventoryItem extends Component {
                         <textarea type='text'
                             rows='5'
                             placeholder='New Product Description'
-                            className={css(subNavCSS.inputBox)}
+                            className={css(subNavCSS.inputTextArea)}
                             value={this.state.labelDescription}
                             onChange={(e) => this.labelDescriptionEdit(e.target.value)} />
                     </div>
@@ -82,7 +110,7 @@ class NewInventoryItem extends Component {
                             placeholder='0'
                             className={css(subNavCSS.inputBox)}
                             value={this.state.productCount}
-                            onChange={(e)=> this.productCountEdit(e.target.value)} />
+                            onChange={(e) => this.productCountEdit(e.target.value)} />
                     </div>
 
                     <div className={css(subNavCSS.flexRow)}>
@@ -91,21 +119,49 @@ class NewInventoryItem extends Component {
                             placeholder='0'
                             className={css(subNavCSS.inputBox)}
                             value={this.state.minimumCount}
-                            onChange={(e)=> this.minimumCountEdit(e.target.value)} />
+                            onChange={(e) => this.minimumCountEdit(e.target.value)} />
                     </div>
 
                     <div className={css(subNavCSS.flexRow)}>
                         <h4 className={css(subNavCSS.title)}>Product Image: </h4>
-                        <input type='text'
+                        <input 
+                            type='url'
+                            // type='text'
                             placeholder='New Product Image URL'
                             className={css(subNavCSS.inputBox)}
                             value={this.state.imageURL}
-                            onChange={(e)=> this.imageURLEdit(e.target.value)} />
+                            onChange={(e) => this.imageURLEdit(e.target.value)} />
                     </div>
-                
-                    <img className='' src={this.state.imageURL} alt='' />
 
+                    <img className={css(subNavCSS.picResize)} src={this.state.imageURL} alt='' />
+
+                    <div className={css(subNavCSS.flexRow)}>
+                        <h5 className={css(subNavCSS.title)}>Price: $</h5>
+                        <input type='number'
+                            min="0.01" step="0.01" max="2500"
+                            placeholder='New Price'
+                            className={css(subNavCSS.inputBox)}
+                            value={this.state.price}
+                            onChange={(e) => this.priceEdit(e.target.value)} />
+                    </div>
+
+                    <h4 className={css(subNavCSS.title)}>Low Product Alert:</h4>
+
+                    <div className={css(subNavCSS.flexRowMiddle)}>
+                        <button className={css(subNavCSS.onOffButtons)} disabled={this.state.alertWhenLow} onClick={() => this.alertWhenLowEdit()} >Alert When Low</button>
+                        <button className={css(subNavCSS.onOffButtons)} disabled={!this.state.alertWhenLow} onClick={() => this.alertWhenLowEdit()} >Do Not Message Me</button>
+                    </div>
+                    <h4 className={css(subNavCSS.title)}><span style={{ color: 'rgb(5,0,5)', textShadow: 'none' }}>{alertMessage}</span>  </h4>
+
+                    <button className={css(subNavCSS.buttonSubmit)}
+                        disabled={!this.state.productName}
+                        onClick={() => {
+                            this.submitNewItem()
+                            console.log('clickedSubmit');
+                            this.props.toggleNewInventory()
+                        }}>Save New Product</button>
                 </div>
+
             </div>
         )
     }
@@ -152,10 +208,34 @@ const subNavCSS = StyleSheet.create({
         width: '75vw',
         height: '90vh',
         margin: '0 auto',
-        // marginTop: '5px',
         background: 'rgb(192,192,192)',
         boxShadow: '2px 2px 4px white',
         zIndex: '10',
+    },
+    buttonSubmit: {
+        margin: '0 auto',
+        width: '100px',
+        height: '70px',
+        background: 'rgb(255,255,255)',
+        boxShadow: '2px 2px 4px rgb(0,0,0)',
+        border: 'none',
+        marginTop: '10px',
+        marginBottom: '15px',
+        cursor: 'pointer',
+
+    },
+    onOffButtons: {
+        width: '150px',
+        height: '30px',
+        background: 'rgb(255,255,255)',
+        boxShadow: '2px 2px 4px rgb(0,0,0)',
+        border: 'none',
+        marginBottom: '15px',
+        fontWeight: 'bold',
+        cursor: 'pointer',
+        ':disabled': {
+            background: 'rgb(75,75,75)',
+        },
     },
     closeButton: {
         textAlign: 'right',
@@ -174,7 +254,29 @@ const subNavCSS = StyleSheet.create({
         marginLeft: '20px',
         marginRight: '20px',
     },
+    flexRowMiddle: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: '5px',
+        marginBottom: '5px',
+        marginLeft: '20px',
+        marginRight: '20px',
+    },
     inputBox: {
+        width: '50%',
+        height: '19px',
+        marginLeft: '5px',
+        background: 'rgba(169,169,169,0.8)',
+        color: 'white',
+        border: 'none',
+        borderShadow: '2px 2px 4px white',
+        textShadow: '1px 1px 2px black',
+        '::placeholder': {
+            color: 'white',
+        }
+    },
+    inputTextArea: {
         width: '50%',
         marginLeft: '5px',
         background: 'rgba(169,169,169,0.8)',
@@ -184,7 +286,12 @@ const subNavCSS = StyleSheet.create({
         textShadow: '1px 1px 2px black',
         '::placeholder': {
             color: 'white',
-            //  fontSize: '1.5rem',
         }
+    },
+    picResize: {
+        width: '150px',
+        margin: '0 auto',
+        marginTop: '15px',
+        marginBottom: '15px',
     }
 });

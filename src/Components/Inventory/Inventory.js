@@ -12,12 +12,13 @@ class Inventory extends Component {
         this.state = {
             currentInventory: [],
             itemEditorVisible: false,
-            newItemVisible: true,  // Switch back to false
+            newItemVisible: false,  // Switch back to false
             currentProductNumber: 1,
         }
         this.toggleItemEditor = this.toggleItemEditor.bind(this);
         this.retrieveCurrentProductNumber = this.retrieveCurrentProductNumber.bind(this);
         this.toggleNewInventoryModal = this.toggleNewInventoryModal.bind(this);
+        this.postNewProduct = this.postNewProduct.bind(this);
     }
 
     componentDidMount() {
@@ -43,6 +44,13 @@ class Inventory extends Component {
         // console.log(`Item Editor Visability: ${this.state.itemEditorVisible}`)
     }
 
+    postNewProduct(productObject) {
+        axios.post('/api/newproduct/insert', productObject).then( newProductTable => {
+            console.log(newProductTable.data);
+            this.setState({ currentInventory: newProductTable.data });
+        }).catch((err)=> console.log('Didn`t work:', err));
+    }
+
     render() {
         // console.log(this.state.currentInventory);
         // console.log(this.props)
@@ -64,7 +72,8 @@ class Inventory extends Component {
                     toggleItemEditor={this.toggleItemEditor} />
                 <NewInventoryItem
                     newInventoryItemVisibility={this.state.newItemVisible}
-                    toggleNewInventory={this.toggleNewInventoryModal} />
+                    toggleNewInventory={this.toggleNewInventoryModal}
+                    postNewProduct={this.postNewProduct} />
                 <h1 className={css(invCSS.h2Reformat)} >Current Inventory</h1>
                 <div className={css(invCSS.main)} >
                     {inventoryList}
