@@ -1,26 +1,23 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import axios from 'axios';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
-// import { getOrdersFromApi, getClientsFromApi, getUsersFromApi } from '../../ducks/reducer';
+import { getOrdersFromApi,
+    //  getClientsFromApi, 
+    //  getUsersFromApi
+     } from '../../ducks/reducer';
 
-export default class Orders extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            ordersArray: [],
-            clientsArray: [],
-        };
-
-    }
-
+class Orders extends React.Component {
+    
     componentDidMount() {
-        
-        axios.get('/api/getOrders').then((axiosResults)=> {
-            console.log(axiosResults.data);
-            this.setState({ ordersArray: axiosResults.data });
-        }).catch(err => console.log(err));
+        if(this.props.ordersArray.length === 0 ){
+            this.props.getOrdersFromApi();
+        }   
+        // axios.get('/api/getOrders').then((axiosResults)=> {
+        //     console.log(axiosResults.data);
+        //     this.setState({ ordersArray: axiosResults.data });
+        // }).catch(err => console.log(err));
 
         axios.get('/api/getClients').then((axiosResults) => {
             console.log(axiosResults.data);
@@ -51,3 +48,13 @@ const orderCSS = StyleSheet.create({
         textShadow: '2px 2px 4px black',
     }
 });
+
+let mapStateToProps = (state) => {
+    return {
+        ordersArray: state.ordersArray,
+    }
+}
+let mapDispatchToProps = {
+    getOrdersFromApi,
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Orders);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
-import Clients from '../Clients';
+// import Clients from '../Clients';
 
 function Client(props) {
 

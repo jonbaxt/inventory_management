@@ -25,21 +25,23 @@ export default class Clients extends React.Component {
             return <Client key={element.client_id} clientInfo={element}  />
         });
 
-        let clientMapped = this.state.clientsArray.length !== 0 ? this.state.clientsArray.map( element => {
-            return <Client key={element.client_id} clientInfo={element}  />
-        }) : <h5 >No Employees Found. Please Refresh Browser.</h5>
-        let dummyClient = {
-            client_id: 1,
-            first_name: "Rod",
-            last_name: "Ferdinand",
-            phone_number: "801-899-2456",
-            email: "rodboy@generalgoods.com",
-            company: "General Goods",
-            company_address_line_1: "123 South 23 East",
-            company_address_line_2: "Houston TX 77001",
-            mailing_address_line_1: "123 South 23 East",
-            mailing_address_line_2: "Houston TX 77001"
-        }
+        // let clientMapped = this.state.clientsArray.length !== 0 ? this.state.clientsArray.map( element => {
+        //     return <Client key={element.client_id} clientInfo={element}  />
+        // }) : <h5 >No Employees Found. Please Refresh Browser.</h5>
+        
+        
+        // let dummyClient = {
+        //     client_id: 1,
+        //     first_name: "Rod",
+        //     last_name: "Ferdinand",
+        //     phone_number: "801-899-2456",
+        //     email: "rodboy@generalgoods.com",
+        //     company: "General Goods",
+        //     company_address_line_1: "123 South 23 East",
+        //     company_address_line_2: "Houston TX 77001",
+        //     mailing_address_line_1: "123 South 23 East",
+        //     mailing_address_line_2: "Houston TX 77001"
+        // }
         return (
             <div className={css(clientCSS.clientMain)}>
                 <h1 className={css(clientCSS.h1Text)}>Clients</h1>
