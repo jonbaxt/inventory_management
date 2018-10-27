@@ -15,7 +15,7 @@ const app = express();
 massive(CONNECTION_STRING).then( (postgresDatabase) => {
     console.log(chalk.bgRed.white('Datbase is connected.'));
     app.set('db', postgresDatabase);
-});
+}).catch( errMessage => console.log(chalk.bgRed.yellow(`Was unable to process request. Error Message ==>> ${errMessage}`)));
 
 app.use(express.static(`${__dirname}/../build`));
 app.use( bodyParser.json() );

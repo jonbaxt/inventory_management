@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
+// import axios from 'axios';
 
 class NewInventoryItem extends Component {
     constructor() {

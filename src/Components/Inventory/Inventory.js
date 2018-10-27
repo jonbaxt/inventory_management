@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 import InventoryItem from './ChildComponents/InventoryItem';
 import ItemEditor from './ChildComponents/ItemEditor';
 import NewInventoryItem from './ChildComponents/NewInventoryItem';
+import { getProductsFromApi, getClientsFromApi, getUsersFromApi, getOrdersFromApi } from '../../ducks/reducer';
 
 class Inventory extends Component {
     constructor() {
         super();
         this.state = {
-            currentInventory: [],
-            itemEditorVisible: true, // Switch back to false
-            newItemVisible: false, 
+            // currentInventory: [],
+            itemEditorVisible: false, // Switch back to false
+            newItemVisible: false,
             currentProductNumber: 1,
         }
         this.toggleItemEditor = this.toggleItemEditor.bind(this);
@@ -22,13 +24,27 @@ class Inventory extends Component {
     }
 
     componentDidMount() {
-        axios.get('/api/getProducts').then((result) => {
-            // axios.get('/testArray').then( (result) => {
-            // console.log(result.data);
-            // console.log(result.data.dummyTestData);
-            this.setState({ currentInventory: result.data });
-        }).catch(err => console.log(`Didn't work ${err}`))
+        // First retrieval essential for home page. rest of the other Axios calls are to help the website to run faster after loaded.
+        if (this.props.productsArray.length === 0) {
+            this.props.getProductsFromApi();
+            this.setState({ currentInventory: this.props.productsArray });
+        }
+        if (this.props.ordersArray.length === 0) {
+            this.props.getOrdersFromApi();
+        }
+        if (this.props.usersArray.length === 0) {
+            this.props.getUsersFromApi();
+        }
+        if (this.props.clientsArray.length === 0) {
+            this.props.getClientsFromApi();
+        }
     }
+
+    // componentDidUpdate(prevProps) {
+    //     if (prevProps.productsArray.length !== this.props.productsArray.length) {
+    //         this.setState({ currentInventory: this.props.productsArray });
+    //     }
+    // }
 
     toggleItemEditor() {
         this.setState({ itemEditorVisible: !this.state.itemEditorVisible });
@@ -45,28 +61,26 @@ class Inventory extends Component {
     }
 
     postNewProduct(productObject) {
-        axios.post('/api/newproduct/insert', productObject).then( newProductTable => {
+        axios.post('/api/newproduct/insert', productObject).then(newProductTable => {
             console.log(newProductTable.data);
             this.setState({ currentInventory: newProductTable.data });
-        }).catch((err)=> console.log('Didn`t work:', err));
+        }).catch((err) => console.log('Didn`t work:', err));
     }
 
     render() {
-        // console.log(this.state.currentInventory);
-        // console.log(this.props)
-        let inventoryList = this.state.currentInventory.length !== 0 ? this.state.currentInventory.map((element, index) => {
+        let inventoryList = this.props.productsArray.length !== 0 ? this.props.productsArray.map((element, index) => {
             return (<InventoryItem key={element.inventory_id}
                 currentInfo={element}
-                // itemEditorVis={this.state.itemEditorVisible}
                 giveBackFunction={this.retrieveCurrentProductNumber} />)
         }) : <h3 className={css(invCSS.h2Reformat)} >No Products Found. Please Refresh Browser.</h3>
+        
         return (
             <div>
                 <div className={css(invCSS.subNavBar)}>
                     <h4 className={css(invCSS.h2Reformat, invCSS.hand)}
-                        onClick={()=> this.toggleNewInventoryModal()}>New Product</h4>
+                        onClick={() => this.toggleNewInventoryModal()}>New Product</h4>
                 </div>
-                <ItemEditor inventory={this.state.currentInventory}
+                <ItemEditor inventory={this.props.productsArray}
                     currentInventoryItem={this.state.currentProductNumber}
                     editorVisibility={this.state.itemEditorVisible}
                     toggleItemEditor={this.toggleItemEditor} />
@@ -125,10 +139,26 @@ const invCSS = StyleSheet.create({
         // cursor: 'pointer',
         textShadow: '2px 2px 4px black',
         // ':hover': {
-            // color: 'rgb(169,169,169)',
-            // transition: '0.5s all ease',
+        // color: 'rgb(169,169,169)',
+        // transition: '0.5s all ease',
         // }
     }
 });
 
-export default Inventory;
+function mapStateToProps(state) {
+    return {
+        productsArray: state.productsArray,
+        ordersArray: state.ordersArray,
+        usersArray: state.usersArray,
+        clientsArray: state.clientsArray
+    }
+}
+
+let mapDispatchToProps = {
+    getProductsFromApi,
+    getClientsFromApi,
+    getUsersFromApi,
+    getOrdersFromApi
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Inventory);

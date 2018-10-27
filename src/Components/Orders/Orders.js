@@ -1,6 +1,9 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import axios from 'axios';
+// import { connect } from 'react-redux';
+
+// import { getOrdersFromApi, getClientsFromApi, getUsersFromApi } from '../../ducks/reducer';
 
 export default class Orders extends React.Component {
     constructor() {
@@ -13,6 +16,7 @@ export default class Orders extends React.Component {
     }
 
     componentDidMount() {
+        
         axios.get('/api/getOrders').then((axiosResults)=> {
             console.log(axiosResults.data);
             this.setState({ ordersArray: axiosResults.data });

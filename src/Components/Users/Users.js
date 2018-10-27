@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
-import axios from 'axios';
+import { connect } from 'react-redux';
 
 import UserTiles from './ChildComponents/UserTiles';
+import { getUsersFromApi } from '../../ducks/reducer'; 
 
-export default class Users extends React.Component {
+class Users extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -13,10 +14,12 @@ export default class Users extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('/api/getEmployees').then( (axiosResults) => {
-            console.log( axiosResults.data );
-            this.setState({ employeesArray: axiosResults.data });
-        }).catch( (err) => { console.log(err) });
+        if( this.props.usersArray.length === 0) {
+            this.props.getUsersFromApi();
+        }
+        // axios.get('/api/getEmployees').then( (axiosResults) => {
+            // this.setState({ employeesArray: axiosResults.data });
+        // }).catch( (err) => { console.log(err) });
     }
 
     render() {
@@ -31,25 +34,16 @@ export default class Users extends React.Component {
         //     address_line_2: "Provo, UT 84601",
         //     employee_role: "Shelf Stocker"
         // }
-        let usersList = this.state.employeesArray.length !== 0 ?  this.state.employeesArray.map( element => {
+        let usersList = this.props.usersArray.length !== 0 ?  this.props.usersArray.map( element => {
             return (<UserTiles key={element.employee_id} userProfile={element} />)
         }) : <h3 className={css(userCSS.h1Text, userCSS.extraTextSpace)} >No Employees Found. Please Refresh Browser.</h3>
+        
+        
         return (
             <div className={css(userCSS.usersMain)}>
                 <h1 className={css(userCSS.h1Text)}>Inventory Warehouse Employees</h1>
                 <section className={css(userCSS.usersTable)}>
                 { usersList }
-                {/* <UserTiles userProfile={dummyUser} />
-                <UserTiles userProfile={dummyUser} />
-                <UserTiles userProfile={dummyUser} />
-                <UserTiles userProfile={dummyUser} />
-                <UserTiles userProfile={dummyUser} />
-                <UserTiles userProfile={dummyUser} />
-                <UserTiles userProfile={dummyUser} />
-                <UserTiles userProfile={dummyUser} />
-                <UserTiles userProfile={dummyUser} />
-                <UserTiles userProfile={dummyUser} />
-                <UserTiles userProfile={dummyUser} /> */}
                 </section>
             </div>
         )
@@ -84,3 +78,11 @@ const userCSS = StyleSheet.create({
         justifyContent: 'center',
     },
 });
+
+function mapStateToProps(state) {
+    return {
+        usersArray: state.usersArray
+    }
+}
+
+export default connect(mapStateToProps, { getUsersFromApi })(Users);
