@@ -3,6 +3,7 @@ import { StyleSheet, css } from 'aphrodite';
 import axios from 'axios';
 
 import Client from './ChildComponents/Client';
+const dum = require('./ChildComponents/clientDummyData');
 
 export default class Clients extends React.Component {
     constructor() {
@@ -20,6 +21,10 @@ export default class Clients extends React.Component {
     }
 
     render() {
+        let dummyMaped = dum.clientData.map( element => {
+            return <Client key={element.client_id} clientInfo={element}  />
+        });
+
         let clientMapped = this.state.clientsArray.length !== 0 ? this.state.clientsArray.map( element => {
             return <Client key={element.client_id} clientInfo={element}  />
         }) : <h5 >No Employees Found. Please Refresh Browser.</h5>
@@ -39,20 +44,8 @@ export default class Clients extends React.Component {
             <div className={css(clientCSS.clientMain)}>
                 <h1 className={css(clientCSS.h1Text)}>Clients</h1>
                 <div className={css(clientCSS.clientsTable)} >
-                    {clientMapped}
-                    <Client clientInfo={dummyClient} />
-                    <Client clientInfo={dummyClient} />
-                    <Client clientInfo={dummyClient} />
-                    <Client clientInfo={dummyClient} />
-                    <Client clientInfo={dummyClient} />
-                    <Client clientInfo={dummyClient} />
-                    <Client clientInfo={dummyClient} />
-                    <Client clientInfo={dummyClient} />
-                    <Client clientInfo={dummyClient} />
-                    <Client clientInfo={dummyClient} />
-                    <Client clientInfo={dummyClient} />
-                    <Client clientInfo={dummyClient} />
-                    <Client clientInfo={dummyClient} />
+                    {dummyMaped}
+                    {/* {clientMapped} */}
                 </div>
             </div>
         )

@@ -7,6 +7,7 @@ export default class Orders extends React.Component {
         super();
         this.state = {
             ordersArray: [],
+            clientsArray: [],
         };
 
     }
@@ -16,6 +17,11 @@ export default class Orders extends React.Component {
             console.log(axiosResults.data);
             this.setState({ ordersArray: axiosResults.data });
         }).catch(err => console.log(err));
+
+        axios.get('/api/getClients').then((axiosResults) => {
+            console.log(axiosResults.data);
+            this.setState({ clientsArray: axiosResults.data });
+        }).catch((err) => console.log(err));
     }
 
     render() {

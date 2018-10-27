@@ -208,7 +208,7 @@ const editorCSS = StyleSheet.create({
     }, 
     submitButton: {
         width: '125px',
-        height: '80px',
+        height: '100px',
         margin: '0 auto'
     }
 });

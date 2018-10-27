@@ -11,8 +11,8 @@ class Inventory extends Component {
         super();
         this.state = {
             currentInventory: [],
-            itemEditorVisible: false,
-            newItemVisible: false,  // Switch back to false
+            itemEditorVisible: true, // Switch back to false
+            newItemVisible: false, 
             currentProductNumber: 1,
         }
         this.toggleItemEditor = this.toggleItemEditor.bind(this);
