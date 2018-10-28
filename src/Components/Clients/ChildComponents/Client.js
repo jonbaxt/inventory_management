@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
-// import Clients from '../Clients';
+import { connect } from 'react-redux';
+
+
 
 function Client(props) {
 
@@ -19,7 +21,13 @@ function Client(props) {
     )
 }
 
-export default Client;
+function mapStateToProps(state) {
+    return {
+        clientArray: state.clientArray
+    }
+}
+
+export default  connect(mapStateToProps, null)(Client);
 
 const clientStyles = StyleSheet.create({
     clientMain: {

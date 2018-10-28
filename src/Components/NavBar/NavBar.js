@@ -46,6 +46,7 @@ const st = StyleSheet.create({
         justifyContent: 'space-between',
         paddingTop: '14px',
         position: 'fixed',
+        zIndex: '100',
         '@media (max-width: 700px)': {
             height: '32px',
         },
