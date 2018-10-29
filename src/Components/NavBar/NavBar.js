@@ -37,7 +37,7 @@ class NavBar extends Component {
 
 const st = StyleSheet.create({
     navMain: {
-        background: 'gray',
+        background: 'rgb(128,128,128)',
         width: '100%',
         height: '40px',
         color: 'white',

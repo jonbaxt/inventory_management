@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
-import axios from 'axios';
 import { connect } from 'react-redux';
 
 import {
@@ -10,32 +9,76 @@ import {
 } from '../../ducks/reducer';
 
 import OrderListObject from './ChildComponents/OrderListObject';
+import ProductMoreDetails from './ChildComponents/ProductMoreDetails';
 
 class Orders extends React.Component {
-
-    componentDidMount() {
-        if (this.props.ordersArray.length === 0) {
-            this.props.getOrdersFromApi();
+    constructor() {
+        super();
+        this.state = {
+            ordersArray: [],
+            moreDetailsVisible: false,
+            moreDetailsOrderId: 1,
         }
-        // axios.get('/api/getOrders').then((axiosResults)=> {
-        //     console.log(axiosResults.data);
-        //     this.setState({ ordersArray: axiosResults.data });
-        // }).catch(err => console.log(err));
-
-        axios.get('/api/getClients').then((axiosResults) => {
-            console.log(axiosResults.data);
-            this.setState({ clientsArray: axiosResults.data });
-        }).catch((err) => console.log(err));
+        this.toggleMoreDetails = this.toggleMoreDetails.bind(this);
+        this.switchMoreDetailsIDNumber = this.switchMoreDetailsIDNumber.bind(this);
     }
+    componentDidMount() {
+        // if (this.props.ordersArray.length === 0) { this.props.getOrdersFromApi(); }
+        if (this.props.ordersArray.length === 0) { 
+            this.props.getOrdersFromApi(); 
+            this.setState({ ordersArray: this.props.ordersArray })
+        }
+    }
+    // componentDidUpdate(prevProps, prevState) {
+    //     if(prevState.ordersArray.length !== this.state.ordersArray.length) {
+    //         this.setState({ ordersArray: this.props.ordersArray })
+    //     }
+    //     if(prevProps.ordersArray.length !== this.props.ordersArray.length) {
+    //         this.setState({ ordersArray: this.props.ordersArray })
+    //     }
+    // }
+    
+    toggleMoreDetails() { this.setState({ moreDetailsVisible: !this.state.moreDetailsVisible }); }
+    switchMoreDetailsIDNumber(newId) { this.setState({ moreDetailsOrderId: newId }); }
 
     render() {
+        
         let orderListDisplay = dummyData.map(element => {
-            return (<OrderListObject key={element.order_id} singleOrder={element} />)
+            return (<OrderListObject key={element.order_id} singleOrder={element} switchMoreDetailsIDNumber={this.switchMoreDetailsIDNumber} toggleMoreDetails={this.toggleMoreDetails} />)
         })
+
+        // let orderListDisplay = this.props.ordersArray.map(element => {
+        //     return (<OrderListObject key={element.order_id} singleOrder={element} switchMoreDetailsIDNumber={this.switchMoreDetailsIDNumber} toggleMoreDetails={this.toggleMoreDetails} />)
+        // })
+
+        // let productMoreDetailsRender =
+            // this.props.render
+                // this.props.ordersArray.length !== 0 
+                // this.state.ordersArray.length !== 0 
+                // ?
+                // <ProductMoreDetails
+                    // toggleMoreDetails={this.toggleMoreDetails}
+                    // moreDetailsOrderId={this.state.moreDetailsOrderId}
+                    // moreDetailsVisible={this.state.moreDetailsVisible}
+                    // ordersArrayPassDown={this.state.ordersArray} />
+                // : ''
+
         return (
             <div className={css(orderCSS.ordersMain)}>
+                {/* { productMoreDetailsRender } */}
+                <ProductMoreDetails
+                    toggleMoreDetails={this.toggleMoreDetails}
+                    moreDetailsOrderId={this.state.moreDetailsOrderId}
+                    moreDetailsVisible={this.state.moreDetailsVisible}
+                    // ordersArrayPassDown={this.props.ordersArray} 
+                    ordersArrayPassDown={dummyData} 
+                    />
+                <div className={css(orderCSS.subNavBar)} >
+                    <h4 className={css(orderCSS.subHText)}>Add New Order</h4>
+                </div>
                 <h1 className={css(orderCSS.h1Text)}>Orders</h1>
                 {orderListDisplay}
+
             </div>
         )
     }
@@ -46,14 +89,37 @@ const orderCSS = StyleSheet.create({
         width: '100%',
         padding: 0,
         margin: 0,
-        paddingTop: '50px',
+        // paddingTop: '50px',
+        paddingTop: '54px',
+        // marginTop: '20px'
+    },
+    subNavBar: {
+        position: 'fixed',
+        width: '100%',
+        height: '23px',
+        background: 'rgb(128,128,90)',
+        zIndex: '99',
     },
     h1Text: {
         margin: 0,
         padding: 0,
+        paddingTop: '16px',
         color: 'white',
         textShadow: '2px 2px 4px black',
-    }
+    },
+    subHText: {
+        margin: 0,
+        padding: 0,
+        marginRight: '30px',
+        textAlign: 'right',
+        color: 'white',
+        textShadow: '1px 1px 2px black',
+        cursor: 'pointer',
+        ':hover': {
+            color: 'rgb(169,169,169)',
+            transition: '0.5s all ease',
+        },
+    },
 });
 
 let mapStateToProps = (state) => {
@@ -65,6 +131,7 @@ let mapDispatchToProps = {
     getOrdersFromApi,
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Orders);
+
 
 
 const dummyData = [
