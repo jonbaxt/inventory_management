@@ -6,7 +6,10 @@ const initialState = {
     // ordersArray: [],
     clientsArray: [],
     usersArray: [],
-    productsArray: []
+    productsArray: [],
+
+    currentProductNameEditor: '',
+    
 }
 
 const FULFILLED = '_FULFILLED';
@@ -15,6 +18,8 @@ const GET_PRODUCTS_FROM_API = 'GET_PRODUCTS_FROM_API';
 const GET_CLIENTS_FROM_API = 'GET_CLIENTS_FROM_API';
 const GET_USERS_FROM_API = 'GET_USERS_FROM_API';
 const GET_ORDERS_FROM_API = 'GET_ORDERS_FROM_API';
+
+const SET_PRODUCT_NAME_FOR_EDITOR = 'SET_PRODUCT_NAME_FOR_EDITOR';
 
 export function getProductsFromApi() {
     let products = axios.get('/api/getProducts').then((result) => {
@@ -60,6 +65,13 @@ export function getOrdersFromApi() {
     }
 }
 
+export function setProductNameForEditor(newName) {
+    return {
+        type: SET_PRODUCT_NAME_FOR_EDITOR,
+        payload: newName
+    }
+}
+
 // Reducer
 export default function reducer(state = initialState, action) {
     switch(action.type) {
@@ -71,6 +83,9 @@ export default function reducer(state = initialState, action) {
             return Object.assign({}, state, { usersArray: action.payload });
         case GET_ORDERS_FROM_API + FULFILLED: 
             return Object.assign({}, state, { ordersArray: action.payload });
+
+        case SET_PRODUCT_NAME_FOR_EDITOR: 
+            return Object.assign({}, state, { currentProductNameEditor: action.payload })
         default: 
             return state;
     }

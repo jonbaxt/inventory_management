@@ -44,6 +44,8 @@ export default class Clients extends React.Component {
         // }
         return (
             <div className={css(clientCSS.clientMain)}>
+                Add a create new client option for the subnav here.
+                Need to Edit Clients as well.
                 <h1 className={css(clientCSS.h1Text)}>Clients</h1>
                 <div className={css(clientCSS.clientsTable)} >
                     {dummyMaped}

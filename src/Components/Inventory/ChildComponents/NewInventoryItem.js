@@ -218,7 +218,8 @@ const subNavCSS = StyleSheet.create({
         background: 'rgba(112,128,144, 0.8)',
         visibility: 'visible',
         // marginTop: '50px',
-        marginTop: '-26px',
+        // marginTop: '-1px',
+        zIndex: '101',
         color: 'white',
     },
     editorHide: {
@@ -247,7 +248,7 @@ const subNavCSS = StyleSheet.create({
         justifyContent: 'flex-start',
         overflow: 'auto',
         width: '75vw',
-        height: '90vh',
+        height: '94vh',
         margin: '0 auto',
         background: 'rgb(192,192,192)',
         boxShadow: '2px 2px 4px white',

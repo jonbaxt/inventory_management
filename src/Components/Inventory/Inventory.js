@@ -88,7 +88,7 @@ class Inventory extends Component {
                     newInventoryItemVisibility={this.state.newItemVisible}
                     toggleNewInventory={this.toggleNewInventoryModal}
                     postNewProduct={this.postNewProduct} />
-                <h1 className={css(invCSS.h2Reformat)} >Current Inventory</h1>
+                <h1 className={css(invCSS.titleH)} >Current Inventory</h1>
                 <div className={css(invCSS.main)} >
                     {inventoryList}
                 </div>
@@ -102,15 +102,13 @@ const invCSS = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         flexWrap: 'wrap',
-        // paddingTop: '50px',
-        // paddingTop: '-20px',
+        // paddingTop: '40px',
     },
     subNavBar: {
+        position: 'fixed',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        // alignItems: 'center',
-        postion: 'fixed',
         width: '100%',
         height: '26px',
         paddingTop: '50px',
@@ -136,13 +134,14 @@ const invCSS = StyleSheet.create({
         marginBottom: '15px',
         paddingTop: '2px',
         color: 'white',
-        // cursor: 'pointer',
         textShadow: '2px 2px 4px black',
-        // ':hover': {
-        // color: 'rgb(169,169,169)',
-        // transition: '0.5s all ease',
-        // }
-    }
+    },
+    titleH: {
+        margin: 0,
+        paddingTop: '70px',
+        color: 'white',
+        textShadow: '2px 2px 4px black',
+    },
 });
 
 function mapStateToProps(state) {
