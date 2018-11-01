@@ -13,6 +13,9 @@ class ItemEditor extends React.Component {
             nameChangeActive: false,
             labelChangeActive: false,
             currentInventoryActive: false,
+            minimumProductActive: false,
+            priceActive: false,
+
             nameTextBox: '',
             // partTextBox: '',
             labelTextBox: '',
@@ -24,6 +27,8 @@ class ItemEditor extends React.Component {
             currentProductName: '',
             currentLabel: '',
             currentInventory: '',
+            minimumProduct: '',
+            priceOfProduct: '',
         }
         this.handleNameEdit = this.handleNameEdit.bind(this);
         // this.handlePartEdit = this.handlePartEdit.bind(this);
@@ -46,6 +51,9 @@ class ItemEditor extends React.Component {
     handleImageEdit(e) { this.setState({ imageTextBox: e }); }
     toggleNameChange = () => { this.setState({ nameChangeActive: !this.state.nameChangeActive }); }
     toggleLabelChange = () => { this.setState({ labelChangeActive: !this.state.labelChangeActive }); }
+    toggleCurrentCount = () => { this.setState({ currentInventoryActive: !this.state.currentInventoryActive }); }
+    toggleMinimimumProduct = () => { this.setState({ minimumProductActive: !this.state.minimumProductActive }); }
+    togglePrice = () => { this.setState({ priceActive: !this.state.priceActive }); }
     resetInputs() {
         this.setState({ nameTextBox: '', partTextBox: '', labelTextBox: '', currentCountTextBox: 0, minimumCountTextBox: 0, priceTextBox: 0, imageTextBox: '' });
     }
@@ -122,6 +130,77 @@ class ItemEditor extends React.Component {
                 }}>Edit</button></div>
             </div>
 
+        let currentInventoryCount = this.state.currentInventoryActive ? <div className={css(editorCSS.inputDiv)}>
+            <h3 className={css(editorCSS.h3Form)}>Current Inventory Count:</h3>
+            <input className={css(editorCSS.inputBoxStyled)} type='text' placeholder={productCount}
+                value={this.state.labelTextBox}
+                onChange={(e) => this.handleCurrentCountEdit(e.target.value)} />
+            <div >
+                <button onClick={() => {
+                    // productName = this.state.nameTextBox;
+                    this.toggleCurrentCount();
+                }} >Change</button>
+                <button onClick={() => {
+                    this.handleCurrentCountEdit('');
+                    this.toggleCurrentCount()
+                }}>Cancel</button>
+            </div>
+        </div>
+            : <div className={css(editorCSS.inputDiv)}>
+                <h3 className={css(editorCSS.h3Form)}>Current Inventory Count:<span className={css(editorCSS.originalText)}>{productCount}</span></h3>
+                <div><button onClick={() => {
+                    // this.handleNameEdit(productName)
+                    this.toggleCurrentCount()
+                }}>Edit</button></div>
+            </div>
+
+        let minimumInventoryCount = this.state.minimumProductActive ? <div className={css(editorCSS.inputDiv)}>
+            <h3 className={css(editorCSS.h3Form)}>Minimum Product Required on Hand:</h3>
+            <input className={css(editorCSS.inputBoxStyled)} type='text' placeholder={minimumProductRequired}
+                value={this.state.labelTextBox}
+                onChange={(e) => this.handleMinimumCountEdit(e.target.value)} />
+            <div >
+                <button onClick={() => {
+                    // productName = this.state.nameTextBox;
+                    this.toggleMinimimumProduct();
+                }} >Change</button>
+                <button onClick={() => {
+                    this.handleMinimumCountEdit('');
+                    this.toggleMinimimumProduct()
+                }}>Cancel</button>
+            </div>
+        </div>
+            : <div className={css(editorCSS.inputDiv)}>
+                <h3 className={css(editorCSS.h3Form)}>Minimum Product Required on Hand:<span className={css(editorCSS.originalText)}>{minimumProductRequired}</span></h3>
+                <div><button onClick={() => {
+                    // this.handleNameEdit(productName)
+                    this.toggleMinimimumProduct()
+                }}>Edit</button></div>
+            </div>
+
+        let priceOfItemChanger = this.state.minimumProductActive ? <div className={css(editorCSS.inputDiv)}>
+            <h3 className={css(editorCSS.h3Form)}>Minimum Product Required on Hand:</h3>
+            <input className={css(editorCSS.inputBoxStyled)} type='text' placeholder={minimumProductRequired}
+                value={this.state.labelTextBox}
+                onChange={(e) => this.handleMinimumCountEdit(e.target.value)} />
+            <div >
+                <button onClick={() => {
+                    // productName = this.state.nameTextBox;
+                    this.toggleMinimimumProduct();
+                }} >Change</button>
+                <button onClick={() => {
+                    this.handleMinimumCountEdit('');
+                    this.toggleMinimimumProduct()
+                }}>Cancel</button>
+            </div>
+        </div>
+            : <div className={css(editorCSS.inputDiv)}>
+                <h3 className={css(editorCSS.h3Form)}>Minimum Product Required on Hand:<span className={css(editorCSS.originalText)}>{minimumProductRequired}</span></h3>
+                <div><button onClick={() => {
+                    // this.handleNameEdit(productName)
+                    this.toggleMinimimumProduct()
+                }}>Edit</button></div>
+            </div>
 
         return (
             <div className={this.props.editorVisibility ? css(editorCSS.editorMain) : css(editorCSS.editorMain, editorCSS.editorHide)} >
@@ -156,19 +235,11 @@ class ItemEditor extends React.Component {
                     <br />
                     <br />
 
-                    <div className={css(editorCSS.inputDiv)}>
-                        <h3 className={css(editorCSS.h3Form)}>Current Inventory Count: <span className={css(editorCSS.originalText)}>{productCount}</span></h3>
-                        <input className={css(editorCSS.inputBoxStyled)} type='text' placeholder='Count'
-                            value={this.state.currentCountTextBox}
-                            onChange={(e) => this.handleCurrentCountEdit(e.target.value)} />
-                    </div>
-                    <br />
+                    {currentInventoryCount}
                     <br />
 
-                    <h3 className={css(editorCSS.h3Form)}>Minimum Product Required on Hand: <span className={css(editorCSS.originalText)}>{minimumProductRequired}</span></h3>
-                    <input className={css(editorCSS.inputBoxStyled)} type='text' placeholder='Minimum Stock Required'
-                        value={this.state.minimumCountTextBox}
-                        onChange={(e) => this.handleMinimumCountEdit(e.target.value)} />
+                    {minimumInventoryCount}
+                    <br />
 
                     <h3 className={css(editorCSS.h3Form)}>Price: <span className={css(editorCSS.originalText)}>${itemPrice}</span></h3>
                     <input className={css(editorCSS.inputBoxStyled)} type='text' placeholder='Price'
