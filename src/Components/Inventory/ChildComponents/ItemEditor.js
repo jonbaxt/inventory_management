@@ -15,6 +15,7 @@ class ItemEditor extends React.Component {
             currentInventoryActive: false,
             minimumProductActive: false,
             priceActive: false,
+            imageActive: false,
 
             nameTextBox: '',
             // partTextBox: '',
@@ -29,6 +30,7 @@ class ItemEditor extends React.Component {
             currentInventory: '',
             minimumProduct: '',
             priceOfProduct: '',
+            imageOfProduct: '',
         }
         this.handleNameEdit = this.handleNameEdit.bind(this);
         // this.handlePartEdit = this.handlePartEdit.bind(this);
@@ -54,6 +56,7 @@ class ItemEditor extends React.Component {
     toggleCurrentCount = () => { this.setState({ currentInventoryActive: !this.state.currentInventoryActive }); }
     toggleMinimimumProduct = () => { this.setState({ minimumProductActive: !this.state.minimumProductActive }); }
     togglePrice = () => { this.setState({ priceActive: !this.state.priceActive }); }
+    toggleImage = () => { this.setState({ imageActive: !this.state.imageActive }); }
     resetInputs() {
         this.setState({ nameTextBox: '', partTextBox: '', labelTextBox: '', currentCountTextBox: 0, minimumCountTextBox: 0, priceTextBox: 0, imageTextBox: '' });
     }
@@ -86,20 +89,18 @@ class ItemEditor extends React.Component {
             <input className={css(editorCSS.inputBoxStyled)} type='text' placeholder={productName}
                 value={this.state.nameTextBox}
                 onChange={(e) => this.handleNameEdit(e.target.value)} />
-            <div >
-                <button onClick={() => {
-                    productName = this.state.nameTextBox;
-                    this.toggleNameChange();
-                }} >Change</button>
-                <button onClick={() => {
-                    this.handleNameEdit('');
-                    this.toggleNameChange()
-                }}>Cancel</button>
-            </div>
+            <div><button className={css(editorCSS.editButton)} onClick={() => {
+                productName = this.state.nameTextBox;
+                this.toggleNameChange();
+            }} >Change</button></div>
+            <div><button className={css(editorCSS.editButton)} onClick={() => {
+                this.handleNameEdit('');
+                this.toggleNameChange()
+            }}>Cancel</button></div>
         </div>
             : <div className={css(editorCSS.inputDiv)}>
                 <h3 className={css(editorCSS.h3Form)}>Name: <span className={css(editorCSS.originalText)}>{productName}</span></h3>
-                <div><button onClick={() => {
+                <div><button className={css(editorCSS.editButton)} onClick={() => {
                     // this.handleNameEdit(productName)
                     this.toggleNameChange()
                 }}>Edit</button></div>
@@ -110,21 +111,19 @@ class ItemEditor extends React.Component {
             <input className={css(editorCSS.inputBoxStyled)} type='text' placeholder={label}
                 value={this.state.labelTextBox}
                 onChange={(e) => this.handleLabelEdit(e.target.value)} />
-            <div >
-                <button onClick={() => {
-                    // productName = this.state.nameTextBox;
-                    this.toggleLabelChange();
-                }} >Change</button>
-                <button onClick={() => {
-                    this.handleLabelEdit('');
-                    // this.handleNameEdit('');
-                    this.toggleLabelChange()
-                }}>Cancel</button>
-            </div>
+            <div ><button className={css(editorCSS.editButton)} onClick={() => {
+                // productName = this.state.nameTextBox;
+                this.toggleLabelChange();
+            }} >Change</button></div>
+            <div><button className={css(editorCSS.editButton)} onClick={() => {
+                this.handleLabelEdit('');
+                // this.handleNameEdit('');
+                this.toggleLabelChange()
+            }}>Cancel</button></div>
         </div>
             : <div className={css(editorCSS.inputDiv)}>
                 <h3 className={css(editorCSS.h3Form)}>Label / Description:  <span className={css(editorCSS.originalText)}>{label}</span></h3>
-                <div><button onClick={() => {
+                <div><button className={css(editorCSS.editButton)} onClick={() => {
                     // this.handleNameEdit(productName)
                     this.toggleLabelChange()
                 }}>Edit</button></div>
@@ -132,23 +131,21 @@ class ItemEditor extends React.Component {
 
         let currentInventoryCount = this.state.currentInventoryActive ? <div className={css(editorCSS.inputDiv)}>
             <h3 className={css(editorCSS.h3Form)}>Current Inventory Count:</h3>
-            <input className={css(editorCSS.inputBoxStyled)} type='text' placeholder={productCount}
-                value={this.state.labelTextBox}
+            <input className={css(editorCSS.inputBoxNumber)} type='number' placeholder={productCount}
+                value={this.state.currentCountTextBox}
                 onChange={(e) => this.handleCurrentCountEdit(e.target.value)} />
-            <div >
-                <button onClick={() => {
-                    // productName = this.state.nameTextBox;
-                    this.toggleCurrentCount();
-                }} >Change</button>
-                <button onClick={() => {
-                    this.handleCurrentCountEdit('');
-                    this.toggleCurrentCount()
-                }}>Cancel</button>
-            </div>
+            <div ><button className={css(editorCSS.editButton)} onClick={() => {
+                // productName = this.state.nameTextBox;
+                this.toggleCurrentCount();
+            }} >Change</button></div>
+            <div><button className={css(editorCSS.editButton)} onClick={() => {
+                this.handleCurrentCountEdit('');
+                this.toggleCurrentCount()
+            }}>Cancel</button></div>
         </div>
             : <div className={css(editorCSS.inputDiv)}>
                 <h3 className={css(editorCSS.h3Form)}>Current Inventory Count:<span className={css(editorCSS.originalText)}>{productCount}</span></h3>
-                <div><button onClick={() => {
+                <div><button className={css(editorCSS.editButton)} onClick={() => {
                     // this.handleNameEdit(productName)
                     this.toggleCurrentCount()
                 }}>Edit</button></div>
@@ -156,49 +153,69 @@ class ItemEditor extends React.Component {
 
         let minimumInventoryCount = this.state.minimumProductActive ? <div className={css(editorCSS.inputDiv)}>
             <h3 className={css(editorCSS.h3Form)}>Minimum Product Required on Hand:</h3>
-            <input className={css(editorCSS.inputBoxStyled)} type='text' placeholder={minimumProductRequired}
-                value={this.state.labelTextBox}
+            <input className={css(editorCSS.inputBoxNumber)} type='number' placeholder={minimumProductRequired}
+                value={this.state.minimumCountTextBox}
                 onChange={(e) => this.handleMinimumCountEdit(e.target.value)} />
-            <div >
-                <button onClick={() => {
-                    // productName = this.state.nameTextBox;
-                    this.toggleMinimimumProduct();
-                }} >Change</button>
-                <button onClick={() => {
-                    this.handleMinimumCountEdit('');
-                    this.toggleMinimimumProduct()
-                }}>Cancel</button>
-            </div>
+            <div ><button className={css(editorCSS.editButton)} onClick={() => {
+                // productName = this.state.nameTextBox;
+                this.toggleMinimimumProduct();
+            }} >Change</button></div>
+            <div><button className={css(editorCSS.editButton)} onClick={() => {
+                this.handleMinimumCountEdit('');
+                this.toggleMinimimumProduct();
+            }}>Cancel</button></div>
         </div>
             : <div className={css(editorCSS.inputDiv)}>
                 <h3 className={css(editorCSS.h3Form)}>Minimum Product Required on Hand:<span className={css(editorCSS.originalText)}>{minimumProductRequired}</span></h3>
-                <div><button onClick={() => {
+                <div><button className={css(editorCSS.editButton)} onClick={() => {
                     // this.handleNameEdit(productName)
-                    this.toggleMinimimumProduct()
+                    this.toggleMinimimumProduct();
                 }}>Edit</button></div>
             </div>
 
-        let priceOfItemChanger = this.state.minimumProductActive ? <div className={css(editorCSS.inputDiv)}>
-            <h3 className={css(editorCSS.h3Form)}>Minimum Product Required on Hand:</h3>
-            <input className={css(editorCSS.inputBoxStyled)} type='text' placeholder={minimumProductRequired}
-                value={this.state.labelTextBox}
-                onChange={(e) => this.handleMinimumCountEdit(e.target.value)} />
-            <div >
-                <button onClick={() => {
-                    // productName = this.state.nameTextBox;
-                    this.toggleMinimimumProduct();
-                }} >Change</button>
-                <button onClick={() => {
-                    this.handleMinimumCountEdit('');
-                    this.toggleMinimimumProduct()
-                }}>Cancel</button>
-            </div>
+        let priceOfItemChanger = this.state.priceActive ? <div className={css(editorCSS.inputDiv)}>
+            <h3 className={css(editorCSS.h3Form)}>Price:</h3>
+            <input className={css(editorCSS.inputBoxNumber)} type='number' placeholder={itemPrice}
+                value={this.state.priceTextBox}
+                onChange={(e) => this.handlePriceEdit(e.target.value)} />
+            <div ><button className={css(editorCSS.editButton)} onClick={() => {
+                // productName = this.state.nameTextBox;
+                this.togglePrice();
+            }} >Change</button></div>
+            <div><button className={css(editorCSS.editButton)} onClick={() => {
+                this.handlePriceEdit('');
+                this.togglePrice();
+            }}>Cancel</button></div>
         </div>
             : <div className={css(editorCSS.inputDiv)}>
-                <h3 className={css(editorCSS.h3Form)}>Minimum Product Required on Hand:<span className={css(editorCSS.originalText)}>{minimumProductRequired}</span></h3>
-                <div><button onClick={() => {
+                <h3 className={css(editorCSS.h3Form)}>Price:<span className={css(editorCSS.originalText)}>{itemPrice}</span></h3>
+                <div><button className={css(editorCSS.editButton)} onClick={() => {
                     // this.handleNameEdit(productName)
-                    this.toggleMinimimumProduct()
+                    this.togglePrice();
+                }}>Edit</button></div>
+            </div>
+
+        let imageOfItemChanger = this.state.imageActive ? <div >
+            <h3 className={css(editorCSS.h3Form)}>Product Image:</h3>
+            <input className={css(editorCSS.inputBoxStyled)} type='text' placeholder={image}
+                value={this.state.imageTextBox}
+                onChange={(e) => this.handleImageEdit(e.target.value)} />
+            <img src={image} alt='' className={css(editorCSS.pictureSize)} />
+            <div ><button className={css(editorCSS.editButton)} onClick={() => {
+                // productName = this.state.nameTextBox;
+                this.toggleImage();
+            }} >Change</button></div>
+            <div><button className={css(editorCSS.editButton)} onClick={() => {
+                this.handleImageEdit('');
+                this.toggleImage();
+            }}>Cancel</button></div>
+        </div> :
+            <div >
+                <h3 className={css(editorCSS.h3Form)}>Product Image: Current Image</h3>
+                <img src={image} alt='' className={css(editorCSS.pictureSize)} />
+                <div><button className={css(editorCSS.editButton)} onClick={() => {
+                    // this.handleNameEdit(productName)
+                    this.toggleImage();
                 }}>Edit</button></div>
             </div>
 
@@ -241,20 +258,16 @@ class ItemEditor extends React.Component {
                     {minimumInventoryCount}
                     <br />
 
-                    <h3 className={css(editorCSS.h3Form)}>Price: <span className={css(editorCSS.originalText)}>${itemPrice}</span></h3>
-                    <input className={css(editorCSS.inputBoxStyled)} type='text' placeholder='Price'
-                        value={this.state.priceTextBox}
-                        onChange={(e) => this.handlePriceEdit(e.target.value)} />
+                    {priceOfItemChanger}
+                    <br />
 
-                    <h3 className={css(editorCSS.h3Form)}>Product Image:</h3>
-                    <input className={css(editorCSS.inputBoxStyled)} type='text' placeholder='New Image URL'
-                        value={this.state.imageTextBox}
-                        onChange={(e) => this.handleImageEdit(e.target.value)} />
-
-                    <img src={image} alt='' className={css(editorCSS.pictureSize)} />
+                    {imageOfItemChanger}
                     <br />
                     <br />
-                    <button className={css(editorCSS.submitButton)} >Save Changes</button>
+
+                    <div>
+                        <button className={css(editorCSS.submitButton)} >Save Changes</button>
+                    </div>
                     <br />
                 </section>
 
@@ -339,16 +352,64 @@ const editorCSS = StyleSheet.create({
             //  fontSize: '1.5rem',
         }
     },
+    inputBoxNumber: {
+        width: '10%',
+        height: '20px',
+        marginLeft: '5px',
+        // background: 'rgba(0,0,0, 0.6)',
+        background: 'rgba(169,169,169,0.8)',
+        color: 'white',
+        textShadow: '1px 1px 2px black',
+        '::placeholder': {
+            color: 'white',
+            //  fontSize: '1.5rem',
+        }
+    },
     inputDiv: {
         display: 'flex',
         flexDirection: 'row',
         width: '100%',
         height: '80px',
     },
+    editButton: {
+        width: '80px',
+        height: '20px',
+        margin: 0,
+        padding: 0,
+
+        background: 'rgb(47,79,79)',
+        border: '2px solid white',
+        borderRadius: '10px',
+        color: 'white',
+        textShadow: '1px 1px 2px black',
+        fontWeight: 'bold',
+        boxShadow: '1px 1px 2px black',
+        cursor: 'pointer',
+        ':hover': {
+            // transition: '0.5s all ease',
+            color: 'rgb(47,79,79)',
+            background: 'white',
+            border: '2px solid rgb(47,79,79)',
+        },
+    },
     submitButton: {
         width: '125px',
-        height: '100px',
-        margin: '0 auto'
+        height: '20px',
+        margin: '0 auto',
+        background: 'rgb(47,79,79)',
+        border: '2px solid white',
+        borderRadius: '10px',
+        color: 'white',
+        textShadow: '1px 1px 2px black',
+        fontWeight: 'bold',
+        boxShadow: '1px 1px 2px black',
+        cursor: 'pointer',
+        ':hover': {
+            // transition: '0.5s all ease',
+            color: 'rgb(47,79,79)',
+            background: 'white',
+            border: '2px solid rgb(47,79,79)',
+        },
     }
 });
 
