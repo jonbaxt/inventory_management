@@ -3,6 +3,7 @@ import { StyleSheet, css } from 'aphrodite';
 import axios from 'axios';
 
 import Client from './ChildComponents/Client';
+import NewClient from './ChildComponents/NewClient';
 const dum = require('./ChildComponents/clientDummyData');
 
 export default class Clients extends React.Component {
@@ -10,6 +11,7 @@ export default class Clients extends React.Component {
         super();
         this.state = {
             clientsArray: [],
+            newClientVisible: false,
         }
     }
 
@@ -44,9 +46,13 @@ export default class Clients extends React.Component {
         // }
         return (
             <div className={css(clientCSS.clientMain)}>
+                <NewClient />
+                <div className={css(clientCSS.subNavBar)}>
+                    <h4 className={css(clientCSS.subNavText)} >Add New Client</h4>
+                </div>
+                <h1 className={css(clientCSS.h1Text)}>Clients</h1>
                 Add a create new client option for the subnav here.
                 Need to Edit Clients as well.
-                <h1 className={css(clientCSS.h1Text)}>Clients</h1>
                 <div className={css(clientCSS.clientsTable)} >
                     {dummyMaped}
                     {/* {clientMapped} */}
@@ -66,8 +72,24 @@ const clientCSS = StyleSheet.create({
         // border: '1px solid black',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
+        // justifyContent: 'center',
 
+    },
+    subNavBar: {
+        position: 'fixed',
+        width: '100%',
+        height: '30px',
+        background: 'rgb(105,105,105)',   
+    },
+    subNavText: {
+        margin: 0,
+        padding: 0,
+        textAlign: 'right',
+        marginRight: '30px',
+        marginTop: '5px',
+        color: 'white',
+        textShadow: '1px 1px 2px black',
+        cursor: 'pointer',
     },
     clientsTable: {
         display: 'flex',
@@ -77,6 +99,7 @@ const clientCSS = StyleSheet.create({
     h1Text: {
         margin: 0,
         padding: 0,
+        paddingTop: '25px',
         color: 'white',
         textShadow: '2px 2px 4px black',
     },

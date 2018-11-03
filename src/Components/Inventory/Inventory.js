@@ -90,6 +90,7 @@ class Inventory extends Component {
                     postNewProduct={this.postNewProduct} />
                 <h1 className={css(invCSS.titleH)} >Current Inventory</h1>
                 <div className={css(invCSS.main)} >
+                    {/* Need to connect the edit with put method still */}
                     {inventoryList}
                 </div>
             </div>
