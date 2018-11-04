@@ -29,6 +29,7 @@ app.get('/api/getProducts', con.getInventory );
 app.post('/api/newproduct/insert', con.postNewProduct );
 
 app.get('/api/getClients', con.getClients);
+app.post('/api/newClient/insert', con.postNewClient);
 
 app.get('/api/getEmployees', con.getEmployees);
 

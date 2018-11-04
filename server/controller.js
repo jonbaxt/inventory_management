@@ -39,7 +39,7 @@ module.exports = {
     // },
     getClients: (req, res) => {
         const dbInstance = req.app.get('db');
-
+        
         dbInstance.get_clients().then((tableData) => {
             res.status(200).send(tableData)
         }).catch((err) => {
@@ -47,9 +47,20 @@ module.exports = {
             res.status(400).send(err)
         });
     },
-    // postNewClients: (req, res) => {
-
-    // },
+    postNewClient: (req, res) => {
+        const dbInstance = req.app.get('db');
+        
+        const { first_name, last_name, phone_number, email, company, company_address_line_1, company_address_line_2, mailing_address_line_1, mailing_address_line_2 } = req.body;
+        // console.log(chalk.bgBlue.green(req.body.first_name));
+        
+        dbInstance.new_client([first_name, last_name, phone_number, email, company, company_address_line_1, company_address_line_2, mailing_address_line_1, mailing_address_line_2]).then((result) => {
+            // console.log(chalk.bgGreen.white('Successfully Submitted to Database'))
+            res.status(200).send(result)
+        }).catch((err) => {
+            // console.log('Unable to process', chalk.bgRed.white(err));
+            res.status(400).send(err)
+        });
+    },
     getOrders: (req, res) => {
         const dbInstance = req.app.get('db');
 

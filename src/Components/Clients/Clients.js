@@ -11,8 +11,9 @@ export default class Clients extends React.Component {
         super();
         this.state = {
             clientsArray: [],
-            newClientVisible: false,
+            newClientVisible: true,  //switch back to false
         }
+        this.toggleNewClient = this.toggleNewClient.bind(this);
     }
 
     componentDidMount() {
@@ -21,17 +22,17 @@ export default class Clients extends React.Component {
             this.setState({ clientsArray: axiosResults.data });
         }).catch((err) => console.log(err));
     }
-
+    toggleNewClient() { this.setState({ newClientVisible: !this.state.newClientVisible }); }
     render() {
-        let dummyMaped = dum.clientData.map( element => {
-            return <Client key={element.client_id} clientInfo={element}  />
+        let dummyMaped = dum.clientData.map(element => {
+            return <Client key={element.client_id} clientInfo={element} />
         });
 
         // let clientMapped = this.state.clientsArray.length !== 0 ? this.state.clientsArray.map( element => {
         //     return <Client key={element.client_id} clientInfo={element}  />
         // }) : <h5 >No Employees Found. Please Refresh Browser.</h5>
-        
-        
+
+
         // let dummyClient = {
         //     client_id: 1,
         //     first_name: "Rod",
@@ -46,8 +47,11 @@ export default class Clients extends React.Component {
         // }
         return (
             <div className={css(clientCSS.clientMain)}>
-                <NewClient />
-                <div className={css(clientCSS.subNavBar)}>
+                <NewClient
+                    newClientVisible={this.state.newClientVisible}
+                    toggleNewClient={this.toggleNewClient} />
+                <div className={css(clientCSS.subNavBar)}
+                    onClick={()=> this.toggleNewClient()}>
                     <h4 className={css(clientCSS.subNavText)} >Add New Client</h4>
                 </div>
                 <h1 className={css(clientCSS.h1Text)}>Clients</h1>
@@ -62,7 +66,7 @@ export default class Clients extends React.Component {
 
     }
 }
-
+// console.log(`Clicked Add New Client: ${this.state.newClientVisible}`)
 const clientCSS = StyleSheet.create({
     clientMain: {
         margin: 0,
@@ -79,7 +83,7 @@ const clientCSS = StyleSheet.create({
         position: 'fixed',
         width: '100%',
         height: '30px',
-        background: 'rgb(105,105,105)',   
+        background: 'rgb(105,105,105)',
     },
     subNavText: {
         margin: 0,

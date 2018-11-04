@@ -20,6 +20,7 @@ const GET_USERS_FROM_API = 'GET_USERS_FROM_API';
 const GET_ORDERS_FROM_API = 'GET_ORDERS_FROM_API';
 
 const SET_PRODUCT_NAME_FOR_EDITOR = 'SET_PRODUCT_NAME_FOR_EDITOR';
+const POST_NEW_CLIENT = 'POST_NEW_CLIENT';
 
 export function getProductsFromApi() {
     let products = axios.get('/api/getProducts').then((result) => {
@@ -40,6 +41,17 @@ export function getClientsFromApi() {
     return {
         type: GET_CLIENTS_FROM_API,
         payload: clients
+    }
+}
+
+export function postNewClient(clientObject) {
+    let newClientsList = axios.post('/api/newClient/insert', clientObject).then((axiosResults)=>{
+        return axiosResults.data;
+    }).catch((err)=> console.log(err));
+
+    return {
+        type: POST_NEW_CLIENT,
+        payload: newClientsList
     }
 }
 
@@ -78,7 +90,7 @@ export default function reducer(state = initialState, action) {
         case GET_PRODUCTS_FROM_API + FULFILLED:
             return Object.assign({}, state, { productsArray: action.payload });
         case GET_CLIENTS_FROM_API + FULFILLED:  
-            return Object.assign({}, state, { clientsArray: action.payload });
+            return Object.assign({}, state, { clientsArray: action.payload });    
         case GET_USERS_FROM_API + FULFILLED:
             return Object.assign({}, state, { usersArray: action.payload });
         case GET_ORDERS_FROM_API + FULFILLED: 
@@ -86,6 +98,8 @@ export default function reducer(state = initialState, action) {
 
         case SET_PRODUCT_NAME_FOR_EDITOR: 
             return Object.assign({}, state, { currentProductNameEditor: action.payload })
+        case POST_NEW_CLIENT + FULFILLED: 
+            return Object.assign({}, state, { clientsArray: action.payload })
         default: 
             return state;
     }
