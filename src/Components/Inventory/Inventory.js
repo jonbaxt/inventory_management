@@ -22,29 +22,29 @@ class Inventory extends Component {
         this.toggleNewInventoryModal = this.toggleNewInventoryModal.bind(this);
         this.postNewProduct = this.postNewProduct.bind(this);
     }
-
     componentDidMount() {
         // First retrieval essential for home page. rest of the other Axios calls are to help the website to run faster after loaded.
-        if (this.props.productsArray.length === 0) {
-            this.props.getProductsFromApi();
-            this.setState({ currentInventory: this.props.productsArray });
-        }
-        if (this.props.ordersArray.length === 0) {
-            this.props.getOrdersFromApi();
-        }
-        if (this.props.usersArray.length === 0) {
-            this.props.getUsersFromApi();
-        }
-        if (this.props.clientsArray.length === 0) {
-            this.props.getClientsFromApi();
+        // if (this.props.productsArray.length === 1) {
+        if (typeof this.props.productsArray !== 'undefined') {
+            if (this.props.productsArray.length === 0) {
+                this.props.getProductsFromApi();
+                this.props.getOrdersFromApi();
+                this.props.getUsersFromApi();
+                this.props.getClientsFromApi();
+            }
         }
     }
 
-    // componentDidUpdate(prevProps) {
-    //     if (prevProps.productsArray.length !== this.props.productsArray.length) {
-    //         this.setState({ currentInventory: this.props.productsArray });
-    //     }
-    // }
+    componentDidUpdate(prevProps) {
+        if (typeof this.props.productsArray !== 'undefined') {
+            if (this.props.productsArray.length === 0) {
+                this.props.getProductsFromApi();
+                this.props.getOrdersFromApi();
+                this.props.getUsersFromApi();
+                this.props.getClientsFromApi();
+            }
+        }
+    }
 
     toggleItemEditor() {
         this.setState({ itemEditorVisible: !this.state.itemEditorVisible });
@@ -68,26 +68,38 @@ class Inventory extends Component {
     }
 
     render() {
-        let inventoryList = this.props.productsArray.length !== 0 ? this.props.productsArray.map((element, index) => {
+        console.log('is productsArray undefined:', typeof this.props.productsArray === 'undefined')
+        let inventoryList = typeof this.props.productsArray !== 'undefined' ? this.props.productsArray.map((element, index) => {
             return (<InventoryItem key={element.inventory_id}
                 currentInfo={element}
                 giveBackFunction={this.retrieveCurrentProductNumber} />)
         }) : <h3 className={css(invCSS.h2Reformat)} >No Products Found. Please Refresh Browser.</h3>
-        
+
+        // let itemEdits = 'Page loading';
+        let itemEdits = typeof this.props.productsArray !== 'undefined' ?
+            <ItemEditor inventory={this.props.productsArray}
+                currentInventoryItem={this.state.currentProductNumber}
+                editorVisibility={this.state.itemEditorVisible}
+                toggleItemEditor={this.toggleItemEditor} />
+            : 'Loading';
+
+
+        // let newInvItem = 'Page loading';
+        let newInvItem = typeof this.props.productsArray !== 'undefined' ?
+            <NewInventoryItem
+                newInventoryItemVisibility={this.state.newItemVisible}
+                toggleNewInventory={this.toggleNewInventoryModal}
+                postNewProduct={this.postNewProduct} />
+            : 'Loading';
+
         return (
             <div>
                 <div className={css(invCSS.subNavBar)}>
                     <h4 className={css(invCSS.h2Reformat, invCSS.hand)}
                         onClick={() => this.toggleNewInventoryModal()}>New Product</h4>
                 </div>
-                <ItemEditor inventory={this.props.productsArray}
-                    currentInventoryItem={this.state.currentProductNumber}
-                    editorVisibility={this.state.itemEditorVisible}
-                    toggleItemEditor={this.toggleItemEditor} />
-                <NewInventoryItem
-                    newInventoryItemVisibility={this.state.newItemVisible}
-                    toggleNewInventory={this.toggleNewInventoryModal}
-                    postNewProduct={this.postNewProduct} />
+                {itemEdits}
+                {newInvItem}
                 <h1 className={css(invCSS.titleH)} >Current Inventory</h1>
                 <div className={css(invCSS.main)} >
                     {/* Need to connect the edit with put method still */}
@@ -103,7 +115,6 @@ const invCSS = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         flexWrap: 'wrap',
-        // paddingTop: '40px',
     },
     subNavBar: {
         position: 'fixed',
@@ -146,19 +157,27 @@ const invCSS = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-    return {
-        productsArray: state.productsArray,
-        ordersArray: state.ordersArray,
-        usersArray: state.usersArray,
-        clientsArray: state.clientsArray
+    if (typeof state.productsArray !== undefined) {
+        return {
+            productsArray: state.productsArray,
+            ordersArray: state.ordersArray,
+            usersArray: state.usersArray,
+            clientsArray: state.clientsArray
+        }
+    }
+    else {
+        return {
+            productsArray: [],
+            ordersArray: [],
+            usersArray: [],
+            clientsArray: []
+        }
     }
 }
-
 let mapDispatchToProps = {
     getProductsFromApi,
     getClientsFromApi,
     getUsersFromApi,
     getOrdersFromApi
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(Inventory);

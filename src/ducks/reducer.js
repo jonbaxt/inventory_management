@@ -3,13 +3,10 @@ import axios from 'axios';
 // initial starting state
 const initialState = {
     ordersArray: [],
-    // ordersArray: [],
     clientsArray: [],
     usersArray: [],
     productsArray: [],
-
     currentProductNameEditor: '',
-    
 }
 
 const FULFILLED = '_FULFILLED';
