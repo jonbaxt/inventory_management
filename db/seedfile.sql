@@ -77,7 +77,10 @@ VALUES
 ('George', 'Costansa', '801-100-1999', 'costansa@burtonmurdoch.com', 'Burton Murdoch Salt Lake', '1162 W 100 S', 'Salt Lake City, UT 84044', '1162 W 100 S', 'Salt Lake City, UT 84044'),
 ('Barholemew', 'Rudy', '801-451-4856', 'rudy@gmail.com', 'Rizzo Repairs Salt Lake', '300 W 4015 S', 'Salt Lake City, UT 84044', '300 W 4015 S', 'Salt Lake City, UT 84044'),
 ('Rick', 'Grimes', '801-888-7898', 'grimes@saltlakepolice.org', 'Salt Lake Police Department', '5 E 120 N', 'Salt Lake City, UT 84044', '5 E 120 N', 'Salt Lake City, UT 84044'),
-('Ted', 'Mosby', '801-100-1000', 'ted@mosbyindustries.com', 'Mosby Industries', '2100 W 1600 N', 'Salt Lake City, UT 84044', '2100 W 1600 N', 'Salt Lake City, UT 84044');
+('Ted', 'Mosby', '801-100-1000', 'ted@mosbyindustries.com', 'Mosby Industries', '2100 W 1600 N', 'Salt Lake City, UT 84044', '2100 W 1600 N', 'Salt Lake City, UT 84044'),
+('Ray', 'Charles', '801-808-8000', 'ray@spoons.com', 'Spoons Inc.', '94 E 200 S', 'Salt Lake City, UT 84044', '94 E 200 S', 'Salt Lake City, UT 84001'),
+('Bob', 'Villa', '801-888-9102', 'bob@villahomes.com', 'Villa Homes', '123 Fake Street', 'Provo, UT 84053', '123 Fake Street', 'Provo, UT 84053')
+;
 
 CREATE TABLE IF NOT EXISTS InventoryEmployees (
     employee_id SERIAL PRIMARY KEY,

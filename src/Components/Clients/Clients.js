@@ -1,12 +1,11 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
-// import axios from 'axios';
 import { connect } from 'react-redux';
 import Client from './ChildComponents/Client';
 import NewClient from './ChildComponents/NewClient';
-// const dum = require('./ChildComponents/clientDummyData');
-
 import { getClientsFromApi } from '../../ducks/reducer';
+
+// const dum = require('./ChildComponents/clientDummyData');
 
 class Clients extends React.Component {
     constructor() {
@@ -19,34 +18,49 @@ class Clients extends React.Component {
     }
 
     componentDidMount() {
-        if(this.props.clientsArray.length === 0){
+        if (this.props.clientsArray[0] !== 'loading') {
             this.props.getClientsFromApi();
+            this.setState({ clientsArray: this.props.clientsArray })
         }
-
-        // axios.get('/api/getClients').then((axiosResults) => {
-        //     console.log(axiosResults.data);
-        //     this.setState({ clientsArray: axiosResults.data });
-        // }).catch((err) => console.log(err));
     }
-    // componentDidUpdate(prevProps, prevState){
-    //     if(prevProps)
+    // componentDidUpdate(prevProps, prevState) {
+        // if (prevProps.clientsArray[0] !== this.props.clientsArray[0]) {
+            // console.log('Component Did Update did run.')
+            // this.props.getClientsFromApi();
+        // }
+        // if (this.props.clientsArray[0] === 'loading') {
+            // console.log('Component Did Update did run.')
+            // this.props.getClientsFromApi();
+        // }
     // }
+    loadingPage = () => {
+        // Minimum 2 seconds needed to load the page properly and then make the axios call after redux has connected.
+        setTimeout( () => {
+            if( this.props.clientsArray[0] === 'loading'){
+            this.props.getClientsFromApi();
+            console.log('loading function ran')
+            }
+        }, 2000)
+    }
     toggleNewClient() { this.setState({ newClientVisible: !this.state.newClientVisible }); }
     render() {
         // let dummyMaped = dum.clientData.map(element => {
-        //     return <Client key={element.client_id} clientInfo={element} />
+            // return <Client key={element.client_id} clientInfo={element} />
         // });
-        let clientMapped = this.props.clientsArray.length !== 0 ? this.props.clientsArray.map( element => {
-            return <Client key={element.client_id} clientInfo={element}  />
-        }) : <h5 >No Employees Found. Please Refresh Browser.</h5>
-
+        let clientMapped = <h2 className={css(clientCSS.subNavText)} style={{ margin: 0, textAlign: 'center' }}>Loading...</h2>;
+        if (this.props.clientsArray[0] !== 'loading') {
+            clientMapped = this.props.clientsArray.length !== 0 ? this.props.clientsArray.map(element => {
+                return <Client key={element.client_id} clientInfo={element} />
+            }) : <h5 >Loading...</h5>
+        }
         return (
             <div className={css(clientCSS.clientMain)}>
+                {this.loadingPage()}
                 <NewClient
                     newClientVisible={this.state.newClientVisible}
                     toggleNewClient={this.toggleNewClient} />
                 <div className={css(clientCSS.subNavBar)}
-                    onClick={()=> this.toggleNewClient()}>
+                    onClick={() => this.toggleNewClient()}>
                     <h4 className={css(clientCSS.subNavText)} >Add New Client</h4>
                 </div>
                 <h1 className={css(clientCSS.h1Text)}>Clients</h1>
@@ -62,15 +76,20 @@ class Clients extends React.Component {
     }
 }
 
-function mapStateToProps(state){
-    return {
-        clientsArray: state.clientsArray,
+function mapStateToProps(state) {
+    if (state.clientsArray.length > 0) {
+        return {
+            clientsArray: state.clientsArray,
+        }
+    }
+    else {
+        return {
+            clientsArray: ['loading'],
+        }
     }
 }
-
 export default connect(mapStateToProps, { getClientsFromApi })(Clients);
 
-// console.log(`Clicked Add New Client: ${this.state.newClientVisible}`)
 const clientCSS = StyleSheet.create({
     clientMain: {
         margin: 0,
