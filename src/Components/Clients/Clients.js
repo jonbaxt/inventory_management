@@ -1,50 +1,45 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
-import axios from 'axios';
-
+// import axios from 'axios';
+import { connect } from 'react-redux';
 import Client from './ChildComponents/Client';
 import NewClient from './ChildComponents/NewClient';
-const dum = require('./ChildComponents/clientDummyData');
+// const dum = require('./ChildComponents/clientDummyData');
 
-export default class Clients extends React.Component {
+import { getClientsFromApi } from '../../ducks/reducer';
+
+class Clients extends React.Component {
     constructor() {
         super();
         this.state = {
             clientsArray: [],
-            newClientVisible: true,  //switch back to false
+            newClientVisible: false,  //switch back to false
         }
         this.toggleNewClient = this.toggleNewClient.bind(this);
     }
 
     componentDidMount() {
-        axios.get('/api/getClients').then((axiosResults) => {
-            console.log(axiosResults.data);
-            this.setState({ clientsArray: axiosResults.data });
-        }).catch((err) => console.log(err));
+        if(this.props.clientsArray.length === 0){
+            this.props.getClientsFromApi();
+        }
+
+        // axios.get('/api/getClients').then((axiosResults) => {
+        //     console.log(axiosResults.data);
+        //     this.setState({ clientsArray: axiosResults.data });
+        // }).catch((err) => console.log(err));
     }
+    // componentDidUpdate(prevProps, prevState){
+    //     if(prevProps)
+    // }
     toggleNewClient() { this.setState({ newClientVisible: !this.state.newClientVisible }); }
     render() {
-        let dummyMaped = dum.clientData.map(element => {
-            return <Client key={element.client_id} clientInfo={element} />
-        });
+        // let dummyMaped = dum.clientData.map(element => {
+        //     return <Client key={element.client_id} clientInfo={element} />
+        // });
+        let clientMapped = this.props.clientsArray.length !== 0 ? this.props.clientsArray.map( element => {
+            return <Client key={element.client_id} clientInfo={element}  />
+        }) : <h5 >No Employees Found. Please Refresh Browser.</h5>
 
-        // let clientMapped = this.state.clientsArray.length !== 0 ? this.state.clientsArray.map( element => {
-        //     return <Client key={element.client_id} clientInfo={element}  />
-        // }) : <h5 >No Employees Found. Please Refresh Browser.</h5>
-
-
-        // let dummyClient = {
-        //     client_id: 1,
-        //     first_name: "Rod",
-        //     last_name: "Ferdinand",
-        //     phone_number: "801-899-2456",
-        //     email: "rodboy@generalgoods.com",
-        //     company: "General Goods",
-        //     company_address_line_1: "123 South 23 East",
-        //     company_address_line_2: "Houston TX 77001",
-        //     mailing_address_line_1: "123 South 23 East",
-        //     mailing_address_line_2: "Houston TX 77001"
-        // }
         return (
             <div className={css(clientCSS.clientMain)}>
                 <NewClient
@@ -58,14 +53,23 @@ export default class Clients extends React.Component {
                 Add a create new client option for the subnav here.
                 Need to Edit Clients as well.
                 <div className={css(clientCSS.clientsTable)} >
-                    {dummyMaped}
-                    {/* {clientMapped} */}
+                    {/* {dummyMaped} */}
+                    {clientMapped}
                 </div>
             </div>
         )
 
     }
 }
+
+function mapStateToProps(state){
+    return {
+        clientsArray: state.clientsArray,
+    }
+}
+
+export default connect(mapStateToProps, { getClientsFromApi })(Clients);
+
 // console.log(`Clicked Add New Client: ${this.state.newClientVisible}`)
 const clientCSS = StyleSheet.create({
     clientMain: {

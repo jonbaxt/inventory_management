@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
-export default class NewClient extends Component {
+import { postNewClient } from '../../../ducks/reducer';
+
+class NewClient extends Component {
     constructor() {
         super();
         this.state = {
@@ -29,6 +32,7 @@ export default class NewClient extends Component {
         this.handleMailingAddLine1 = this.handleMailingAddLine1.bind(this);
         this.handleMailingAddLine2 = this.handleMailingAddLine2.bind(this);
         this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this);
+        this.postNewClientToDatabase = this.postNewClientToDatabase.bind(this);
         this.resetAllInputBoxes = this.resetAllInputBoxes.bind(this);
     }
     handleFirstNameInput(e) { this.setState({ firstName: e }); }
@@ -40,14 +44,29 @@ export default class NewClient extends Component {
     handleCompanyAddLine2(e) { this.setState({ companyAddLine2: e }); }
     handleMailingAddLine1(e) { this.setState({ mailingAddLine1: e }); }
     handleMailingAddLine2(e) { this.setState({ mailingAddLine2: e }); }
-    handleCheckBoxChange() { 
+    handleCheckBoxChange() {
         this.setState({ checkBoxState: !this.state.checkBoxState });
-    if(!this.state.checkBoxState){
-        this.setState({ mailingAddLine1: this.state.companyAddLine1, mailingAddLine2: this.state.companyAddLine2, inputBoxDisabled: true });
-    }else {
-        this.setState({ mailingAddLine1: '', mailingAddLine2: '', inputBoxDisabled: false });
-    } 
-}
+        if (!this.state.checkBoxState) {
+            this.setState({ mailingAddLine1: this.state.companyAddLine1, mailingAddLine2: this.state.companyAddLine2, inputBoxDisabled: true });
+        } else {
+            this.setState({ mailingAddLine1: '', mailingAddLine2: '', inputBoxDisabled: false });
+        }
+    }
+    postNewClientToDatabase() {
+        let newClient = {
+            first_name: this.state.firstName,
+            last_name: this.state.lastName,
+            phone_number: this.state.phoneNumber,
+            email: this.state.emailAddress,
+            company: this.state.companyName,
+            company_address_line_1: this.state.companyAddLine1,
+            company_address_line_2: this.state.companyAddLine2,
+            mailing_address_line_1: this.state.mailingAddLine1,
+            mailing_address_line_2: this.state.mailingAddLine2
+        }
+        this.props.postNewClient(newClient);
+        this.resetAllInputBoxes();
+    }
     resetAllInputBoxes() {
         this.setState({
             firstName: '',
@@ -61,16 +80,23 @@ export default class NewClient extends Component {
             mailingAddLine2: ''
         });
     }
-    // client_id: 1,
-    // first_name: "Rod",
-    // last_name: "Ferdinand",
-    // phone_number: "801-899-2456",
-    // email: "rodboy@generalgoods.com",
-    // company: "General Goods",
-    // company_address_line_1: "123 South 23 East",
-    // company_address_line_2: "Houston TX 77001",
-    // mailing_address_line_1: "123 South 23 East",
-    // mailing_address_line_2: "Houston TX 77001"
+    isDisabled = () => {
+        let currentState = ''
+        if(this.state.firstName !== '' && 
+        this.state.lastName !== '' && 
+        this.state.phoneNumber !== '' && 
+        this.state.emailAddress !== '' && 
+        this.state.companyName !== '' && 
+        this.state.companyAddLine1 !== '' && 
+        this.state.companyAddLine2 !== '' &&
+        this.state.mailingAddLine1 !== '' &&
+        this.state.mailingAddLine2 !== '') {
+            currentState = true;
+        } else {
+            currentState = false;
+        }
+        return currentState;
+    }
     render() {
 
         return (
@@ -156,16 +182,21 @@ export default class NewClient extends Component {
                     </div>
                     <span className={css(newCliCSS.flexR)}>
                         <input type='checkbox'
-                        className={css(newCliCSS.checkBoxRedesign)}
-                        value={this.state.checkBoxState}
-                        onClick={()=>{ console.log('CheckBox Clicked')
-                        this.handleCheckBoxChange()}} /><h5 className={css(newCliCSS.smallFontRes)}>Mailing Address Same as Company</h5>
+                            className={css(newCliCSS.checkBoxRedesign)}
+                            value={this.state.checkBoxState}
+                            onClick={() => {
+                                console.log('CheckBox Clicked')
+                                this.handleCheckBoxChange()
+                            }} /><h5 className={css(newCliCSS.smallFontRes)}>Mailing Address Same as Company</h5>
                     </span>
                     <div className={css(newCliCSS.buttonArea)}>
                         <button className={css(newCliCSS.buttonRedesign)}
                             onClick={() => {
-                                console.log('Clicked Save')
-                            }}>Save</button>
+                                this.postNewClientToDatabase();
+                                this.props.toggleNewClient();
+                                console.log('Clicked Save');
+                            }}
+                            disabled={!this.isDisabled()}>Save</button>
                         <button className={css(newCliCSS.buttonRedesign)}
                             onClick={() => {
                                 this.resetAllInputBoxes();
@@ -182,6 +213,20 @@ export default class NewClient extends Component {
         )
     }
 }
+// function mapStateToProps(state) {
+//     return {
+
+//     }
+// }
+let mapDispatchToProps = {
+    postNewClient,
+}
+
+// export default connect(mapStateToProps, mapDispatchToProps)(NewClient);
+export default connect(null, mapDispatchToProps)(NewClient);
+
+
+
 
 const newCliCSS = StyleSheet.create({
     outerArea: {
@@ -345,6 +390,11 @@ const newCliCSS = StyleSheet.create({
             color: 'rgb(47,79,79)',
             background: 'white',
             border: '2px solid rgb(47,79,79)',
+        },
+        ':disabled': {
+            background: 'gray',
+            border: '2px solid black',
+            color: 'black',
         },
     },
 });
