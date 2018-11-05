@@ -16,7 +16,11 @@ function Client(props) {
             {/* <p className={css(clientStyles.textFormatP)} >{props.clientInfo.company_address_line_1}</p>
             <p className={css(clientStyles.textFormatP)} >{props.clientInfo.company_address_line_2}</p> */}
             {/* <p className={css(clientStyles.textFormatP)} >Email: {props.clientInfo.email}</p> */}
-            <button className={css(clientStyles.buttonFormatted)} >View Addresses</button>
+            <button onClick={()=>{
+                props.getCurrentClient(props.clientInfo.client_id);
+                props.toggleAddressVisible();
+            } } 
+            className={css(clientStyles.buttonFormatted)} >View Addresses</button>
         </div>
     )
 }

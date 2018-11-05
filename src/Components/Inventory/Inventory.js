@@ -68,7 +68,8 @@ class Inventory extends Component {
     }
 
     render() {
-        console.log('is productsArray undefined:', typeof this.props.productsArray === 'undefined')
+        // console.log('is productsArray undefined:', typeof this.props.productsArray === 'undefined')
+
         let inventoryList = this.props.productsArray.length !== 0 ? this.props.productsArray.map((element, index) => {
             return (<InventoryItem key={element.inventory_id}
                 currentInfo={element}

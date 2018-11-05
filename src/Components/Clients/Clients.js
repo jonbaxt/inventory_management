@@ -2,9 +2,10 @@ import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import { connect } from 'react-redux';
 import Client from './ChildComponents/Client';
+
+import ClientAddress from './ChildComponents/ClientAddress';
 import NewClient from './ChildComponents/NewClient';
 import { getClientsFromApi } from '../../ducks/reducer';
-
 // const dum = require('./ChildComponents/clientDummyData');
 
 class Clients extends React.Component {
@@ -12,9 +13,14 @@ class Clients extends React.Component {
         super();
         this.state = {
             clientsArray: [],
-            newClientVisible: false,  //switch back to false
+            currentClientViewed: '',
+            newClientVisible: false,
+            clientAddressesVisible: false,
         }
         this.toggleNewClient = this.toggleNewClient.bind(this);
+        this.toggleAddressVisible = this.toggleAddressVisible.bind(this);
+        this.handleCurrentClientViewed = this.handleCurrentClientViewed.bind(this);
+        this.getCurrentClient = this.getCurrentClient.bind(this);
     }
 
     componentDidMount() {
@@ -23,34 +29,35 @@ class Clients extends React.Component {
             this.setState({ clientsArray: this.props.clientsArray })
         }
     }
-    // componentDidUpdate(prevProps, prevState) {
-        // if (prevProps.clientsArray[0] !== this.props.clientsArray[0]) {
-            // console.log('Component Did Update did run.')
-            // this.props.getClientsFromApi();
-        // }
-        // if (this.props.clientsArray[0] === 'loading') {
-            // console.log('Component Did Update did run.')
-            // this.props.getClientsFromApi();
-        // }
-    // }
     loadingPage = () => {
         // Minimum 2 seconds needed to load the page properly and then make the axios call after redux has connected.
-        setTimeout( () => {
-            if( this.props.clientsArray[0] === 'loading'){
-            this.props.getClientsFromApi();
-            console.log('loading function ran')
+        setTimeout(() => {
+            if (this.props.clientsArray[0] === 'loading') {
+                this.props.getClientsFromApi();
+                console.log('loading function ran')
             }
         }, 2000)
     }
     toggleNewClient() { this.setState({ newClientVisible: !this.state.newClientVisible }); }
+    toggleAddressVisible() { this.setState({ clientAddressesVisible: !this.state.clientAddressesVisible }); }
+    handleCurrentClientViewed(e) { this.setState({ currentClientViewed: e }); }
+    getCurrentClient(clientId) {
+        let currentClientArray = this.props.clientsArray.filter( (e)=> clientId === e.client_id);
+        let currentClientObject = currentClientArray[0];
+        this.setState({ currentClientViewed: currentClientObject });
+        // this.handleCurrentClientViewed(currentClientObject);
+    }
     render() {
         // let dummyMaped = dum.clientData.map(element => {
-            // return <Client key={element.client_id} clientInfo={element} />
+        // return <Client key={element.client_id} clientInfo={element} />
         // });
         let clientMapped = <h2 className={css(clientCSS.subNavText)} style={{ margin: 0, textAlign: 'center' }}>Loading...</h2>;
         if (this.props.clientsArray[0] !== 'loading') {
             clientMapped = this.props.clientsArray.length !== 0 ? this.props.clientsArray.map(element => {
-                return <Client key={element.client_id} clientInfo={element} />
+                return <Client key={element.client_id} 
+                clientInfo={element}
+                getCurrentClient={this.getCurrentClient}
+                toggleAddressVisible={this.toggleAddressVisible} />
             }) : <h5 >Loading...</h5>
         }
         return (
@@ -59,13 +66,15 @@ class Clients extends React.Component {
                 <NewClient
                     newClientVisible={this.state.newClientVisible}
                     toggleNewClient={this.toggleNewClient} />
+                <ClientAddress
+                    clientAddressesVisible={this.state.clientAddressesVisible}
+                    toggleAddressVisible={this.toggleAddressVisible}
+                    currentClientViewed={this.state.currentClientViewed} />
                 <div className={css(clientCSS.subNavBar)}
                     onClick={() => this.toggleNewClient()}>
                     <h4 className={css(clientCSS.subNavText)} >Add New Client</h4>
                 </div>
                 <h1 className={css(clientCSS.h1Text)}>Clients</h1>
-                Add a create new client option for the subnav here.
-                Need to Edit Clients as well.
                 <div className={css(clientCSS.clientsTable)} >
                     {/* {dummyMaped} */}
                     {clientMapped}

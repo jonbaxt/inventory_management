@@ -213,20 +213,10 @@ class NewClient extends Component {
         )
     }
 }
-// function mapStateToProps(state) {
-//     return {
-
-//     }
-// }
 let mapDispatchToProps = {
     postNewClient,
 }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(NewClient);
 export default connect(null, mapDispatchToProps)(NewClient);
-
-
-
 
 const newCliCSS = StyleSheet.create({
     outerArea: {
