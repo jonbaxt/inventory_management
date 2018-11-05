@@ -37,7 +37,7 @@ class Inventory extends Component {
 
     componentDidUpdate(prevProps) {
         if (typeof this.props.productsArray !== 'undefined') {
-            if (this.props.productsArray.length === 0) {
+            if (this.props.productsArray.length !== prevProps.productsArray.length) {
                 this.props.getProductsFromApi();
                 this.props.getOrdersFromApi();
                 this.props.getUsersFromApi();
@@ -69,14 +69,14 @@ class Inventory extends Component {
 
     render() {
         console.log('is productsArray undefined:', typeof this.props.productsArray === 'undefined')
-        let inventoryList = typeof this.props.productsArray !== 'undefined' ? this.props.productsArray.map((element, index) => {
+        let inventoryList = this.props.productsArray.length !== 0 ? this.props.productsArray.map((element, index) => {
             return (<InventoryItem key={element.inventory_id}
                 currentInfo={element}
                 giveBackFunction={this.retrieveCurrentProductNumber} />)
         }) : <h3 className={css(invCSS.h2Reformat)} >No Products Found. Please Refresh Browser.</h3>
 
         // let itemEdits = 'Page loading';
-        let itemEdits = typeof this.props.productsArray !== 'undefined' ?
+        let itemEdits = this.props.productsArray.length !== 0 ?
             <ItemEditor inventory={this.props.productsArray}
                 currentInventoryItem={this.state.currentProductNumber}
                 editorVisibility={this.state.itemEditorVisible}
@@ -85,7 +85,7 @@ class Inventory extends Component {
 
 
         // let newInvItem = 'Page loading';
-        let newInvItem = typeof this.props.productsArray !== 'undefined' ?
+        let newInvItem = this.props.productsArray.length !== 0 ?
             <NewInventoryItem
                 newInventoryItemVisibility={this.state.newItemVisible}
                 toggleNewInventory={this.toggleNewInventoryModal}
@@ -157,13 +157,15 @@ const invCSS = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-    if (typeof state.productsArray !== undefined) {
-        return {
-            productsArray: state.productsArray,
-            ordersArray: state.ordersArray,
-            usersArray: state.usersArray,
-            clientsArray: state.clientsArray
-        }
+    if (typeof state.productsArray !== 'undefined') {
+        // if (state.productsArray.length > 0) {
+            return {
+                productsArray: state.productsArray,
+                ordersArray: state.ordersArray,
+                usersArray: state.usersArray,
+                clientsArray: state.clientsArray
+            }
+        // }
     }
     else {
         return {
