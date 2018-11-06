@@ -19,19 +19,24 @@ export default function ClientAddress(props) {
     return (
         <div className={ props.clientAddressesVisible ?  css(addressCSS.mainModal) : css(addressCSS.mainModal, addressCSS.hidden) }>
             <div className={css(addressCSS.modelBox)}>
-            <p>{props.currentClientViewed.first_name + ' ' + props.currentClientViewed.last_name}</p>
             <br />
-            <p>{props.currentClientViewed.company}</p>
+            <h1 className={css(addressCSS.textFormat)}>Client Addresses</h1>
             <br />
-            <p>Company Address</p>
-            <p>{props.currentClientViewed.company_address_line_1}</p>
-            <p>{props.currentClientViewed.company_address_line_2}</p>
+            <h1 className={css(addressCSS.textFormat)}>{props.currentClientViewed.first_name + ' ' + props.currentClientViewed.last_name}</h1>
             <br />
-            <p>Mailing Address</p>
-            <p>{props.currentClientViewed.mailing_address_line_1}</p>
-            <p>{props.currentClientViewed.mailing_address_line_2}</p>
-            
-            <button onClick={()=> props.toggleAddressVisible() }>Close</button>
+            <h3 className={css(addressCSS.textFormat)}>Company</h3>
+            <p className={css(addressCSS.textFormat)}>{props.currentClientViewed.company}</p>
+            <br />
+            <h3 className={css(addressCSS.textFormat)}>Company Address</h3>
+            <p className={css(addressCSS.textFormat)}>{props.currentClientViewed.company_address_line_1}</p>
+            <p className={css(addressCSS.textFormat)}>{props.currentClientViewed.company_address_line_2}</p>
+            <br />
+            <h3 className={css(addressCSS.textFormat)}>Mailing Address</h3>
+            <p className={css(addressCSS.textFormat)}>{props.currentClientViewed.mailing_address_line_1}</p>
+            <p className={css(addressCSS.textFormat)}>{props.currentClientViewed.mailing_address_line_2}</p>
+            <br />
+            <br />
+            <button className={css(addressCSS.closeButton)} onClick={()=> props.toggleAddressVisible() }>Close</button>
             </div>
         </div>
     )
@@ -54,10 +59,32 @@ const addressCSS = StyleSheet.create({
         visibility: 'hidden',
     },
     modelBox: {
-        width: '80%',
-        height: '70vh',
+        width: '310px',
+        height: '65vh',
         zIndex: '102',
         background: 'rgb(192,192,192)',
         boxShadow: '2px 2px 4px white',
     },
+    textFormat: {
+        color: 'white',
+        textShadow: '1px 1px 2px black',
+        margin: 0,
+        padding: 0,        
+    },
+    closeButton: {
+        background: 'rgb(47,79,79)',
+        border: '2px solid white',
+        borderRadius: '10px',
+        color: 'white',
+        textShadow: '1px 1px 2px black',
+        fontWeight: 'bold',
+        boxShadow: '1px 1px 2px black',
+        padding: '10px',
+        cursor: 'pointer',
+        ':hover': {
+            color: 'rgb(47,79,79)',
+            background: 'white',
+            border: '2px solid rgb(47,79,79)',
+        },
+    }
 });
