@@ -5,6 +5,7 @@ import Client from './ChildComponents/Client';
 
 import ClientAddress from './ChildComponents/ClientAddress';
 import NewClient from './ChildComponents/NewClient';
+import EditorOptionsMenu from './ChildComponents/EditorOptionsMenu';
 import { getClientsFromApi } from '../../ducks/reducer';
 // const dum = require('./ChildComponents/clientDummyData');
 
@@ -16,9 +17,11 @@ class Clients extends React.Component {
             currentClientViewed: '',
             newClientVisible: false,
             clientAddressesVisible: false,
+            editOptionsVisible: false,      // Currently false, switch to true when styling.
         }
         this.toggleNewClient = this.toggleNewClient.bind(this);
         this.toggleAddressVisible = this.toggleAddressVisible.bind(this);
+        this.toggleEditVisible = this.toggleEditVisible.bind(this);
         this.handleCurrentClientViewed = this.handleCurrentClientViewed.bind(this);
         this.getCurrentClient = this.getCurrentClient.bind(this);
     }
@@ -40,6 +43,7 @@ class Clients extends React.Component {
     }
     toggleNewClient() { this.setState({ newClientVisible: !this.state.newClientVisible }); }
     toggleAddressVisible() { this.setState({ clientAddressesVisible: !this.state.clientAddressesVisible }); }
+    toggleEditVisible() { this.setState({ editOptionsVisible: !this.state.editOptionsVisible }); }
     handleCurrentClientViewed(e) { this.setState({ currentClientViewed: e }); }
     getCurrentClient(clientId) {
         let currentClientArray = this.props.clientsArray.filter( (e)=> clientId === e.client_id);
@@ -57,23 +61,28 @@ class Clients extends React.Component {
                 return <Client key={element.client_id} 
                 clientInfo={element}
                 getCurrentClient={this.getCurrentClient}
-                toggleAddressVisible={this.toggleAddressVisible} />
+                toggleAddressVisible={this.toggleAddressVisible} 
+                toggleEditVisible={this.toggleEditVisible} />
             }) : <h5 >Loading...</h5>
         }
         return (
             <div className={css(clientCSS.clientMain)}>
                 {this.loadingPage()}
-                <NewClient
-                    newClientVisible={this.state.newClientVisible}
-                    toggleNewClient={this.toggleNewClient} />
-                <ClientAddress
-                    clientAddressesVisible={this.state.clientAddressesVisible}
-                    toggleAddressVisible={this.toggleAddressVisible}
-                    currentClientViewed={this.state.currentClientViewed} />
                 <div className={css(clientCSS.subNavBar)}
                     onClick={() => this.toggleNewClient()}>
                     <h4 className={css(clientCSS.subNavText)} >Add New Client</h4>
                 </div>
+                <NewClient
+                    newClientVisible={this.state.newClientVisible}
+                    toggleNewClient={this.toggleNewClient}  />
+                <ClientAddress
+                    clientAddressesVisible={this.state.clientAddressesVisible}
+                    toggleAddressVisible={this.toggleAddressVisible}
+                    currentClientViewed={this.state.currentClientViewed} />
+                <EditorOptionsMenu 
+                    editOptionsVisible={this.state.editOptionsVisible}
+                    toggleEditVisible={this.toggleEditVisible}
+                    currentClientViewed={this.state.currentClientViewed}/>
                 <h1 className={css(clientCSS.h1Text)}>Clients</h1>
                 <div className={css(clientCSS.clientsTable)} >
                     {/* {dummyMaped} */}

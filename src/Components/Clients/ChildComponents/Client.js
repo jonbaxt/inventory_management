@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import { connect } from 'react-redux';
 
-
+import './Client.css';
 
 function Client(props) {
 
@@ -16,11 +16,31 @@ function Client(props) {
             {/* <p className={css(clientStyles.textFormatP)} >{props.clientInfo.company_address_line_1}</p>
             <p className={css(clientStyles.textFormatP)} >{props.clientInfo.company_address_line_2}</p> */}
             {/* <p className={css(clientStyles.textFormatP)} >Email: {props.clientInfo.email}</p> */}
-            <button onClick={()=>{
+
+            <span className={css(clientStyles.buttonSpan)}>
+
+
+                <button className={css(clientStyles.buttonFormatted)}
+                onClick={() => {
+                    props.getCurrentClient(props.clientInfo.client_id);
+                    props.toggleAddressVisible();
+                }} >View Addresses</button>
+
+                <div className='tripleCircles'
+                onClick={() => {
+                console.log('Clicked Editor Button');
                 props.getCurrentClient(props.clientInfo.client_id);
-                props.toggleAddressVisible();
-            } } 
-            className={css(clientStyles.buttonFormatted)} >View Addresses</button>
+                props.toggleEditVisible(); }} >
+                    <div className='circleDiv'></div>
+                    <div className='circleDiv'></div>
+                    <div className='circleDiv'></div>
+                    <span className='tooltip'>
+                        <p>Edit Options</p>
+                        <p>for {props.clientInfo.first_name}</p>
+                    </span>
+                </div>
+
+            </span>
         </div>
     )
 }
@@ -31,7 +51,7 @@ function mapStateToProps(state) {
     }
 }
 
-export default  connect(mapStateToProps, null)(Client);
+export default connect(mapStateToProps, null)(Client);
 
 const clientStyles = StyleSheet.create({
     clientMain: {
@@ -66,11 +86,12 @@ const clientStyles = StyleSheet.create({
     buttonFormatted: {
         marginTop: '20px',
         marginBottom: '10px',
-        width: '140px',
+        width: '100px',
         height: '40px',
         background: 'rgb(47,79,79)',
         border: '2px solid white',
-        borderRadius: '10px',
+        borderWidth: '2px 0.5px 2px 2px',
+        borderRadius: '10px 0px 0px 10px',
         color: 'white',
         textShadow: '1px 1px 2px black',
         fontWeight: 'bold',
@@ -82,6 +103,12 @@ const clientStyles = StyleSheet.create({
             background: 'white',
             border: '2px solid rgb(47,79,79)',
         },
+    },
+    buttonSpan: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
     },
 });
 

@@ -1,0 +1,61 @@
+.tripleCircles {
+    margin-top: 20px;
+    width: 25px;
+    height: 36px;
+    border: 2px solid white;
+    border-width: 2px 2px 2px 0.5px;
+    box-shadow: 1px 1px 2px black;
+    /* borderRadius: '10px 0px 0px 10px', */
+    border-radius: 0px 10px 10px 0px ;
+    background: rgb(47,79,79);
+
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.tooltip {
+    visibility: hidden;
+    width: 75px;
+    background-color: black;
+    font-size: 10px;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    paddingTop: 25px;
+    /* padding: 0.5px 0; */
+    /* padding: 5px 0;     */
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 102;
+    top: 40px;
+    left: -190%;
+}
+.tooltip>p{
+    margin: 0;
+    padding: 0;
+}
+.circleDiv {
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 1px 1px 2px black;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+.tripleCircles:hover .tooltip {
+    visibility: visible;
+}
+.tripleCircles:hover {
+    transition: 0.5s all ease;
+    background: white;
+    border: 2px solid rgb(47,79,79);
+}
+.tripleCircles:hover .circleDiv {
+    transition: 0.5s all ease;
+    background: rgb(47,79,79);
+}

@@ -79,7 +79,13 @@ VALUES
 ('Rick', 'Grimes', '801-888-7898', 'grimes@saltlakepolice.org', 'Salt Lake Police Department', '5 E 120 N', 'Salt Lake City, UT 84044', '5 E 120 N', 'Salt Lake City, UT 84044'),
 ('Ted', 'Mosby', '801-100-1000', 'ted@mosbyindustries.com', 'Mosby Industries', '2100 W 1600 N', 'Salt Lake City, UT 84044', '2100 W 1600 N', 'Salt Lake City, UT 84044'),
 ('Ray', 'Charles', '801-808-8000', 'ray@spoons.com', 'Spoons Inc.', '94 E 200 S', 'Salt Lake City, UT 84044', '94 E 200 S', 'Salt Lake City, UT 84001'),
-('Bob', 'Villa', '801-888-9102', 'bob@villahomes.com', 'Villa Homes', '123 Fake Street', 'Provo, UT 84053', '123 Fake Street', 'Provo, UT 84053')
+('Bob', 'Villa', '801-888-9102', 'bob@villahomes.com', 'Villa Homes', '123 Fake Street', 'Provo, UT 84053', '123 Fake Street', 'Provo, UT 84053'),
+('Ray', 'Stanz', '999-102-3827', 'ray@cornbellys.com', 'Cornbellys Utah', '100 S 1000 E', 'Lehi, UT 84043', '100 S 100 E', 'Lehi, UT 84043' ),
+('Rodney', 'Dangerfield', '801-802-1928', 'rod@dangeresque.com', 'Dangeresque Films', '1050 S 10 E', 'Provo, UT 84404', '1050 S 10 E', 'Provo, UT 84404'),
+('Gary', 'Herbert', '801-100-1000', 'gherbert@utah.gov', 'State of Utah', '100 S Capital Hill Drive', 'Salt Lake City, UT 84404', 'PO Box 100', 'Salt Lake City, UT 84404'),
+('Adam', 'Sandler', '399-219-9999', 'adam@happymadison.com', 'Happy Madison Productions', '3680 N Happy Ave', 'Los Angeles, CA 90001', 'PO Box 385', 'Los Angeles, CA 90001'),
+('Ryan', 'Reynolds', '301-298-1387', 'ryan@ryanreynolds.com', '20th Century Fox', '4055 S 20th Century Ave', 'Los Angeles, CA 90001', 'PO Box 3049', 'Los Angeles, CA 90001'),
+('John', 'Perry', '801-002-1113', 'johnperry01@walmart.com', 'Lindon Walmart', '102 S State Street', 'Lindon, UT 84042', '102 S State Street', 'Lindon, UT 84042')
 ;
 
 CREATE TABLE IF NOT EXISTS InventoryEmployees (
