@@ -20,7 +20,7 @@ class UpdateName extends React.Component {
     resetInputs() { this.setState({ firstNameChange: '', secondNameChange: '' }); }
     firstNameCheckboxChange() {
 
-        this.setState({ firstNameChange: thisthis.props.currentClientViewed.first_name })
+        this.setState({ firstNameChange: this.props.currentClientViewed.first_name })
     }
     render() {
 
