@@ -1,5 +1,8 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
+import { connect } from 'react-redux';
+
+import { deleteClientById } from '../../../../ducks/reducer';
 
 function DeleteVerify(props) {
     console.log(props);
@@ -13,8 +16,9 @@ function DeleteVerify(props) {
 
                 <button className={css(veriCSS.delButton)}
                     onClick={()=>{
-
-                        console.log('Clicked Deletein Delete Verification Modal');
+                        props.deleteClientById(props.currentClientViewed.client_id)
+                        props.toggleDeleteVisible();
+                        props.toggleEditVisible();
                     }}>Delete</button>
 
                 <button className={css(veriCSS.cancelButton)}
@@ -28,7 +32,10 @@ function DeleteVerify(props) {
     )
 }
 
-export default DeleteVerify;
+const mapDispatchToProps = {
+    deleteClientById
+}
+export default connect(null, mapDispatchToProps)(DeleteVerify);
 
 const veriCSS = StyleSheet.create({
     main: {

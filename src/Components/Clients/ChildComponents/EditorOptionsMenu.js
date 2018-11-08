@@ -3,18 +3,20 @@ import { StyleSheet, css } from 'aphrodite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
+import UpdateName from './EditorModals/UpdateName';
 import DeleteVerify from './EditorModals/DeleteVerify';
 
 export default class EditorOptionsMenu extends Component {
     constructor() {
         super();
         this.state = {
+            updateNameVisible: false,
             deleteVerifyVisible: false,
         }
-
-
+        this.toggleNameVisible = this.toggleNameVisible.bind(this);
         this.toggleDeleteVisible = this.toggleDeleteVisible.bind(this);
     }
+    toggleNameVisible() { this.setState({ updateNameVisible: !this.state.updateNameVisible }); }
     toggleDeleteVisible() { this.setState({ deleteVerifyVisible: !this.state.deleteVerifyVisible }); }
     render() {
         //  The Options is to allow precise Axios Put calls to update certain aspects of the client as needed as well as delete the client.
@@ -30,11 +32,14 @@ export default class EditorOptionsMenu extends Component {
                                 this.props.toggleEditVisible();
                             }} />
                     </div>
-                    <h2 className={css(optionsStyles.textForm)}>Client Update Options</h2>
+                    <h2 className={css(optionsStyles.textForm, optionsStyles.noMargin)}>Client Update Options</h2>
                     <h3 className={css(optionsStyles.textForm, optionsStyles.noMargin)}>for</h3>
                     <h3 className={css(optionsStyles.textForm, optionsStyles.noMargin)}>{this.props.currentClientViewed.first_name + ' ' + this.props.currentClientViewed.last_name }</h3>
 
-                    <button className={css(optionsStyles.optionButton)}>Update Name</button>
+                    <button className={css(optionsStyles.optionButton)}
+                        onClick={()=> {
+                            this.toggleNameVisible()                            
+                        }}>Update Name</button>
 
                     <button className={css(optionsStyles.optionButton)}>Update Phone Number</button>
 
@@ -49,6 +54,12 @@ export default class EditorOptionsMenu extends Component {
 
 
                 </div>
+                <UpdateName 
+                    currentClientViewed={this.props.currentClientViewed}
+                    updateNameVisible={this.state.updateNameVisible}
+                    toggleNameVisible={this.toggleNameVisible}
+                />
+
                 <DeleteVerify
                     currentClientViewed={this.props.currentClientViewed}
                     deleteVerifyVisible={this.state.deleteVerifyVisible}
@@ -85,7 +96,7 @@ const optionsStyles = StyleSheet.create({
         // justifyContent: 'center',
         alignItems: 'center',
 
-        border: '2px dashed red',
+        // border: '2px dashed red',
 
         '@media(max-width: 570px)': {
             height: '90vh',
@@ -116,7 +127,7 @@ const optionsStyles = StyleSheet.create({
         marginTop: '5px',
         marginRight: '5px',
 
-        border: '2px dashed green',
+        // border: '2px dashed green',
 
     },
     fontAwesStyle: {
@@ -132,7 +143,7 @@ const optionsStyles = StyleSheet.create({
 
         transition: '1s all ease',
 
-        border: '2px dashed purple',
+        // border: '2px dashed purple',
 
         ':hover': {
             transition: '1s all ease',
@@ -142,8 +153,8 @@ const optionsStyles = StyleSheet.create({
     },
     optionButton: {
         width: '180px',
-        height: '75px',
-        margin: '20px',
+        height: '90px',
+        margin: '12px',
         background: 'rgb(47,79,79)',
         border: '2px solid white',
         borderRadius: '10px',
@@ -167,8 +178,8 @@ const optionsStyles = StyleSheet.create({
     },
     deleteButton: {
         width: '180px',
-        height: '75px',
-        margin: '20px',
+        height: '90px',
+        margin: '12px',
         // background: 'rgb(47,79,79)',
         background: 'red',
         border: '2px solid white',

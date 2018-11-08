@@ -19,9 +19,11 @@ const GET_ORDERS_FROM_API = 'GET_ORDERS_FROM_API';
 const SET_PRODUCT_NAME_FOR_EDITOR = 'SET_PRODUCT_NAME_FOR_EDITOR';
 const POST_NEW_CLIENT = 'POST_NEW_CLIENT';
 
+const DELETE_CLIENT_BY_ID = 'DELETE_CLIENT_BY_ID';
+
 export function getProductsFromApi() {
     let products = axios.get('/api/getProducts').then((result) => {
-        return  result.data
+        return result.data
     }).catch(err => console.log(`Didn't work ${err}`))
 
     return {
@@ -42,9 +44,9 @@ export function getClientsFromApi() {
 }
 
 export function postNewClient(clientObject) {
-    let newClientsList = axios.post('/api/newClient/insert', clientObject).then((axiosResults)=>{
+    let newClientsList = axios.post('/api/newClient/insert', clientObject).then((axiosResults) => {
         return axiosResults.data;
-    }).catch((err)=> console.log(err));
+    }).catch((err) => console.log(err));
 
     return {
         type: POST_NEW_CLIENT,
@@ -52,10 +54,19 @@ export function postNewClient(clientObject) {
     }
 }
 
+export function deleteClientById(clientId) {
+    let newClientArray = axios.delete(`/api/delete/client/byid/${clientId}`).then((axiosResults) => { return axiosResults.data }).catch((err) => console.log(err));
+
+    return {
+        type: DELETE_CLIENT_BY_ID,
+        payload: newClientArray
+    }
+}
+
 export function getUsersFromApi() {
-    let users = axios.get('/api/getEmployees').then( (axiosResults) => {
+    let users = axios.get('/api/getEmployees').then((axiosResults) => {
         return axiosResults.data;
-    }).catch( (err) => { console.log(err) });
+    }).catch((err) => { console.log(err) });
 
     return {
         type: GET_USERS_FROM_API,
@@ -64,7 +75,7 @@ export function getUsersFromApi() {
 }
 
 export function getOrdersFromApi() {
-    let orders = axios.get('/api/getOrders').then((axiosResults)=> {
+    let orders = axios.get('/api/getOrders').then((axiosResults) => {
         return axiosResults.data;
     }).catch(err => console.log(err));
 
@@ -83,21 +94,24 @@ export function setProductNameForEditor(newName) {
 
 // Reducer
 export default function reducer(state = initialState, action) {
-    switch(action.type) {
+    switch (action.type) {
         case GET_PRODUCTS_FROM_API + FULFILLED:
             return Object.assign({}, state, { productsArray: action.payload });
-        case GET_CLIENTS_FROM_API + FULFILLED:  
-            return Object.assign({}, state, { clientsArray: action.payload });    
+        case GET_CLIENTS_FROM_API + FULFILLED:
+            return Object.assign({}, state, { clientsArray: action.payload });
         case GET_USERS_FROM_API + FULFILLED:
             return Object.assign({}, state, { usersArray: action.payload });
-        case GET_ORDERS_FROM_API + FULFILLED: 
+        case GET_ORDERS_FROM_API + FULFILLED:
             return Object.assign({}, state, { ordersArray: action.payload });
 
-        case SET_PRODUCT_NAME_FOR_EDITOR: 
+        case SET_PRODUCT_NAME_FOR_EDITOR:
             return Object.assign({}, state, { currentProductNameEditor: action.payload })
-        case POST_NEW_CLIENT + FULFILLED: 
+        case POST_NEW_CLIENT + FULFILLED:
             return Object.assign({}, state, { clientsArray: action.payload })
-        default: 
+
+        case DELETE_CLIENT_BY_ID + FULFILLED:
+            return Object.assign({}, state, { clientsArray: action.payload })
+        default:
             return state;
     }
 

@@ -61,6 +61,13 @@ module.exports = {
             res.status(400).send(err)
         });
     },
+    deleteClientById: (req, res) => {
+        const dbInstance = req.app.get('db');
+
+        const idNum = Number(req.params.id);
+
+        dbInstance.delete_client_by_id([idNum]).then( alteredTable => { res.status(200).send(alteredTable); }).catch( err =>{ res.status(400).send(err);})
+    },
     getOrders: (req, res) => {
         const dbInstance = req.app.get('db');
 

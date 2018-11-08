@@ -125,6 +125,7 @@ const clientCSS = StyleSheet.create({
         width: '100%',
         height: '30px',
         background: 'rgb(105,105,105)',
+        zIndex: '99',
     },
     subNavText: {
         margin: 0,
