@@ -61,6 +61,16 @@ module.exports = {
             res.status(400).send(err)
         });
     },
+    updateClientNameById: (req, res) => {
+        const dbInstance = req.app.get('db');
+        const client_id = Number(req.params.id);
+        const first_name = req.body.first_name;
+        const last_name = req.body.last_name;
+
+        dbInstance.update_client_name([client_id, first_name, last_name]).then( (updatedNameInTable) => {
+            res.status(200).send(updatedNameInTable);
+        }).catch(err => res.status(400).send( err));
+    },
     deleteClientById: (req, res) => {
         const dbInstance = req.app.get('db');
 

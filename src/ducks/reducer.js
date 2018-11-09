@@ -12,13 +12,17 @@ const initialState = {
 const FULFILLED = '_FULFILLED';
 
 const GET_PRODUCTS_FROM_API = 'GET_PRODUCTS_FROM_API';
-const GET_CLIENTS_FROM_API = 'GET_CLIENTS_FROM_API';
+
+
+// May not need this call
+const SET_PRODUCT_NAME_FOR_EDITOR = 'SET_PRODUCT_NAME_FOR_EDITOR';
+
 const GET_USERS_FROM_API = 'GET_USERS_FROM_API';
 const GET_ORDERS_FROM_API = 'GET_ORDERS_FROM_API';
 
-const SET_PRODUCT_NAME_FOR_EDITOR = 'SET_PRODUCT_NAME_FOR_EDITOR';
+const GET_CLIENTS_FROM_API = 'GET_CLIENTS_FROM_API';
 const POST_NEW_CLIENT = 'POST_NEW_CLIENT';
-
+const UPDATE_CLIENT_NAME_BY_ID = 'UPDATE_CLIENT_NAME_BY_ID';
 const DELETE_CLIENT_BY_ID = 'DELETE_CLIENT_BY_ID';
 
 export function getProductsFromApi() {
@@ -51,6 +55,19 @@ export function postNewClient(clientObject) {
     return {
         type: POST_NEW_CLIENT,
         payload: newClientsList
+    }
+}
+
+export function updateClientNameById(clientId, firstName, lastName) {
+    const newName = {
+        first_name: firstName,
+        last_name: lastName
+    }
+    let updatedClientTable = axios.put(`/api/clients/updatename/${clientId}`, newName).then( (axiosResults) => { return axiosResults.data; }).catch( (err) => console.log(err));
+
+    return {
+        type: UPDATE_CLIENT_NAME_BY_ID,
+        payload: updatedClientTable
     }
 }
 
@@ -105,12 +122,13 @@ export default function reducer(state = initialState, action) {
             return Object.assign({}, state, { ordersArray: action.payload });
 
         case SET_PRODUCT_NAME_FOR_EDITOR:
-            return Object.assign({}, state, { currentProductNameEditor: action.payload })
+            return Object.assign({}, state, { currentProductNameEditor: action.payload });
         case POST_NEW_CLIENT + FULFILLED:
-            return Object.assign({}, state, { clientsArray: action.payload })
-
+            return Object.assign({}, state, { clientsArray: action.payload });
+        case UPDATE_CLIENT_NAME_BY_ID + FULFILLED: 
+            return Object.assign({}, state, { clientsArray: action.payload });
         case DELETE_CLIENT_BY_ID + FULFILLED:
-            return Object.assign({}, state, { clientsArray: action.payload })
+            return Object.assign({}, state, { clientsArray: action.payload });
         default:
             return state;
     }

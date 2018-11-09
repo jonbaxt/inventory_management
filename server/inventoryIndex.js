@@ -30,6 +30,7 @@ app.post('/api/newproduct/insert', con.postNewProduct );
 
 app.get('/api/getClients', con.getClients);
 app.post('/api/newClient/insert', con.postNewClient);
+app.put('/api/clients/updatename/:id', con.updateClientNameById);
 app.delete('/api/delete/client/byid/:id', con.deleteClientById);
 
 app.get('/api/getEmployees', con.getEmployees);

@@ -1,5 +1,8 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
+import { connect } from 'react-redux';
+
+import { updateClientNameById } from '../../../../ducks/reducer';
 
 class UpdateName extends React.Component {
     constructor() {
@@ -12,15 +15,39 @@ class UpdateName extends React.Component {
         }
         this.handleFirstName = this.handleFirstName.bind(this);
         this.handleSecondName = this.handleSecondName.bind(this);
-        
+        this.changeFirstNameCheckbox = this.changeFirstNameCheckbox.bind(this);
+        this.firstNameCheckboxChange = this.firstNameCheckboxChange.bind(this);
+        this.changeSecondNameCheckbox = this.changeSecondNameCheckbox.bind(this);
+        this.secondNameCheckboxChange = this.secondNameCheckboxChange.bind(this);
         this.resetInputs = this.resetInputs.bind(this);
     }
     handleFirstName(e) { this.setState({ firstNameChange: e }); }
     handleSecondName(e) { this.setState({ secondNameChange: e }); }
     resetInputs() { this.setState({ firstNameChange: '', secondNameChange: '' }); }
+    changeFirstNameCheckbox() { this.setState({ firstNameCheckbox: !this.state.firstNameCheckbox}); }
+    changeSecondNameCheckbox() { this.setState({ secondNameCheckbox: !this.state.secondNameCheckbox }); }
     firstNameCheckboxChange() {
-
-        this.setState({ firstNameChange: this.props.currentClientViewed.first_name })
+        if(this.state.firstNameCheckbox){
+        this.setState({ firstNameChange: this.props.currentClientViewed.first_name });
+        } else {
+            this.setState({ firstNameChange: ''});
+        }
+    }
+    secondNameCheckboxChange() {
+        if(this.state.secondNameCheckbox){
+            this.setState({ secondNameChange: this.props.currentClientViewed.last_name });
+        } else {
+            this.setState({ secondNameChange: '' });
+        }
+    }
+    isUpdateButtonDisabled = () => {
+        let isDisabled = '';
+        if(this.state.firstNameChange === '' || this.state.secondNameChange === ''){
+            isDisabled = true;
+        } else {
+            isDisabled = false;
+        }
+        return isDisabled;
     }
     render() {
 
@@ -31,19 +58,32 @@ class UpdateName extends React.Component {
 
                     <h4 className={css(nameStyles.textForm)}>First Name</h4>
                     <div className={css(nameStyles.flexRow)}>
-                        <input type='checkbox' className={css(nameStyles.checkBoxRedesign)} />
-                        <h6 className={css(nameStyles.textForm)}>Keep Current Name</h6>
+                        <input type='checkbox'
+                            value={this.state.firstNameCheckbox}
+                            onChange={(e) => {
+                                this.changeFirstNameCheckbox();
+                                this.firstNameCheckboxChange();
+                                console.log(`first name ${e.target.value}`)
+                            }}
+                            className={css(nameStyles.checkBoxRedesign)} />
+                        <h6 className={css(nameStyles.textForm)}>Keep Current NameF</h6>
                     </div>
 
                     <input type='text' className={css(nameStyles.inputBoxStyled)}
                         value={this.state.firstNameChange}
                         onChange={(e) => this.handleFirstName(e.target.value)}
                         placeholder={this.props.currentClientViewed.first_name}
-                        disabled='' />
+                        disabled={!this.state.firstNameCheckbox} />
 
                     <h4 className={css(nameStyles.textForm)}>Last Name</h4>
                     <div className={css(nameStyles.flexRow)}>
-                        <input type='checkbox' className={css(nameStyles.checkBoxRedesign)} />
+                        <input type='checkbox'
+                            onChange={(e) => {
+                                this.changeSecondNameCheckbox();
+                                this.secondNameCheckboxChange();
+                                console.log(`last name ${e.target.value}`)
+                            }}
+                            className={css(nameStyles.checkBoxRedesign)} />
                         <h6 className={css(nameStyles.textForm)}>Keep Current Name</h6>
                     </div>
 
@@ -51,10 +91,18 @@ class UpdateName extends React.Component {
                         value={this.state.secondNameChange}
                         onChange={(e) => this.handleSecondName(e.target.value)}
                         placeholder={this.props.currentClientViewed.last_name}
-                        disabled='' />
+                        disabled={!this.state.secondNameCheckbox} />
 
                     <div className={css(nameStyles.flexRow)}>
-                        <button className={css(nameStyles.updateButton)}>Update</button>
+                        <button className={css(nameStyles.updateButton)}
+                            onClick={()=>{
+                                this.props.updateClientNameById(this.props.currentClientViewed.client_id, this.state.firstNameChange, this.state.secondNameChange);
+                                this.resetInputs();
+                                this.props.toggleNameVisible();
+                                this.props.toggleEditVisible();
+                                console.log('clicked update')
+                            }}
+                            disabled={this.isUpdateButtonDisabled()} >Update</button>
                         <button className={css(nameStyles.cancelButton)}
                             onClick={() => {
                                 this.resetInputs();
@@ -149,13 +197,18 @@ const nameStyles = StyleSheet.create({
         boxShadow: '2px 2px 4px black',
         background: 'rgb(112,128,144)',
         cursor: 'pointer',
+        ':disabled': {
+            background: 'black',
+            color: 'grey',
+            border: '2px solid grey',
+            cursor: 'not-allowed',
+        }
     },
     cancelButton: {
         marginTop: '15px',
         marginLeft: '10px',
         marginRight: '10px',
         width: '80px',
-        height: '40px',
         height: '40px',
         color: 'white',
         fontWeight: 'bold',
@@ -167,4 +220,4 @@ const nameStyles = StyleSheet.create({
     },
 });
 
-export default UpdateName;
+export default connect(null, { updateClientNameById })(UpdateName);

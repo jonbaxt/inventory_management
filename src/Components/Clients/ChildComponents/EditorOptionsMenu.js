@@ -58,6 +58,7 @@ export default class EditorOptionsMenu extends Component {
                     currentClientViewed={this.props.currentClientViewed}
                     updateNameVisible={this.state.updateNameVisible}
                     toggleNameVisible={this.toggleNameVisible}
+                    toggleEditVisible={this.props.toggleEditVisible}
                 />
 
                 <DeleteVerify

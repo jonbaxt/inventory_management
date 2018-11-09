@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { deleteClientById } from '../../../../ducks/reducer';
 
 function DeleteVerify(props) {
-    console.log(props);
-    console.log(props.deleteVerifyVisible);
+    // console.log(props);
+    // console.log(props.deleteVerifyVisible);
     return (
         <div className={ props.deleteVerifyVisible ? css(veriCSS.main) : css(veriCSS.main, veriCSS.hide) }>
             <div className={css(veriCSS.modal)}>
@@ -92,7 +92,6 @@ const veriCSS = StyleSheet.create({
         marginLeft: '10px',
         marginRight: '10px',
         width: '80px',
-        height: '40px',
         height: '40px',
         color: 'white',
         fontWeight: 'bold',
