@@ -1,1 +1,1 @@
-SELECT * FROM InventoryProducts;
+SELECT * FROM InventoryProducts ORDER BY Inventory_Id ASC;

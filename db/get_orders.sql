@@ -38,5 +38,6 @@ FROM InventoryOrders
 JOIN InventoryClients ON InventoryOrders.purchaser_id=InventoryClients.client_id
 JOIN InventoryProducts ON InventoryOrders.product_sold_id=InventoryProducts.inventory_id
 JOIN InventoryEmployees ON InventoryOrders.employee_who_entered_id=InventoryEmployees.employee_id
--- WHERE purchaser_id=6
+ORDER BY Order_Id ASC
+-- WHERE purchaser_id=6 
 ;

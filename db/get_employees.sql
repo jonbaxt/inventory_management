@@ -1,1 +1,1 @@
-SELECT * FROM InventoryEmployees;
+SELECT * FROM InventoryEmployees ORDER BY Employee_Id ASC;

@@ -1,1 +1,1 @@
-SELECT * FROM InventoryClients;
+SELECT * FROM InventoryClients ORDER BY Client_ID ASC;
