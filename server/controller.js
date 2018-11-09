@@ -80,6 +80,15 @@ module.exports = {
             res.status(200).send(updatedNumberInTable);
         }).catch(err => console.log(err));
     },
+    updateEmailById: (req, res) => {
+        const dbInstance = req.app.get('db');
+        const client_id = Number(req.params.id);
+        const email = req.body.email;
+
+        dbInstance.update_client_email([client_id, email]).then( (updatedEmailInTable)=> {
+            res.status(200).send(updatedEmailInTable);
+        }).catch(err => console.log(err));
+    },
     deleteClientById: (req, res) => {
         const dbInstance = req.app.get('db');
 
