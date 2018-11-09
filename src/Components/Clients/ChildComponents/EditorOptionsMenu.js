@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 import UpdateName from './EditorModals/UpdateName';
+import UpdatePhone from './EditorModals/UpdatePhone';
 import DeleteVerify from './EditorModals/DeleteVerify';
 
 export default class EditorOptionsMenu extends Component {
@@ -11,18 +12,21 @@ export default class EditorOptionsMenu extends Component {
         super();
         this.state = {
             updateNameVisible: false,
+            updatePhoneVisible: false,
             deleteVerifyVisible: false,
         }
         this.toggleNameVisible = this.toggleNameVisible.bind(this);
+        this.toggleUpdatePhoneVisible = this.toggleUpdatePhoneVisible.bind(this);
         this.toggleDeleteVisible = this.toggleDeleteVisible.bind(this);
     }
     toggleNameVisible() { this.setState({ updateNameVisible: !this.state.updateNameVisible }); }
+    toggleUpdatePhoneVisible() { this.setState({ updatePhoneVisible: !this.state.updatePhoneVisible }); }
     toggleDeleteVisible() { this.setState({ deleteVerifyVisible: !this.state.deleteVerifyVisible }); }
     render() {
         //  The Options is to allow precise Axios Put calls to update certain aspects of the client as needed as well as delete the client.
         console.log(this.props);
         return (
-            <div className={ this.props.editOptionsVisible ?  css(optionsStyles.optionsMain) : css(optionsStyles.optionsMain, optionsStyles.hide)}>
+            <div className={this.props.editOptionsVisible ? css(optionsStyles.optionsMain) : css(optionsStyles.optionsMain, optionsStyles.hide)}>
                 <div className={css(optionsStyles.mainBox)} >
                     <div className={css(optionsStyles.closeButton)}>
                         <FontAwesomeIcon icon={faTimesCircle}
@@ -34,14 +38,17 @@ export default class EditorOptionsMenu extends Component {
                     </div>
                     <h2 className={css(optionsStyles.textForm, optionsStyles.noMargin)}>Client Update Options</h2>
                     <h3 className={css(optionsStyles.textForm, optionsStyles.noMargin)}>for</h3>
-                    <h3 className={css(optionsStyles.textForm, optionsStyles.noMargin)}>{this.props.currentClientViewed.first_name + ' ' + this.props.currentClientViewed.last_name }</h3>
+                    <h3 className={css(optionsStyles.textForm, optionsStyles.noMargin)}>{this.props.currentClientViewed.first_name + ' ' + this.props.currentClientViewed.last_name}</h3>
 
                     <button className={css(optionsStyles.optionButton)}
-                        onClick={()=> {
-                            this.toggleNameVisible()                            
+                        onClick={() => {
+                            this.toggleNameVisible()
                         }}>Update Name</button>
 
-                    <button className={css(optionsStyles.optionButton)}>Update Phone Number</button>
+                    <button className={css(optionsStyles.optionButton)}
+                        onClick={() => {
+                            this.toggleUpdatePhoneVisible()
+                        }}>Update Phone Number</button>
 
                     <button className={css(optionsStyles.optionButton)}>Update Email</button>
 
@@ -50,17 +57,22 @@ export default class EditorOptionsMenu extends Component {
                     <button className={css(optionsStyles.optionButton)}>Update Addresses</button>
 
                     <button className={css(optionsStyles.deleteButton)}
-                        onClick={()=> this.toggleDeleteVisible()}>Delete Client</button>
+                        onClick={() => this.toggleDeleteVisible()}>Delete Client</button>
 
 
                 </div>
-                <UpdateName 
+                <UpdateName
                     currentClientViewed={this.props.currentClientViewed}
                     updateNameVisible={this.state.updateNameVisible}
                     toggleNameVisible={this.toggleNameVisible}
                     toggleEditVisible={this.props.toggleEditVisible}
                 />
-
+                <UpdatePhone
+                    currentClientViewed={this.props.currentClientViewed}
+                    updatePhoneVisible={this.state.updatePhoneVisible}
+                    toggleUpdatePhoneVisible={this.toggleUpdatePhoneVisible}
+                    toggleEditVisible={this.props.toggleEditVisible}
+                />
                 <DeleteVerify
                     currentClientViewed={this.props.currentClientViewed}
                     deleteVerifyVisible={this.state.deleteVerifyVisible}
