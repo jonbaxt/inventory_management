@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS InventoryOrders (
     order_notes TEXT,
     product_sold_id INTEGER REFERENCES InventoryProducts(inventory_id) ON DELETE CASCADE,
     employee_who_entered_id INTEGER REFERENCES InventoryEmployees(employee_id) ON DELETE CASCADE,
-    client_id INTEGER REFERENCES InventoryClients(client_id) ON DELETE CASCADE
+    purchaser_id INTEGER REFERENCES InventoryClients(client_id) ON DELETE CASCADE
 );
 
 INSERT INTO InventoryOrders
@@ -134,7 +134,7 @@ INSERT INTO InventoryOrders
     order_notes,
     product_sold_id,
     employee_who_entered_id,
-    client_id )
+    purchaser_id )
 VALUES
 ('2018-5-1', '2018-5-2', '2018-5-3', TRUE, 'no notes', 1, 1, 1),
 ('2018-10-1', '2018-10-3', NULL, FALSE, 'Wanted, one day shipping, it was unfortunately before a holdiay.', 3, 1, 2),
