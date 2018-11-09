@@ -33,6 +33,7 @@ app.post('/api/newClient/insert', con.postNewClient);
 app.put('/api/clients/updatename/:id', con.updateClientNameById);
 app.put('/api/clients/updatephonenumber/:id', con.updatePhoneNumberById);
 app.put('/api/clients/updateemail/:id', con.updateEmailById);
+app.put('/api/clients/updatecompany/:id', con.updateCompanyById);
 app.delete('/api/delete/client/byid/:id', con.deleteClientById);
 
 app.get('/api/getEmployees', con.getEmployees);

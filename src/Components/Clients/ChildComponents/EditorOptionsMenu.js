@@ -6,6 +6,7 @@ import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import UpdateName from './EditorModals/UpdateName';
 import UpdatePhone from './EditorModals/UpdatePhone';
 import UpdateEmail from './EditorModals/UpdateEmail';
+import UpdateCompany from './EditorModals/UpdateCompany';
 import DeleteVerify from './EditorModals/DeleteVerify';
 
 export default class EditorOptionsMenu extends Component {
@@ -15,20 +16,23 @@ export default class EditorOptionsMenu extends Component {
             updateNameVisible: false,
             updatePhoneVisible: false,
             updateEmailVisible: false,
+            updateCompanyVisible: false,
             deleteVerifyVisible: false,
         }
         this.toggleNameVisible = this.toggleNameVisible.bind(this);
         this.toggleUpdatePhoneVisible = this.toggleUpdatePhoneVisible.bind(this);
         this.toggleUpdateEmailVisible = this.toggleUpdateEmailVisible.bind(this);
+        this.toggleUpdateCompanyVisible = this.toggleUpdateCompanyVisible.bind(this);
         this.toggleDeleteVisible = this.toggleDeleteVisible.bind(this);
     }
     toggleNameVisible() { this.setState({ updateNameVisible: !this.state.updateNameVisible }); }
     toggleUpdatePhoneVisible() { this.setState({ updatePhoneVisible: !this.state.updatePhoneVisible }); }
     toggleUpdateEmailVisible() { this.setState({ updateEmailVisible: !this.state.updateEmailVisible }); }
+    toggleUpdateCompanyVisible() { this.setState({ updateCompanyVisible: !this.state.updateCompanyVisible }); }
     toggleDeleteVisible() { this.setState({ deleteVerifyVisible: !this.state.deleteVerifyVisible }); }
     render() {
         //  The Options is to allow precise Axios Put calls to update certain aspects of the client as needed as well as delete the client.
-        console.log(this.props);
+        // console.log(this.props);
         return (
             <div className={this.props.editOptionsVisible ? css(optionsStyles.optionsMain) : css(optionsStyles.optionsMain, optionsStyles.hide)}>
                 <div className={css(optionsStyles.mainBox)} >
@@ -36,7 +40,7 @@ export default class EditorOptionsMenu extends Component {
                         <FontAwesomeIcon icon={faTimesCircle}
                             className={css(optionsStyles.fontAwesStyle)}
                             onClick={() => {
-                                console.log('Clicked Editor Options Close Button');
+                                // console.log('Clicked Editor Options Close Button');
                                 this.props.toggleEditVisible();
                             }} />
                     </div>
@@ -59,7 +63,9 @@ export default class EditorOptionsMenu extends Component {
                             this.toggleUpdateEmailVisible()
                         }}>Update Email</button>
 
-                    <button className={css(optionsStyles.optionButton)}>Update Company Name</button>
+                    <button className={css(optionsStyles.optionButton)}
+                        onClick={()=> 
+                            this.toggleUpdateCompanyVisible()}>Update Company Name</button>
 
                     <button className={css(optionsStyles.optionButton)}>Update Addresses</button>
 
@@ -84,6 +90,12 @@ export default class EditorOptionsMenu extends Component {
                     currentClientViewed={this.props.currentClientViewed}
                     updateEmailVisible={this.state.updateEmailVisible}
                     toggleUpdateEmailVisible={this.toggleUpdateEmailVisible}
+                    toggleEditVisible={this.props.toggleEditVisible}
+                />
+                <UpdateCompany 
+                    currentClientViewed={this.props.currentClientViewed}
+                    updateCompanyVisible={this.state.updateCompanyVisible}
+                    toggleUpdateCompanyVisible={this.toggleUpdateCompanyVisible}
                     toggleEditVisible={this.props.toggleEditVisible}
                 />
                 <DeleteVerify

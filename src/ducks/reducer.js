@@ -25,6 +25,7 @@ const POST_NEW_CLIENT = 'POST_NEW_CLIENT';
 const UPDATE_CLIENT_NAME_BY_ID = 'UPDATE_CLIENT_NAME_BY_ID';
 const UPDATE_PHONE_NUMBER_BY_ID = 'UPDATE_CLIENT_PHONE_NUMBER_BY_ID';
 const UPDATE_CLIENT_EMAIL_BY_ID = 'UPDATE_CLIENT_EMAIL_BY_ID';
+const UPDATE_CLIENT_COMPANY_BY_ID = 'UPDATE_CLIENT_COMPANY_BY_ID';
 const DELETE_CLIENT_BY_ID = 'DELETE_CLIENT_BY_ID';
 
 export function getProductsFromApi() {
@@ -99,6 +100,19 @@ export function updateClientEmailById(clientId, emailAddress) {
     }
 }
 
+export function updateClientCompanyById(clientId, companyName) {
+    const companyN = {
+        company: companyName
+    }
+
+    let updatedClientTable = axios.put(`/api/clients/updatecompany/${clientId}`, companyN).then( (axiosResults) => { return axiosResults.data; }).catch( (err) => console.log(err));    
+
+    return {
+        type: UPDATE_CLIENT_COMPANY_BY_ID,
+        payload: updatedClientTable
+    }
+}
+
 export function deleteClientById(clientId) {
     let newClientArray = axios.delete(`/api/delete/client/byid/${clientId}`).then((axiosResults) => { return axiosResults.data }).catch((err) => console.log(err));
 
@@ -159,7 +173,8 @@ export default function reducer(state = initialState, action) {
             return Object.assign({}, state, { clientsArray: action.payload });
         case UPDATE_CLIENT_EMAIL_BY_ID + FULFILLED:
             return Object.assign({}, state, { clientsArray: action.payload });
-
+        case UPDATE_CLIENT_COMPANY_BY_ID + FULFILLED: 
+            return Object.assign({}, state, { clientsArray: action.payload });
         case DELETE_CLIENT_BY_ID + FULFILLED:
             return Object.assign({}, state, { clientsArray: action.payload });
         default:
