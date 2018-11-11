@@ -4,7 +4,8 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 import InventoryItem from './ChildComponents/InventoryItem';
-import ItemEditor from './ChildComponents/ItemEditor';
+// import ItemEditor from './ChildComponents/ItemEditor';
+import ItemEditorNew from './ChildComponents/ItemEditorNew';
 import NewInventoryItem from './ChildComponents/NewInventoryItem';
 import { getProductsFromApi, getClientsFromApi, getUsersFromApi, getOrdersFromApi } from '../../ducks/reducer';
 
@@ -77,8 +78,15 @@ class Inventory extends Component {
         }) : <h3 className={css(invCSS.h2Reformat)} >No Products Found. Please Refresh Browser.</h3>
 
         // let itemEdits = 'Page loading';
-        let itemEdits = this.props.productsArray.length !== 0 ?
-            <ItemEditor inventory={this.props.productsArray}
+        // let itemEdits = this.props.productsArray.length !== 0 ?
+        //     <ItemEditor inventory={this.props.productsArray}
+        //         currentInventoryItem={this.state.currentProductNumber}
+        //         editorVisibility={this.state.itemEditorVisible}
+        //         toggleItemEditor={this.toggleItemEditor} />
+        //     : 'Loading';
+
+        let itemEditNew = this.props.productsArray.length !== 0 ?
+            <ItemEditorNew inventory={this.props.productsArray}
                 currentInventoryItem={this.state.currentProductNumber}
                 editorVisibility={this.state.itemEditorVisible}
                 toggleItemEditor={this.toggleItemEditor} />
@@ -99,7 +107,8 @@ class Inventory extends Component {
                     <h4 className={css(invCSS.h2Reformat, invCSS.hand)}
                         onClick={() => this.toggleNewInventoryModal()}>New Product</h4>
                 </div>
-                {itemEdits}
+                {/* {itemEdits} */}
+                {itemEditNew}
                 {newInvItem}
                 <h1 className={css(invCSS.titleH)} >Current Inventory</h1>
                 <div className={css(invCSS.main)} >
@@ -160,12 +169,12 @@ const invCSS = StyleSheet.create({
 function mapStateToProps(state) {
     if (typeof state.productsArray !== 'undefined') {
         // if (state.productsArray.length > 0) {
-            return {
-                productsArray: state.productsArray,
-                ordersArray: state.ordersArray,
-                usersArray: state.usersArray,
-                clientsArray: state.clientsArray
-            }
+        return {
+            productsArray: state.productsArray,
+            ordersArray: state.ordersArray,
+            usersArray: state.usersArray,
+            clientsArray: state.clientsArray
+        }
         // }
     }
     else {

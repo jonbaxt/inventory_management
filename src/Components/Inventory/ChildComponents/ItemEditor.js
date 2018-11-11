@@ -4,8 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 
-import { setProductNameForEditor } from '../../../ducks/reducer';
-
 class ItemEditor extends React.Component {
     constructor() {
         super();
@@ -410,17 +408,31 @@ const editorCSS = StyleSheet.create({
             background: 'white',
             border: '2px solid rgb(47,79,79)',
         },
-    }
+    },
+    buttonSubmit: {
+        margin: 0,
+        width: '100px',
+        marginLeft: '5px',
+        marginRight: '5px',
+        height: '35px',
+        background: 'rgb(255,255,255)',
+        boxShadow: '2px 2px 4px rgb(0,0,0)',
+        border: 'none',
+        marginTop: '10px',
+        marginBottom: '15px',
+        cursor: 'pointer',
+    },
 });
 
 
-function mapStateToProps(state) {
-    return {
-        currentProductNameEditor: state.currentProductNameEditor,
-    }
-}
-const mapDispatchToProps = {
-    setProductNameForEditor
-}
+// function mapStateToProps(state) {
+    // return {
+        // currentProductNameEditor: state.currentProductNameEditor,
+    // }
+// }
+// const mapDispatchToProps = {
+    
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ItemEditor);
+// export default connect(mapStateToProps, mapDispatchToProps)(ItemEditor);
+export default connect(null, null)(ItemEditor);
