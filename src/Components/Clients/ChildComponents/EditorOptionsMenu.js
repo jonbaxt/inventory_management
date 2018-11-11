@@ -7,6 +7,7 @@ import UpdateName from './EditorModals/UpdateName';
 import UpdatePhone from './EditorModals/UpdatePhone';
 import UpdateEmail from './EditorModals/UpdateEmail';
 import UpdateCompany from './EditorModals/UpdateCompany';
+import UpdateAddresses from './EditorModals/UpdateAddresses';
 import DeleteVerify from './EditorModals/DeleteVerify';
 
 export default class EditorOptionsMenu extends Component {
@@ -17,18 +18,21 @@ export default class EditorOptionsMenu extends Component {
             updatePhoneVisible: false,
             updateEmailVisible: false,
             updateCompanyVisible: false,
+            updateAddressVisible: false,
             deleteVerifyVisible: false,
         }
         this.toggleNameVisible = this.toggleNameVisible.bind(this);
         this.toggleUpdatePhoneVisible = this.toggleUpdatePhoneVisible.bind(this);
         this.toggleUpdateEmailVisible = this.toggleUpdateEmailVisible.bind(this);
         this.toggleUpdateCompanyVisible = this.toggleUpdateCompanyVisible.bind(this);
+        this.toggleUpdateAddressVisible = this.toggleUpdateAddressVisible.bind(this);
         this.toggleDeleteVisible = this.toggleDeleteVisible.bind(this);
     }
     toggleNameVisible() { this.setState({ updateNameVisible: !this.state.updateNameVisible }); }
     toggleUpdatePhoneVisible() { this.setState({ updatePhoneVisible: !this.state.updatePhoneVisible }); }
     toggleUpdateEmailVisible() { this.setState({ updateEmailVisible: !this.state.updateEmailVisible }); }
     toggleUpdateCompanyVisible() { this.setState({ updateCompanyVisible: !this.state.updateCompanyVisible }); }
+    toggleUpdateAddressVisible() { this.setState({ updateAddressVisible: !this.state.updateAddressVisible }); }
     toggleDeleteVisible() { this.setState({ deleteVerifyVisible: !this.state.deleteVerifyVisible }); }
     render() {
         //  The Options is to allow precise Axios Put calls to update certain aspects of the client as needed as well as delete the client.
@@ -67,7 +71,8 @@ export default class EditorOptionsMenu extends Component {
                         onClick={()=> 
                             this.toggleUpdateCompanyVisible()}>Update Company Name</button>
 
-                    <button className={css(optionsStyles.optionButton)}>Update Addresses</button>
+                    <button className={css(optionsStyles.optionButton)}
+                        onClick={()=> this.toggleUpdateAddressVisible()}>Update Addresses</button>
 
                     <button className={css(optionsStyles.deleteButton)}
                         onClick={() => this.toggleDeleteVisible()}>Delete Client</button>
@@ -96,6 +101,12 @@ export default class EditorOptionsMenu extends Component {
                     currentClientViewed={this.props.currentClientViewed}
                     updateCompanyVisible={this.state.updateCompanyVisible}
                     toggleUpdateCompanyVisible={this.toggleUpdateCompanyVisible}
+                    toggleEditVisible={this.props.toggleEditVisible}
+                />
+                <UpdateAddresses 
+                    currentClientViewed={this.props.currentClientViewed}
+                    updateAddressVisible={this.state.updateAddressVisible}
+                    toggleUpdateAddressVisible={this.updateAddressVisible}
                     toggleEditVisible={this.props.toggleEditVisible}
                 />
                 <DeleteVerify
