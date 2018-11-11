@@ -66,7 +66,7 @@ class UpdateName extends React.Component {
                                 console.log(`first name ${e.target.value}`)
                             }}
                             className={css(nameStyles.checkBoxRedesign)} />
-                        <h6 className={css(nameStyles.textForm)}>Keep Current NameF</h6>
+                        <h6 className={css(nameStyles.textForm)}>Keep Current Name</h6>
                     </div>
 
                     <input type='text' className={css(nameStyles.inputBoxStyled)}
@@ -197,6 +197,11 @@ const nameStyles = StyleSheet.create({
         boxShadow: '2px 2px 4px black',
         background: 'rgb(112,128,144)',
         cursor: 'pointer',
+        ':hover': {
+            color: 'rgb(112,128,144)',
+            border: '2px solid rgb(112,128,144)',
+            background: 'white',
+        },
         ':disabled': {
             background: 'black',
             color: 'grey',
@@ -217,6 +222,11 @@ const nameStyles = StyleSheet.create({
         boxShadow: '2px 2px 4px black',
         background: '',
         cursor: 'pointer',
+        ':hover': {
+            background: 'white',
+            color: 'grey',
+            border: '2px solid grey',
+        },
     },
 });
 

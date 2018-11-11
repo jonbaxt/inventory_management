@@ -85,7 +85,12 @@ const veriCSS = StyleSheet.create({
         boxShadow: '2px 2px 4px black',
         background: 'rgb(139,0,0)',
         cursor: 'pointer',
-    
+        ':hover': {
+            background: 'rgb(139,0,0)',
+            color: 'rgb(200,0,0)',
+            border: '2px solid rgb(200,0,0)',
+        },
+
     },
     cancelButton: {
         marginTop: '15px',
@@ -100,5 +105,10 @@ const veriCSS = StyleSheet.create({
         boxShadow: '2px 2px 4px black',
         background: '',
         cursor: 'pointer',
+        ':hover': {
+            background: 'white',
+            color: 'grey',
+            border: '2px solid grey',
+        },
     }
 });

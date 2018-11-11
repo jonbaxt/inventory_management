@@ -106,7 +106,7 @@ export default class EditorOptionsMenu extends Component {
                 <UpdateAddresses 
                     currentClientViewed={this.props.currentClientViewed}
                     updateAddressVisible={this.state.updateAddressVisible}
-                    toggleUpdateAddressVisible={this.updateAddressVisible}
+                    toggleUpdateAddressVisible={this.toggleUpdateAddressVisible}
                     toggleEditVisible={this.props.toggleEditVisible}
                 />
                 <DeleteVerify

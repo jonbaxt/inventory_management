@@ -118,6 +118,11 @@ const emailStyle = StyleSheet.create({
         boxShadow: '2px 2px 4px black',
         background: 'rgb(112,128,144)',
         cursor: 'pointer',
+        ':hover': {
+            color: 'rgb(112,128,144)',
+            border: '2px solid rgb(112,128,144)',
+            background: 'white',
+        },
         ':disabled': {
             background: 'black',
             color: 'grey',
@@ -138,6 +143,11 @@ const emailStyle = StyleSheet.create({
         boxShadow: '2px 2px 4px black',
         background: '',
         cursor: 'pointer',
+        ':hover': {
+            background: 'white',
+            color: 'grey',
+            border: '2px solid grey',
+        },
     },
 });
 

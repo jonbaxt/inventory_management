@@ -17,41 +17,41 @@ class UpdateCompany extends React.Component {
     resetCompanyChange() { this.setState({ companyChange: '' }); }
     render() {
         return (
-            <div 
-            className={ this.props.updateCompanyVisible ? css(companyStyle.outerSurface) : css(companyStyle.outerSurface, companyStyle.hide) }>
-            <div className={css(companyStyle.modalSheet)}>
-                <h2 className={css(companyStyle.textForm)}>Update Company</h2>
-                <h4 className={css(companyStyle.textForm)}>Current Company Name:<br /> {this.props.currentClientViewed.company}</h4>
+            <div
+                className={this.props.updateCompanyVisible ? css(companyStyle.outerSurface) : css(companyStyle.outerSurface, companyStyle.hide)}>
+                <div className={css(companyStyle.modalSheet)}>
+                    <h2 className={css(companyStyle.textForm)}>Update Company</h2>
+                    <h4 className={css(companyStyle.textForm)}>Current Company Name:<br /> {this.props.currentClientViewed.company}</h4>
 
-                <input type='text' 
-                    className={css(companyStyle.inputBoxStyled)}
-                    value={this.state.companyChange}
-                    placeholder='New Company Name'
-                    onChange={(e)=> this.handleCompanyChange(e.target.value)} 
+                    <input type='text'
+                        className={css(companyStyle.inputBoxStyled)}
+                        value={this.state.companyChange}
+                        placeholder='New Company Name'
+                        onChange={(e) => this.handleCompanyChange(e.target.value)}
                     />
-                <div className={css(companyStyle.flexRow)}>
-                    <button className={css(companyStyle.updateButton)}    
-                        onClick={()=>{ 
+                    <div className={css(companyStyle.flexRow)}>
+                        <button className={css(companyStyle.updateButton)}
+                            onClick={() => {
 
-                            this.props.updateClientCompanyById(this.props.currentClientViewed.client_id, 
-                            this.state.companyChange);
-                            this.resetCompanyChange();
-                            this.props.toggleUpdateCompanyVisible();
-                            this.props.toggleEditVisible();
-                        }}
-                        disabled={!this.state.companyChange}>Update</button>
-                    <button className={css(companyStyle.cancelButton)}
-                        onClick={()=>{ 
-                            this.resetCompanyChange();
+                                this.props.updateClientCompanyById(this.props.currentClientViewed.client_id,
+                                    this.state.companyChange);
+                                this.resetCompanyChange();
+                                this.props.toggleUpdateCompanyVisible();
+                                this.props.toggleEditVisible();
+                            }}
+                            disabled={!this.state.companyChange}>Update</button>
+                        <button className={css(companyStyle.cancelButton)}
+                            onClick={() => {
+                                this.resetCompanyChange();
                             }}>Reset</button>
-                    <button className={css(companyStyle.cancelButton)}
-                        onClick={()=>{ 
-                            this.resetCompanyChange();
-                            this.props.toggleUpdateCompanyVisible();
+                        <button className={css(companyStyle.cancelButton)}
+                            onClick={() => {
+                                this.resetCompanyChange();
+                                this.props.toggleUpdateCompanyVisible();
                             }}>Cancel</button>
+                    </div>
                 </div>
             </div>
-        </div>
         )
     }
 }
@@ -119,7 +119,12 @@ const companyStyle = StyleSheet.create({
         border: '2px solid white',
         boxShadow: '2px 2px 4px black',
         background: 'rgb(112,128,144)',
-        cursor: 'pointer',
+        cursor: 'pointer', 
+        ':hover': {
+            color: 'rgb(112,128,144)',
+            border: '2px solid rgb(112,128,144)',
+            background: 'white',
+        },
         ':disabled': {
             background: 'black',
             color: 'grey',
@@ -140,6 +145,11 @@ const companyStyle = StyleSheet.create({
         boxShadow: '2px 2px 4px black',
         background: '',
         cursor: 'pointer',
+        ':hover': {
+            background: 'white',
+            color: 'grey',
+            border: '2px solid grey',
+        },
     },
 });
 
