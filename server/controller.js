@@ -98,12 +98,18 @@ module.exports = {
             res.status(200).send(updatedCompanyInTable);
         }).catch(err => console.log(err));
     },
+    updateClientCompanyAddressesById: (req, res) => {
+        const dbInstance = req.app.get('db');
+        const client_id = Number(req.params.id);
+        const { company_address_line_1, company_address_line_2, mailing_address_line_1, mailing_address_line_2 } = req.body;
+
+        dbInstance.update_client_addresses([client_id, company_address_line_1, company_address_line_2, mailing_address_line_1, mailing_address_line_2]).then( (newTableData )=>{ res.status(200).send(newTableData) }).catch( (err) =>{ res.status(400).send(err) });
+    },
     deleteClientById: (req, res) => {
         const dbInstance = req.app.get('db');
-
         const idNum = Number(req.params.id);
 
-        dbInstance.delete_client_by_id([idNum]).then( alteredTable => { res.status(200).send(alteredTable); }).catch( err =>{ res.status(400).send(err);})
+        dbInstance.delete_client_by_id([idNum]).then( alteredTable => { res.status(200).send(alteredTable); }).catch( err =>{ res.status(400).send(err);});
     },
     getOrders: (req, res) => {
         const dbInstance = req.app.get('db');

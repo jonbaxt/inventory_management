@@ -26,6 +26,7 @@ const UPDATE_CLIENT_NAME_BY_ID = 'UPDATE_CLIENT_NAME_BY_ID';
 const UPDATE_PHONE_NUMBER_BY_ID = 'UPDATE_CLIENT_PHONE_NUMBER_BY_ID';
 const UPDATE_CLIENT_EMAIL_BY_ID = 'UPDATE_CLIENT_EMAIL_BY_ID';
 const UPDATE_CLIENT_COMPANY_BY_ID = 'UPDATE_CLIENT_COMPANY_BY_ID';
+const UPDATE_CLIENT_ADDRESSES_BY_ID = 'UPDATE_CLIENT_ADDRESSES_BY_ID';
 const DELETE_CLIENT_BY_ID = 'DELETE_CLIENT_BY_ID';
 
 export function getProductsFromApi() {
@@ -66,7 +67,7 @@ export function updateClientNameById(clientId, firstName, lastName) {
         first_name: firstName,
         last_name: lastName
     }
-    let updatedClientTable = axios.put(`/api/clients/updatename/${clientId}`, newName).then( (axiosResults) => { return axiosResults.data; }).catch( (err) => console.log(err));
+    let updatedClientTable = axios.put(`/api/clients/updatename/${clientId}`, newName).then((axiosResults) => { return axiosResults.data; }).catch((err) => console.log(err));
 
     return {
         type: UPDATE_CLIENT_NAME_BY_ID,
@@ -79,7 +80,7 @@ export function updateClientPhoneById(clientId, phoneNumber) {
         phone_number: phoneNumber
     }
 
-    let updatedClientTable = axios.put(`/api/clients/updatephonenumber/${clientId}`, phone).then( (axiosResults) => { return axiosResults.data; }).catch( (err) => console.log(err));
+    let updatedClientTable = axios.put(`/api/clients/updatephonenumber/${clientId}`, phone).then((axiosResults) => { return axiosResults.data; }).catch((err) => console.log(err));
 
     return {
         type: UPDATE_PHONE_NUMBER_BY_ID,
@@ -92,7 +93,7 @@ export function updateClientEmailById(clientId, emailAddress) {
         email: emailAddress
     }
 
-    let updatedClientTable = axios.put(`/api/clients/updateemail/${clientId}`, emailClient).then( (axiosResults) => { return axiosResults.data; }).catch( (err) => console.log(err));
+    let updatedClientTable = axios.put(`/api/clients/updateemail/${clientId}`, emailClient).then((axiosResults) => { return axiosResults.data; }).catch((err) => console.log(err));
 
     return {
         type: UPDATE_CLIENT_EMAIL_BY_ID,
@@ -105,10 +106,19 @@ export function updateClientCompanyById(clientId, companyName) {
         company: companyName
     }
 
-    let updatedClientTable = axios.put(`/api/clients/updatecompany/${clientId}`, companyN).then( (axiosResults) => { return axiosResults.data; }).catch( (err) => console.log(err));    
+    let updatedClientTable = axios.put(`/api/clients/updatecompany/${clientId}`, companyN).then((axiosResults) => { return axiosResults.data; }).catch((err) => console.log(err));
 
     return {
         type: UPDATE_CLIENT_COMPANY_BY_ID,
+        payload: updatedClientTable
+    }
+}
+
+export function updateClientAddressesById(clientId, addressesObject) {
+    let updatedClientTable = axios.put(`/api/clients/updateaddresses/${clientId}`, addressesObject).then((axiosResults) => { return axiosResults.data; }).catch((err) => console.log(err));
+
+    return {
+        type: UPDATE_CLIENT_ADDRESSES_BY_ID,
         payload: updatedClientTable
     }
 }
@@ -163,17 +173,21 @@ export default function reducer(state = initialState, action) {
         case GET_ORDERS_FROM_API + FULFILLED:
             return Object.assign({}, state, { ordersArray: action.payload });
 
+        //This one potentially may be removed since not used enough.
         case SET_PRODUCT_NAME_FOR_EDITOR:
             return Object.assign({}, state, { currentProductNameEditor: action.payload });
+
         case POST_NEW_CLIENT + FULFILLED:
             return Object.assign({}, state, { clientsArray: action.payload });
-        case UPDATE_CLIENT_NAME_BY_ID + FULFILLED: 
+        case UPDATE_CLIENT_NAME_BY_ID + FULFILLED:
             return Object.assign({}, state, { clientsArray: action.payload });
         case UPDATE_PHONE_NUMBER_BY_ID + FULFILLED:
             return Object.assign({}, state, { clientsArray: action.payload });
         case UPDATE_CLIENT_EMAIL_BY_ID + FULFILLED:
             return Object.assign({}, state, { clientsArray: action.payload });
-        case UPDATE_CLIENT_COMPANY_BY_ID + FULFILLED: 
+        case UPDATE_CLIENT_COMPANY_BY_ID + FULFILLED:
+            return Object.assign({}, state, { clientsArray: action.payload });
+        case UPDATE_CLIENT_ADDRESSES_BY_ID + FULFILLED:
             return Object.assign({}, state, { clientsArray: action.payload });
         case DELETE_CLIENT_BY_ID + FULFILLED:
             return Object.assign({}, state, { clientsArray: action.payload });
