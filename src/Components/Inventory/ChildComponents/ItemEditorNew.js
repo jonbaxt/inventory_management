@@ -3,26 +3,101 @@ import { StyleSheet, css } from 'aphrodite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
+import NameEdit from './EditorModals/NameEdit';
+
 class ItemEditorNew extends Component {
-
+    constructor() {
+        super();
+        this.state = {
+            nameEditView: false,
+        }
+        this.toggleNameEditChange = this.toggleNameEditChange.bind(this);
+    }
+    toggleNameEditChange() { this.setState({ nameEditView: !this.state.nameEditView }); }
     render() {
-
+        let productDetails = this.props.inventory.filter((product) => product.inventory_id === this.props.currentInventoryItem);
+        let currentProduct = '';
+        let productName = '';
+        let partNumber = '';
+        let itemPrice = '';
+        let label = '';
+        let productCount = '';
+        let minimumProductRequired = '';
+        let image = '';
+        if (this.props.inventory.length !== 0) {
+            currentProduct = productDetails[0];
+            productName = currentProduct.product_name;
+            partNumber = currentProduct.part_number;
+            itemPrice = currentProduct.price;
+            label = currentProduct.product_label;
+            productCount = currentProduct.current_count;
+            minimumProductRequired = currentProduct.minimum_stock;
+            image = currentProduct.product_image;
+            // this.handleNameEdit(productName);
+        }
         return (
-            <div className={ this.props.editorVisibility ?  css(editStyles.mainArea) : css(editStyles.mainArea, editStyles.editorHide)}>
+            <div className={this.props.editorVisibility ? css(editStyles.mainArea) : css(editStyles.mainArea, editStyles.editorHide)}>
 
                 <section className={css(editStyles.editorMain)}>
-                <div className={css(editStyles.closeButton)}>
-                        <FontAwesomeIcon icon={faTimesCircle}
+                    <div className={css(editStyles.closeDiv)}>
+                        <FontAwesomeIcon className={css(editStyles.closeButton)}
+                            icon={faTimesCircle}
                             onClick={() => {
                                 // this.resetInputs()
                                 this.props.toggleItemEditor()
                             }} /></div>
-                <h2 className={css(editStyles.textRedo)}>Product Editor Options</h2>
-                <h3 className={css(editStyles.textRedo)}>dfd</h3>
+                    <h3 className={css(editStyles.textRedo)}>Product Editor Options</h3>
+                    <h4 className={css(editStyles.textRedo)}>Product #{this.props.currentInventoryItem}</h4>
+                    <h5 className={css(editStyles.textRedo)}>{productName}</h5>
 
-                
+                    <div className={css(editStyles.optionsArea)}>
+
+                        <span className={css(editStyles.optionButton)}
+                            onClick={() => {
+                                this.toggleNameEditChange();
+                                console.log('clicked')
+                            }}>Change Product Name</span>
+                        <span className={css(editStyles.optionButton)}
+                            onClick={() => {
+                                console.log('clicked')
+                            }}>Change Part Number</span>
+                        <span className={css(editStyles.optionButton)}
+                            onClick={() => {
+                                console.log('clicked')
+                            }}>Change Product Label</span>
+                        <span className={css(editStyles.optionButton)}
+                            onClick={() => {
+                                console.log('clicked')
+                            }}>Change Image</span>
+                        <span className={css(editStyles.optionButton)}
+                            onClick={() => {
+                                console.log('clicked')
+                            }}>Change Current Product Count</span>
+                        <span className={css(editStyles.optionButton)}
+                            onClick={() => {
+                                console.log('clicked')
+                            }}>Change Minimum Stock Required</span>
+                        <span className={css(editStyles.optionButton)}
+                            onClick={() => {
+                                console.log('clicked')
+                            }}>Change Price</span>
+                        <span className={css(editStyles.optionButton)}
+                            onClick={() => {
+                                console.log('clicked')
+                            }}>Change Alert Notification</span>
+                        <span className={css(editStyles.deleteButton)}
+                            onClick={() => {
+                                console.log('clicked')
+                            }}>Delete Product</span>
+                    </div>
                 </section>
-
+                <NameEdit
+                    nameEditView={this.state.nameEditView}
+                    toggleItemEditor={this.props.toggleItemEditor}
+                    toggleNameEditChange={this.toggleNameEditChange}
+                    currentInventoryItem={this.props.currentInventoryItem}
+                    productName={productName}
+                />
             </div>
         )
     }
@@ -49,10 +124,11 @@ const editStyles = StyleSheet.create({
     // Down here is for the editor
     editorMain: {
         display: 'flex',
+        // flexWrap: 'wrap',
         flexDirection: 'column',
         justifyContent: 'flex-start',
         overflow: 'auto',
-        width: '75vw',
+        width: '318px',
         height: '90vh',
         margin: '0 auto',
         // marginTop: '5px',
@@ -66,14 +142,83 @@ const editStyles = StyleSheet.create({
         margin: 0,
         padding: 0,
     },
-    closeButton: {
-        textAlign: 'right',
+    closeDiv: {
+        marginTop: '5px',
+        marginRight: '5px',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-end',
+    },
+    closeButton: {
+        color: 'white',
+        textAlign: 'right',
         cursor: 'pointer',
         fontSize: '20px',
+        ':hover': {
+            transition: '0.5s all ease',
+            color: 'rgba(47,79,79, 0.8)',
+        },
     },
+    optionsArea: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+    },
+    optionButton: {
+        width: '250px',
+        height: '45px',
+        margin: '4px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: 'rgb(47,79,79)',
+        border: '2px solid white',
+        borderRadius: '10px',
+        color: 'white',
+        textShadow: '1px 1px 2px black',
+        fontWeight: 'bold',
+        boxShadow: '1px 1px 2px black',
+        cursor: 'pointer',
+
+        transition: '0.2s all ease',
+
+        ':hover': {
+            transition: '0.2s all ease',
+            background: 'white',
+            // background: 'rgb(47,79,79)',
+            color: 'rgb(47, 79, 79)',
+            // color: 'white',
+            border: '2px solid rgb(47, 79, 79)',
+            // color: 'rgb(47,79,79)',
+        },
+    },
+    deleteButton: {
+        width: '250px',
+        height: '30px',
+        margin: '4px',
+        alignItems: 'center',
+        // background: 'rgb(47,79,79)',
+        background: 'red',
+        border: '2px solid white',
+        borderRadius: '10px',
+        color: 'white',
+        textShadow: '1px 1px 2px black',
+        fontWeight: 'bold',
+        boxShadow: '1px 1px 2px black',
+        cursor: 'pointer',
+
+        transition: '0.2s all ease',
+
+        ':hover': {
+            transition: '0.2s all ease',
+            color: 'red',
+            // background: 'white',
+            background: 'rgb(128,0,0)',
+            border: '2px solid red',
+        },
+    }
 
 });
 
