@@ -80,6 +80,12 @@ module.exports = {
 
         dbInstance.update_inventory_alert_when_low([inventory_id, alert_when_low]).then( (updatedTable) => { res.status(200).send(updatedTable); }).catch( (err) => { res.status(400).send(err); });
     },
+    deleteProductById: (req, res) => {
+        const dbInstance = req.app.get('db');
+        const idNum = Number(req.params.id);
+
+        dbInstance.delete_inventory_product([idNum]).then( alteredTable => { res.status(200).send(alteredTable); }).catch( err =>{ res.status(400).send(err);});
+    },
     getEmployees: (req, res) => {
         const dbInstance = req.app.get('db');
 

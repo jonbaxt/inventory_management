@@ -11,9 +11,12 @@ import MinCountEdit from './EditorModals/MinCountEdit';
 import PriceEdit from './EditorModals/PriceEdit';
 import LabelEdit from './EditorModals/LabelEdit';
 
+import DeleteProduct from './EditorModals/DeleteProduct';
+
 class ItemEditorNew extends Component {
     constructor() {
         super();
+        // Need to fix currentProduct to not break on delete since currentProduct will not exist.
         this.state = {
             nameEditView: false,
             partNumberEditView: false,
@@ -22,6 +25,8 @@ class ItemEditorNew extends Component {
             currCountEditView: false,
             minCountEditView: false,
             priceEditView: false,
+
+            deleteProductView: false,
         }
         this.toggleNameEditChange = this.toggleNameEditChange.bind(this);
         this.togglePartNumberEditChange = this.togglePartNumberEditChange.bind(this);
@@ -30,6 +35,8 @@ class ItemEditorNew extends Component {
         this.toggleCurrCountEditChange = this.toggleCurrCountEditChange.bind(this);
         this.toggleMinCountEditChange = this.toggleMinCountEditChange.bind(this);
         this.togglePriceEditChange = this.togglePriceEditChange.bind(this);
+
+        this.toggleDeleteProductChange = this.toggleDeleteProductChange.bind(this);
     }
     toggleNameEditChange() { this.setState({ nameEditView: !this.state.nameEditView }); }
     togglePartNumberEditChange() { this.setState({ partNumberEditView: !this.state.partNumberEditView }); }
@@ -38,6 +45,8 @@ class ItemEditorNew extends Component {
     toggleCurrCountEditChange() { this.setState({ currCountEditView: !this.state.currCountEditView }); }
     toggleMinCountEditChange() { this.setState({ minCountEditView: !this.state.minCountEditView }); }
     togglePriceEditChange() { this.setState({ priceEditView: !this.state.priceEditView }); }
+
+    toggleDeleteProductChange() { this.setState({ deleteProductView: !this.state.deleteProductView }); }
 
     render() {
         let productDetails = this.props.inventory.filter((product) => product.inventory_id === this.props.currentInventoryItem);
@@ -117,7 +126,8 @@ class ItemEditorNew extends Component {
                             }}>Change Alert Notification</span>
                         <span className={css(editStyles.deleteButton)}
                             onClick={() => {
-                                console.log('clicked')
+                                this.toggleDeleteProductChange();
+                                // console.log('clicked')
                             }}>Delete Product</span>
                     </div>
                 </section>
@@ -169,7 +179,13 @@ class ItemEditorNew extends Component {
                     productName={productName}
                     itemPrice={itemPrice}
                 />
-
+                <DeleteProduct 
+                    deleteProductView={this.state.deleteProductView}
+                    toggleItemEditor={this.props.toggleItemEditor}
+                    toggleDeleteProductChange={this.toggleDeleteProductChange}
+                    currentInventoryItem={this.props.currentInventoryItem}
+                    productName={productName}
+                />
             </div>
         )
     }

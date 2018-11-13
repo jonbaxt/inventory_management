@@ -35,7 +35,7 @@ app.put('/api/inventoryproducts/updateproductcurrentcount/:id', con.updateProduc
 app.put('/api/inventoryproducts/updateproductminimumcount/:id', con.updateProductMinimumStock);
 app.put('/api/inventoryproducts/updateproductprice/:id', con.updateProductPrice);
 app.put('/api/inventoryproducts/updateproductalertwhenlow/:id', con.updateProductAlertWhenLow);
-
+app.delete('/api/delete/inventoryproduct/byid/:id', con.deleteProductById);
 
 app.get('/api/getClients', con.getClients);
 app.post('/api/newClient/insert', con.postNewClient);

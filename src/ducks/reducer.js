@@ -19,6 +19,7 @@ const UPDATE_PRODUCT_CURRENT_COUNT = 'UPDATE_PRODUCT_CURRENT_COUNT';
 const UPDATE_PRODUCT_MINIMUM_STOCK = 'UPDATE_PRODUCT_MINIMUM_STOCK';
 const UPDATE_PRODUCT_PRICE = 'UPDATE_PRODUCT_PRICE';
 const UPDATE_PRODUCT_ALERT_WHEN_LOW = 'UPDATE_PRODUCT_ALERT_WHEN_LOW';
+const DELETE_PRODUCT_BY_ID = 'DELETE_PROUDCT_BY_ID';
 
 const GET_USERS_FROM_API = 'GET_USERS_FROM_API';
 const GET_ORDERS_FROM_API = 'GET_ORDERS_FROM_API';
@@ -32,16 +33,7 @@ const UPDATE_CLIENT_COMPANY_BY_ID = 'UPDATE_CLIENT_COMPANY_BY_ID';
 const UPDATE_CLIENT_ADDRESSES_BY_ID = 'UPDATE_CLIENT_ADDRESSES_BY_ID';
 const DELETE_CLIENT_BY_ID = 'DELETE_CLIENT_BY_ID';
 
-export function getProductsFromApi() {
-    let products = axios.get('/api/getProducts').then((result) => {
-        return result.data
-    }).catch(err => console.log(`Didn't work ${err}`))
 
-    return {
-        type: GET_PRODUCTS_FROM_API,
-        payload: products
-    }
-}
 
 export function getClientsFromApi() {
     let clients = axios.get('/api/getClients').then((axiosResults) => {
@@ -123,6 +115,26 @@ export function updateClientAddressesById(clientId, addressesObject) {
     return {
         type: UPDATE_CLIENT_ADDRESSES_BY_ID,
         payload: updatedClientTable
+    }
+}
+
+export function deleteClientById(clientId) {
+    let newClientArray = axios.delete(`/api/delete/client/byid/${clientId}`).then((axiosResults) => { return axiosResults.data }).catch((err) => console.log(err));
+
+    return {
+        type: DELETE_CLIENT_BY_ID,
+        payload: newClientArray
+    }
+}
+
+export function getProductsFromApi() {
+    let products = axios.get('/api/getProducts').then((result) => {
+        return result.data
+    }).catch(err => console.log(`Didn't work ${err}`))
+
+    return {
+        type: GET_PRODUCTS_FROM_API,
+        payload: products
     }
 }
 
@@ -222,12 +234,12 @@ export function updateProductAlertWhenLow(productId, alertWhenLow) {
     }
 }
 
-export function deleteClientById(clientId) {
-    let newClientArray = axios.delete(`/api/delete/client/byid/${clientId}`).then((axiosResults) => { return axiosResults.data }).catch((err) => console.log(err));
+export function deleteProductById(productId) {
+    let newArray = axios.delete(`/api/delete/inventoryproduct/byid/${productId}`).then((axiosResults) => { return axiosResults.data }).catch((err) => console.log(err));
 
     return {
-        type: DELETE_CLIENT_BY_ID,
-        payload: newClientArray
+        type: DELETE_PRODUCT_BY_ID,
+        payload: newArray
     }
 }
 
@@ -275,7 +287,8 @@ export default function reducer(state = initialState, action) {
             return Object.assign({}, state, { productsArray: action.payload });
         case UPDATE_PRODUCT_ALERT_WHEN_LOW + FULFILLED:
             return Object.assign({}, state, { productsArray: action.payload });
-
+        case DELETE_PRODUCT_BY_ID + FULFILLED: 
+            return Object.assign({}, state, { productsArray: action.payload });
 
         case GET_USERS_FROM_API + FULFILLED:
             return Object.assign({}, state, { usersArray: action.payload });
