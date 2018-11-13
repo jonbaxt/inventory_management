@@ -24,6 +24,62 @@ module.exports = {
             res.status(400).send(err)
         });
     },
+    updateProductName: (req, res) => {
+        const dbInstance = req.app.get('db');
+        const inventory_id = req.params.id;
+        const product_name = req.body.product_name;
+
+        dbInstance.update_inventory_product_name([inventory_id, product_name]).then( (updatedTable) => { res.status(200).send(updatedTable); }).catch( (err) => { res.status(400).send(err); });
+    },
+    updateProductPartNumber: (req, res) => {
+        const dbInstance = req.app.get('db');
+        const inventory_id = req.params.id;
+        const part_number = req.body.part_number;
+
+        dbInstance.update_inventory_product_part_number([inventory_id, part_number]).then( (updatedTable) => { res.status(200).send(updatedTable); }).catch( (err) => { res.status(400).send(err); });
+    },
+    updateProductLabel: (req, res) => {
+        const dbInstance = req.app.get('db');
+        const inventory_id = req.params.id;
+        const product_label = req.body.product_label;
+
+        dbInstance.update_inventory_product_product_label([inventory_id, product_label]).then( (updatedTable) => { res.status(200).send(updatedTable); }).catch( (err) => { res.status(400).send(err); });
+    },
+    updateProductImage: (req, res) => {
+        const dbInstance = req.app.get('db');
+        const inventory_id = req.params.id;
+        const product_image = req.body.product_image;
+
+        dbInstance.update_inventory_product_product_image([inventory_id, product_image]).then( (updatedTable) => { res.status(200).send(updatedTable); }).catch( (err) => { res.status(400).send(err); });
+    },
+    updateProductCurrentCount: (req, res) => {
+        const dbInstance = req.app.get('db');
+        const inventory_id = req.params.id;
+        const current_count = req.body.current_count;
+
+        dbInstance.update_inventory_current_count([inventory_id, current_count]).then( (updatedTable) => { res.status(200).send(updatedTable); }).catch( (err) => { res.status(400).send(err); });
+    },
+    updateProductMinimumStock: (req, res) => {
+        const dbInstance = req.app.get('db');
+        const inventory_id = req.params.id;
+        const minimum_stock = req.body.minimum_stock;
+
+        dbInstance.update_inventory_minimum_stock([inventory_id, minimum_stock]).then( (updatedTable) => { res.status(200).send(updatedTable); }).catch( (err) => { res.status(400).send(err); });
+    },
+    updateProductPrice: (req, res) => {
+        const dbInstance = req.app.get('db');
+        const inventory_id = req.params.id;
+        const price = req.body.price;
+
+        dbInstance.update_inventory_price([inventory_id, price]).then( (updatedTable) => { res.status(200).send(updatedTable); }).catch( (err) => { res.status(400).send(err); });
+    },
+    updateProductAlertWhenLow: (req, res) => {
+        const dbInstance = req.app.get('db');
+        const inventory_id = req.params.id;
+        const alert_when_low = req.body.alert_when_low;
+
+        dbInstance.update_inventory_alert_when_low([inventory_id, alert_when_low]).then( (updatedTable) => { res.status(200).send(updatedTable); }).catch( (err) => { res.status(400).send(err); });
+    },
     getEmployees: (req, res) => {
         const dbInstance = req.app.get('db');
 
