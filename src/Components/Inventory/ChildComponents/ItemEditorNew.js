@@ -4,16 +4,33 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 import NameEdit from './EditorModals/NameEdit';
+import PartNumberEdit from './EditorModals/PartNumberEdit';
+
+import CurrCountEdit from './EditorModals/CurrCountEdit';
+import PriceEdit from './EditorModals/PriceEdit';
 
 class ItemEditorNew extends Component {
     constructor() {
         super();
         this.state = {
             nameEditView: false,
+            partNumberEditView: false,
+
+            currCountEditView: false,
+            priceEditView: false,
         }
         this.toggleNameEditChange = this.toggleNameEditChange.bind(this);
+        this.togglePartNumberEditChange = this.togglePartNumberEditChange.bind(this);
+
+        this.toggleCurrCountEditChange = this.toggleCurrCountEditChange.bind(this);
+        this.togglePriceEditChange = this.togglePriceEditChange.bind(this);
     }
     toggleNameEditChange() { this.setState({ nameEditView: !this.state.nameEditView }); }
+    togglePartNumberEditChange() { this.setState({ partNumberEditView: !this.state.partNumberEditView }); }
+
+    toggleCurrCountEditChange() { this.setState({ currCountEditView: !this.state.currCountEditView }); }
+    togglePriceEditChange() { this.setState({ priceEditView: !this.state.priceEditView }); }
+
     render() {
         let productDetails = this.props.inventory.filter((product) => product.inventory_id === this.props.currentInventoryItem);
         let currentProduct = '';
@@ -55,11 +72,12 @@ class ItemEditorNew extends Component {
                         <span className={css(editStyles.optionButton)}
                             onClick={() => {
                                 this.toggleNameEditChange();
-                                console.log('clicked')
+                                // console.log('clicked')
                             }}>Change Product Name</span>
                         <span className={css(editStyles.optionButton)}
                             onClick={() => {
-                                console.log('clicked')
+                                this.togglePartNumberEditChange();
+                                // console.log('clicked')
                             }}>Change Part Number</span>
                         <span className={css(editStyles.optionButton)}
                             onClick={() => {
@@ -71,7 +89,8 @@ class ItemEditorNew extends Component {
                             }}>Change Image</span>
                         <span className={css(editStyles.optionButton)}
                             onClick={() => {
-                                console.log('clicked')
+                                this.toggleCurrCountEditChange();
+                                // console.log('clicked')
                             }}>Change Current Product Count</span>
                         <span className={css(editStyles.optionButton)}
                             onClick={() => {
@@ -79,7 +98,8 @@ class ItemEditorNew extends Component {
                             }}>Change Minimum Stock Required</span>
                         <span className={css(editStyles.optionButton)}
                             onClick={() => {
-                                console.log('clicked')
+                                this.togglePriceEditChange();
+                                // console.log('clicked')
                             }}>Change Price</span>
                         <span className={css(editStyles.optionButton)}
                             onClick={() => {
@@ -98,6 +118,32 @@ class ItemEditorNew extends Component {
                     currentInventoryItem={this.props.currentInventoryItem}
                     productName={productName}
                 />
+                <PartNumberEdit 
+                    partNumberEditView={this.state.partNumberEditView}
+                    toggleItemEditor={this.props.toggleItemEditor}
+                    togglePartNumberEditChange={this.togglePartNumberEditChange}
+                    currentInventoryItem={this.props.currentInventoryItem}
+                    productName={productName}
+                    partNumber={partNumber}
+                />
+
+                <CurrCountEdit 
+                    currCountEditView={this.state.currCountEditView}
+                    toggleItemEditor={this.props.toggleItemEditor}
+                    toggleCurrCountEditChange={this.toggleCurrCountEditChange}
+                    currentInventoryItem={this.props.currentInventoryItem}
+                    productName={productName}
+                    productCount={productCount}
+                />
+                <PriceEdit 
+                    priceEditView={this.state.priceEditView}
+                    toggleItemEditor={this.props.toggleItemEditor}
+                    togglePriceEditChange={this.togglePriceEditChange}
+                    currentInventoryItem={this.props.currentInventoryItem}
+                    productName={productName}
+                    itemPrice={itemPrice}
+                />
+
             </div>
         )
     }
