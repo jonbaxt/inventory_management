@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
+import { connect } from 'react-redux';
 
+import { updateProductName } from '../../../../ducks/reducer';
 
 class NameEdit extends Component {
     constructor() {
@@ -9,8 +11,10 @@ class NameEdit extends Component {
             nameInputBox: '',
         }
         this.handleNameBoxChange = this.handleNameBoxChange.bind(this);
+        this.resetInput = this.resetInput.bind(this);
     }
     handleNameBoxChange(e) { this.setState({ nameInputBox: e }); }
+    resetInput() { this.setState({ nameInputBox: '' }); }
     render() {
         /* 
         nameEditView={this.state.nameEditView}
@@ -33,10 +37,18 @@ class NameEdit extends Component {
 
                     <div className={css(styles.flRow)}>
 
-                        <button className={css(styles.changeButton)}>Change</button>
-                        <button className={css(styles.buttonStyle)}>Reset</button>
+                        <button className={css(styles.changeButton)}
+                            disabled={!this.state.nameInputBox}
+                            onClick={()=>{ 
+                                this.props.updateProductName(this.props.currentInventoryItem, this.state.nameInputBox);
+                                this.resetInput();
+                                this.props.toggleNameEditChange();
+                                this.props.toggleItemEditor();
+                             }}>Change</button>
                         <button className={css(styles.buttonStyle)}
-                            onClick={() => { this.props.toggleNameEditChange() }} >Close</button>
+                            onClick={()=>{ this.resetInput(); }}>Reset</button>
+                        <button className={css(styles.buttonStyle)}
+                            onClick={() => { this.props.toggleNameEditChange(); }} >Close</button>
                     </div>
                 </section>
             </div>
@@ -158,4 +170,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default NameEdit;
+export default connect(null, { updateProductName })(NameEdit);
