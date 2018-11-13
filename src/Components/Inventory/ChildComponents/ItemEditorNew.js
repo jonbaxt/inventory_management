@@ -5,13 +5,14 @@ import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 import NameEdit from './EditorModals/NameEdit';
 import PartNumberEdit from './EditorModals/PartNumberEdit';
-
+import ImageEdit from './EditorModals/ImageEdit';
 import CurrCountEdit from './EditorModals/CurrCountEdit';
 import MinCountEdit from './EditorModals/MinCountEdit';
 import PriceEdit from './EditorModals/PriceEdit';
 import LabelEdit from './EditorModals/LabelEdit';
 
 import DeleteProduct from './EditorModals/DeleteProduct';
+import { runInThisContext } from 'vm';
 
 class ItemEditorNew extends Component {
     constructor() {
@@ -21,7 +22,7 @@ class ItemEditorNew extends Component {
             nameEditView: false,
             partNumberEditView: false,
             labelEditView: false,
-
+            imageEditView: false,
             currCountEditView: false,
             minCountEditView: false,
             priceEditView: false,
@@ -31,7 +32,7 @@ class ItemEditorNew extends Component {
         this.toggleNameEditChange = this.toggleNameEditChange.bind(this);
         this.togglePartNumberEditChange = this.togglePartNumberEditChange.bind(this);
         this.toggleLabelEditChange = this.toggleLabelEditChange.bind(this);
-
+        this.toggleImageEditChange = this.toggleImageEditChange.bind(this);
         this.toggleCurrCountEditChange = this.toggleCurrCountEditChange.bind(this);
         this.toggleMinCountEditChange = this.toggleMinCountEditChange.bind(this);
         this.togglePriceEditChange = this.togglePriceEditChange.bind(this);
@@ -41,7 +42,7 @@ class ItemEditorNew extends Component {
     toggleNameEditChange() { this.setState({ nameEditView: !this.state.nameEditView }); }
     togglePartNumberEditChange() { this.setState({ partNumberEditView: !this.state.partNumberEditView }); }
     toggleLabelEditChange() { this.setState({ labelEditView: !this.state.labelEditView }); }
-
+    toggleImageEditChange() { this.setState({ imageEditView: !this.state.imageEditView }); }
     toggleCurrCountEditChange() { this.setState({ currCountEditView: !this.state.currCountEditView }); }
     toggleMinCountEditChange() { this.setState({ minCountEditView: !this.state.minCountEditView }); }
     togglePriceEditChange() { this.setState({ priceEditView: !this.state.priceEditView }); }
@@ -103,7 +104,8 @@ class ItemEditorNew extends Component {
                             }}>Change Product Label</span>
                         <span className={css(editStyles.optionButton)}
                             onClick={() => {
-                                console.log('clicked')
+                                this.toggleImageEditChange();
+                                // console.log('clicked')
                             }}>Change Image</span>
                         <span className={css(editStyles.optionButton)}
                             onClick={() => {
@@ -154,7 +156,14 @@ class ItemEditorNew extends Component {
                     productName={productName}
                     label={label}
                 />
-                
+                <ImageEdit 
+                    imageEditView={this.state.imageEditView}
+                    toggleItemEditor={this.props.toggleItemEditor}
+                    toggleImageEditChange={this.toggleImageEditChange}
+                    currentInventoryItem={this.props.currentInventoryItem}
+                    productName={productName}
+                    image={image}
+                />
                 <CurrCountEdit 
                     currCountEditView={this.state.currCountEditView}
                     toggleItemEditor={this.props.toggleItemEditor}
