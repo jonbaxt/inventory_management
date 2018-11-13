@@ -43,7 +43,7 @@ module.exports = {
         const inventory_id = req.params.id;
         const product_label = req.body.product_label;
 
-        dbInstance.update_inventory_product_product_label([inventory_id, product_label]).then( (updatedTable) => { res.status(200).send(updatedTable); }).catch( (err) => { res.status(400).send(err); });
+        dbInstance.update_inventory_product_label([inventory_id, product_label]).then( (updatedTable) => { res.status(200).send(updatedTable); }).catch( (err) => { res.status(400).send(err); });
     },
     updateProductImage: (req, res) => {
         const dbInstance = req.app.get('db');

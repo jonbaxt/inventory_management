@@ -9,6 +9,7 @@ import PartNumberEdit from './EditorModals/PartNumberEdit';
 import CurrCountEdit from './EditorModals/CurrCountEdit';
 import MinCountEdit from './EditorModals/MinCountEdit';
 import PriceEdit from './EditorModals/PriceEdit';
+import LabelEdit from './EditorModals/LabelEdit';
 
 class ItemEditorNew extends Component {
     constructor() {
@@ -16,6 +17,7 @@ class ItemEditorNew extends Component {
         this.state = {
             nameEditView: false,
             partNumberEditView: false,
+            labelEditView: false,
 
             currCountEditView: false,
             minCountEditView: false,
@@ -23,6 +25,7 @@ class ItemEditorNew extends Component {
         }
         this.toggleNameEditChange = this.toggleNameEditChange.bind(this);
         this.togglePartNumberEditChange = this.togglePartNumberEditChange.bind(this);
+        this.toggleLabelEditChange = this.toggleLabelEditChange.bind(this);
 
         this.toggleCurrCountEditChange = this.toggleCurrCountEditChange.bind(this);
         this.toggleMinCountEditChange = this.toggleMinCountEditChange.bind(this);
@@ -30,6 +33,7 @@ class ItemEditorNew extends Component {
     }
     toggleNameEditChange() { this.setState({ nameEditView: !this.state.nameEditView }); }
     togglePartNumberEditChange() { this.setState({ partNumberEditView: !this.state.partNumberEditView }); }
+    toggleLabelEditChange() { this.setState({ labelEditView: !this.state.labelEditView }); }
 
     toggleCurrCountEditChange() { this.setState({ currCountEditView: !this.state.currCountEditView }); }
     toggleMinCountEditChange() { this.setState({ minCountEditView: !this.state.minCountEditView }); }
@@ -85,7 +89,8 @@ class ItemEditorNew extends Component {
                             }}>Change Part Number</span>
                         <span className={css(editStyles.optionButton)}
                             onClick={() => {
-                                console.log('clicked')
+                                this.toggleLabelEditChange();
+                                // console.log('clicked')
                             }}>Change Product Label</span>
                         <span className={css(editStyles.optionButton)}
                             onClick={() => {
@@ -131,7 +136,15 @@ class ItemEditorNew extends Component {
                     productName={productName}
                     partNumber={partNumber}
                 />
-
+                <LabelEdit 
+                    labelEditView={this.state.labelEditView}
+                    toggleItemEditor={this.props.toggleItemEditor}
+                    toggleLabelEditChange={this.toggleLabelEditChange}
+                    currentInventoryItem={this.props.currentInventoryItem}
+                    productName={productName}
+                    label={label}
+                />
+                
                 <CurrCountEdit 
                     currCountEditView={this.state.currCountEditView}
                     toggleItemEditor={this.props.toggleItemEditor}
@@ -144,6 +157,7 @@ class ItemEditorNew extends Component {
                     minCountEditView={this.state.minCountEditView}
                     toggleItemEditor={this.props.toggleItemEditor}
                     toggleMinCountEditChange={this.toggleMinCountEditChange}
+                    currentInventoryItem={this.props.currentInventoryItem}
                     productName={productName}
                     minimumProductRequired={minimumProductRequired}
                 />
