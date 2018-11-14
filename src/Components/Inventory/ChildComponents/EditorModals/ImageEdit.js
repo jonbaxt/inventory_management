@@ -105,10 +105,6 @@ const styles = StyleSheet.create({
         boxShadow: '2px 2px 4px white',
         zIndex: '10',
     },
-    flRow: {
-        display: 'flex',
-        flexDirection: 'row',
-    },
     flCol: {
         display: 'flex',
         flexDirection: 'column',

@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+// import { connect } from 'react-redux';
+
+// import { postNewProductToDB } from '../../../ducks/reducer';
+
 // import axios from 'axios';
 
 class NewInventoryItem extends Component {
@@ -60,6 +64,8 @@ class NewInventoryItem extends Component {
             alert_when_low: this.state.alertWhenLow
         }
         this.props.postNewProduct(newItem);
+
+        // this.props.postNewProductToDB(newItem);
     }
 
     resetState() {
@@ -188,8 +194,9 @@ class NewInventoryItem extends Component {
                             disabled={!this.isDisabled()}
                             onClick={() => {
                                 this.submitNewItem()
-                                console.log('clickedSubmit');
+                                // console.log('clickedSubmit');
                                 this.props.toggleNewInventory();
+                                this.resetState();
                             }}>Save New Product</button>
                         <button className={css(subNavCSS.buttonSubmit)}
                             onClick={() => {
@@ -207,8 +214,6 @@ class NewInventoryItem extends Component {
         )
     }
 }
-
-export default NewInventoryItem;
 
 const subNavCSS = StyleSheet.create({
     newInventoryMain: {
@@ -338,3 +343,6 @@ const subNavCSS = StyleSheet.create({
         marginBottom: '15px',
     }
 });
+
+// export default connect(null, { postNewProductToDB })(NewInventoryItem);
+export default NewInventoryItem;

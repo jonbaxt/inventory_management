@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
-import axios from 'axios';
+// import axios from 'axios';
 import { connect } from 'react-redux';
 
 import InventoryItem from './ChildComponents/InventoryItem';
@@ -8,7 +8,7 @@ import InventoryItem from './ChildComponents/InventoryItem';
 import ItemEditorNew from './ChildComponents/ItemEditorNew';
 import NewInventoryItem from './ChildComponents/NewInventoryItem';
 import MoreInfo from './ChildComponents/EditorModals/MoreInfo';
-import { getProductsFromApi, getClientsFromApi, getUsersFromApi, getOrdersFromApi } from '../../ducks/reducer';
+import { getProductsFromApi, getClientsFromApi, getUsersFromApi, getOrdersFromApi, postNewProductToDB } from '../../ducks/reducer';
 
 class Inventory extends Component {
     constructor() {
@@ -75,10 +75,12 @@ class Inventory extends Component {
     }
 
     postNewProduct(productObject) {
-        axios.post('/api/newproduct/insert', productObject).then(newProductTable => {
-            console.log(newProductTable.data);
-            this.setState({ currentInventory: newProductTable.data });
-        }).catch((err) => console.log('Didn`t work:', err));
+        this.props.postNewProductToDB(productObject);
+        
+        // axios.post('/api/newproduct/insert', productObject).then(newProductTable => {
+        //     console.log(newProductTable.data);
+        //     this.setState({ currentInventory: newProductTable.data });
+        // }).catch((err) => console.log('Didn`t work:', err));
     }
 
     render() {
@@ -103,7 +105,8 @@ class Inventory extends Component {
             <ItemEditorNew inventory={this.props.productsArray}
                 currentInventoryItem={this.state.currentProductNumber}
                 editorVisibility={this.state.itemEditorVisible}
-                toggleItemEditor={this.toggleItemEditor} />
+                toggleItemEditor={this.toggleItemEditor}
+                retrieveCurrentProductNumber={this.retrieveCurrentProductNumber} />
             : 'Loading';
 
 
@@ -112,7 +115,8 @@ class Inventory extends Component {
             <NewInventoryItem
                 newInventoryItemVisibility={this.state.newItemVisible}
                 toggleNewInventory={this.toggleNewInventoryModal}
-                postNewProduct={this.postNewProduct} />
+                postNewProduct={this.postNewProduct}
+                retrieveCurrentProductNumber={this.retrieveCurrentProductNumber} />
             : 'Loading';
 
         let moreInfo = this.props.productsArray.length !== 0 ? 
@@ -212,6 +216,7 @@ let mapDispatchToProps = {
     getProductsFromApi,
     getClientsFromApi,
     getUsersFromApi,
-    getOrdersFromApi
+    getOrdersFromApi,
+    postNewProductToDB
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Inventory);

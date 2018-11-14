@@ -20,8 +20,9 @@ function DeleteProduct(props) {
                 <button className={css(veriCSS.delButton)}
                     onClick={() => {
                         props.deleteProductById(props.currentInventoryItem);
+                        props.retrieveCurrentProductNumber(-1);
                         props.toggleDeleteProductChange();
-                        props.toggleItemEditor();
+                        // props.toggleItemEditor();
                     }}>Delete</button>
 
                 <button className={css(veriCSS.cancelButton)}

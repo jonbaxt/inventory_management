@@ -10,7 +10,7 @@ import CurrCountEdit from './EditorModals/CurrCountEdit';
 import MinCountEdit from './EditorModals/MinCountEdit';
 import PriceEdit from './EditorModals/PriceEdit';
 import LabelEdit from './EditorModals/LabelEdit';
-
+import AlertNotifyEdit from './EditorModals/AlertNotifyEdit';
 import DeleteProduct from './EditorModals/DeleteProduct';
 
 class ItemEditorNew extends Component {
@@ -25,7 +25,7 @@ class ItemEditorNew extends Component {
             currCountEditView: false,
             minCountEditView: false,
             priceEditView: false,
-
+            alertEditView: false,
             deleteProductView: false,
         }
         this.toggleNameEditChange = this.toggleNameEditChange.bind(this);
@@ -35,7 +35,7 @@ class ItemEditorNew extends Component {
         this.toggleCurrCountEditChange = this.toggleCurrCountEditChange.bind(this);
         this.toggleMinCountEditChange = this.toggleMinCountEditChange.bind(this);
         this.togglePriceEditChange = this.togglePriceEditChange.bind(this);
-
+        this.toggleAlertEditChange = this.toggleAlertEditChange.bind(this);
         this.toggleDeleteProductChange = this.toggleDeleteProductChange.bind(this);
     }
     toggleNameEditChange() { this.setState({ nameEditView: !this.state.nameEditView }); }
@@ -45,7 +45,7 @@ class ItemEditorNew extends Component {
     toggleCurrCountEditChange() { this.setState({ currCountEditView: !this.state.currCountEditView }); }
     toggleMinCountEditChange() { this.setState({ minCountEditView: !this.state.minCountEditView }); }
     togglePriceEditChange() { this.setState({ priceEditView: !this.state.priceEditView }); }
-
+    toggleAlertEditChange() { this.setState({ alertEditView: !this.state.alertEditView }); }
     toggleDeleteProductChange() { this.setState({ deleteProductView: !this.state.deleteProductView }); }
 
     render() {
@@ -58,6 +58,7 @@ class ItemEditorNew extends Component {
         let productCount = '';
         let minimumProductRequired = '';
         let image = '';
+        let alertNotification = ''
         if (this.props.inventory.length !== 0) {
             currentProduct = productDetails[0];
             productName = currentProduct.product_name;
@@ -67,6 +68,7 @@ class ItemEditorNew extends Component {
             productCount = currentProduct.current_count;
             minimumProductRequired = currentProduct.minimum_stock;
             image = currentProduct.product_image;
+            alertNotification = currentProduct.alert_when_low;
             // this.handleNameEdit(productName);
         }
         return (
@@ -123,7 +125,8 @@ class ItemEditorNew extends Component {
                             }}>Change Price</span>
                         <span className={css(editStyles.optionButton)}
                             onClick={() => {
-                                console.log('clicked')
+                                this.toggleAlertEditChange();
+                                // console.log('clicked')
                             }}>Change Alert Notification</span>
                         <span className={css(editStyles.deleteButton)}
                             onClick={() => {
@@ -187,12 +190,21 @@ class ItemEditorNew extends Component {
                     productName={productName}
                     itemPrice={itemPrice}
                 />
+                <AlertNotifyEdit 
+                    alertEditView={this.state.alertEditView}
+                    toggleItemEditor={this.props.toggleItemEditor}
+                    toggleAlertEditChange={this.toggleAlertEditChange}
+                    currentInventoryItem={this.props.currentInventoryItem}
+                    productName={productName}
+                    alertNotification={alertNotification}
+                />
                 <DeleteProduct 
                     deleteProductView={this.state.deleteProductView}
                     toggleItemEditor={this.props.toggleItemEditor}
                     toggleDeleteProductChange={this.toggleDeleteProductChange}
                     currentInventoryItem={this.props.currentInventoryItem}
                     productName={productName}
+                    retrieveCurrentProductNumber={this.props.retrieveCurrentProductNumber}
                 />
             </div>
         )

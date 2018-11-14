@@ -11,6 +11,7 @@ const initialState = {
 const FULFILLED = '_FULFILLED';
 
 const GET_PRODUCTS_FROM_API = 'GET_PRODUCTS_FROM_API';
+const POST_NEW_PRODUCT = 'POST_NEW_PRODUCT';
 const UPDATE_PRODUCT_NAME = 'UPDATE_PRODUCT_NAME';
 const UPDATE_PRODUCT_PART_NUMBER = 'UPDATE_PRODUCT_PART_NUMBER';
 const UPDATE_PRODUCT_LABEL = 'UPDATE_PRODUCT_LABEL';
@@ -134,6 +135,18 @@ export function getProductsFromApi() {
 
     return {
         type: GET_PRODUCTS_FROM_API,
+        payload: products
+    }
+}
+
+export function postNewProductToDB(productObject) {
+
+    let products = axios.post('/api/newproduct/insert', productObject).then((result) => {
+        return result.data
+    }).catch(err => console.log(`Didn't work ${err}`))
+
+    return {
+        type: POST_NEW_PRODUCT,
         payload: products
     }
 }
@@ -270,7 +283,8 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case GET_PRODUCTS_FROM_API + FULFILLED:
             return Object.assign({}, state, { productsArray: action.payload });
-
+        case POST_NEW_PRODUCT + FULFILLED: 
+            return Object.assign({}, state, { productsArray: action.payload });
         case UPDATE_PRODUCT_NAME + FULFILLED:
             return Object.assign({}, state, { productsArray: action.payload });
         case UPDATE_PRODUCT_PART_NUMBER + FULFILLED:
