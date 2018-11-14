@@ -12,7 +12,6 @@ import PriceEdit from './EditorModals/PriceEdit';
 import LabelEdit from './EditorModals/LabelEdit';
 
 import DeleteProduct from './EditorModals/DeleteProduct';
-import { runInThisContext } from 'vm';
 
 class ItemEditorNew extends Component {
     constructor() {

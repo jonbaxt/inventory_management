@@ -3,6 +3,7 @@ import { StyleSheet, css } from 'aphrodite';
 import { connect } from 'react-redux';
 
 import { updateProductImage } from '../../../../ducks/reducer';
+import noImage from '../../../NoImage.png'
 
 class ImageEdit extends Component {
     constructor() {
@@ -25,17 +26,25 @@ class ImageEdit extends Component {
         image={image}
         */
 
-        let currentImage = <img className={css(styles.imageSize)} src={this.props.image} alt=''  />
+        let currentImage = <img className={css(styles.imageSize)} src={this.props.image} alt='' />
+        let newImage = this.state.urlBox !== '' ? <img className={css(styles.imageSize)} src={this.state.urlBox} alt='' /> : <img className={css(styles.imageSize)} src={noImage} alt='' />
         return (
-            <div className={  this.props.imageEditView
+            <div className={this.props.imageEditView
                 ? css(styles.mainArea) : css(styles.mainArea, styles.editorHide)}>
                 <section className={css(styles.modal)} >
                     <h3 className={css(styles.textRedo, styles.marginGapTop)}>Change Product Image</h3>
                     <h5 className={css(styles.textRedo)}>Name:</h5>
                     <h6 className={css(styles.textRedo)}>{this.props.productName}</h6>
-                    <h4 className={css(styles.textRedo, styles.marginGapTop, styles.underline)}>Current Image: </h4>
-                    { currentImage }
-
+                    <div className={css(styles.flRow)} >
+                        <span className={css(styles.flCol)} >
+                            <h4 className={css(styles.textRedo, styles.marginGapTop, styles.underline)}>Current Image: </h4>
+                            {currentImage}
+                        </span>
+                        <span className={css(styles.flCol)} >
+                            <h4 className={css(styles.textRedo, styles.marginGapTop, styles.underline)}>New Image: </h4>
+                            {newImage}
+                        </span>
+                    </div>
                     {/* <h4 className={css(styles.textRedo)}>{this.props.label} */}
                     {/* </h4> */}
 
@@ -50,16 +59,16 @@ class ImageEdit extends Component {
                         <button className={css(styles.changeButton)}
                             disabled={!this.state.urlBox}
                             onClick={() => {
-                                // this.props.updateProductLabel(this.props.currentInventoryItem, this.state.labelBox);
+                                this.props.updateProductImage(this.props.currentInventoryItem, this.state.urlBox);
                                 this.resetInput();
-                                // this.props.toggleLabelEditChange();
-                                // this.props.toggleItemEditor();
+                                this.props.toggleImageEditChange();
+                                this.props.toggleItemEditor();
                             }}>Change</button>
                         <button className={css(styles.buttonStyle)}
                             onClick={() => { this.resetInput(); }}>Reset</button>
                         <button className={css(styles.buttonStyle)}
                             onClick={() => {
-                                // this.props.toggleLabelEditChange();
+                                this.props.toggleImageEditChange();
                             }} >Close</button>
                     </div>
                 </section>
@@ -95,6 +104,14 @@ const styles = StyleSheet.create({
         background: 'rgb(192,192,192)',
         boxShadow: '2px 2px 4px white',
         zIndex: '10',
+    },
+    flRow: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    flCol: {
+        display: 'flex',
+        flexDirection: 'column',
     },
     buttonStyle: {
         marginLeft: '10px',
@@ -179,7 +196,7 @@ const styles = StyleSheet.create({
         textDecorationLine: 'underline',
     },
     imageSize: {
-        width: '200px',
+        width: '150px',
     },
     imageDiv: {
         display: 'flex',

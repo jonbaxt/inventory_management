@@ -7,6 +7,7 @@ import InventoryItem from './ChildComponents/InventoryItem';
 // import ItemEditor from './ChildComponents/ItemEditor';
 import ItemEditorNew from './ChildComponents/ItemEditorNew';
 import NewInventoryItem from './ChildComponents/NewInventoryItem';
+import MoreInfo from './ChildComponents/EditorModals/MoreInfo';
 import { getProductsFromApi, getClientsFromApi, getUsersFromApi, getOrdersFromApi } from '../../ducks/reducer';
 
 class Inventory extends Component {
@@ -16,11 +17,14 @@ class Inventory extends Component {
             // currentInventory: [],
             itemEditorVisible: false, // Switch back to false
             newItemVisible: false,
+            moreInfoVisible: false,
             currentProductNumber: 1,
         }
         this.toggleItemEditor = this.toggleItemEditor.bind(this);
-        this.retrieveCurrentProductNumber = this.retrieveCurrentProductNumber.bind(this);
         this.toggleNewInventoryModal = this.toggleNewInventoryModal.bind(this);
+        this.toggleMoreInfoModal = this.toggleMoreInfoModal.bind(this);
+        this.retrieveCurrentProductNumber = this.retrieveCurrentProductNumber.bind(this);
+        this.retrieveCurrentProductNumberForMore = this.retrieveCurrentProductNumberForMore.bind(this);
         this.postNewProduct = this.postNewProduct.bind(this);
     }
     componentDidMount() {
@@ -51,14 +55,23 @@ class Inventory extends Component {
         this.setState({ itemEditorVisible: !this.state.itemEditorVisible });
     }
     toggleNewInventoryModal() {
-        this.setState({ newItemVisible: !this.state.newItemVisible })
+        this.setState({ newItemVisible: !this.state.newItemVisible });
+    }
+    toggleMoreInfoModal() {
+        this.setState({ moreInfoVisible: !this.state.moreInfoVisible });
     }
 
     retrieveCurrentProductNumber(prodNum) {
-        console.log('Current Product Number: ', prodNum);
+        // console.log('Current Product Number: ', prodNum);
         this.setState({ currentProductNumber: prodNum });
         this.toggleItemEditor();
         // console.log(`Item Editor Visability: ${this.state.itemEditorVisible}`)
+    }
+
+    retrieveCurrentProductNumberForMore(prodNum) {
+        console.log('Current Product Number: ', prodNum);
+        this.setState({ currentProductNumber: prodNum });
+        this.toggleMoreInfoModal();
     }
 
     postNewProduct(productObject) {
@@ -74,7 +87,8 @@ class Inventory extends Component {
         let inventoryList = this.props.productsArray.length !== 0 ? this.props.productsArray.map((element, index) => {
             return (<InventoryItem key={element.inventory_id}
                 currentInfo={element}
-                giveBackFunction={this.retrieveCurrentProductNumber} />)
+                giveBackFunction={this.retrieveCurrentProductNumber} 
+                giveBackFunctionForMoreButton={this.retrieveCurrentProductNumberForMore} />)
         }) : <h3 className={css(invCSS.h2Reformat)} >No Products Found. Please Refresh Browser.</h3>
 
         // let itemEdits = 'Page loading';
@@ -101,6 +115,13 @@ class Inventory extends Component {
                 postNewProduct={this.postNewProduct} />
             : 'Loading';
 
+        let moreInfo = this.props.productsArray.length !== 0 ? 
+            <MoreInfo 
+                moreInfoVisible={this.state.moreInfoVisible}
+                toggleMoreInfoModal={this.toggleMoreInfoModal}
+                currentInventoryItem={this.state.currentProductNumber}
+                inventory={this.props.productsArray} /> : 'Loading';
+
         return (
             <div>
                 <div className={css(invCSS.subNavBar)}>
@@ -110,6 +131,7 @@ class Inventory extends Component {
                 {/* {itemEdits} */}
                 {itemEditNew}
                 {newInvItem}
+                {moreInfo}
                 <h1 className={css(invCSS.titleH)} >Current Inventory</h1>
                 <div className={css(invCSS.main)} >
                     {/* Need to connect the edit with put method still */}

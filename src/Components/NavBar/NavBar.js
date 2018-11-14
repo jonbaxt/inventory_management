@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import { Link } from 'react-router-dom';
+import logo from './logo.png'
+
 class NavBar extends Component {
     constructor() {
         super();
@@ -12,7 +14,11 @@ class NavBar extends Component {
     render() {
         return (
             <div className={css(st.navMain)}>
-                <Link className={css(st.linkReformat)} to='/'><h3 className={css(st.h1Rev)}>Inventory Warehouse</h3></Link>
+                <Link className={css(st.linkReformat)} to='/'>
+                <img src={logo} alt='' className={css(st.picSizing)} />
+                {/* <h3 className={css(st.h1Rev)}>Inventory Warehouse</h3> */}
+                
+                </Link>
                 <div className={css(st.rightSide)}>
 
                     {/* <h3 className={css(st.h1Rev)}>Add Product</h3> */}
@@ -78,6 +84,15 @@ const st = StyleSheet.create({
         color: 'white',
         pointer: 'cursor',
         textDecorationLine: 'none'
+    },
+    picSizing: {
+        position: 'fixed',
+        top: '-2px',
+        left: '10px',
+        width: '70px',
+        // ':hover': {
+        //     background: 'white',
+        // }
     },
 });
 
