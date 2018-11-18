@@ -16,4 +16,4 @@ Built with Node, Express, React, PostgreSQL
 - Layout for User Section Built. ✔️
 - Layout for Client Section Built. ✔️
 - Layout for Order Section Built. ✔️ ️
-
+- Delete Function in Products Still has error when delete a product.

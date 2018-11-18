@@ -3,48 +3,45 @@ import { StyleSheet, css } from 'aphrodite';
 import { connect } from 'react-redux';
 
 import UserTiles from './ChildComponents/UserTiles';
-import { getUsersFromApi } from '../../ducks/reducer'; 
+import { getUsersFromApi } from '../../ducks/reducer';
+import NewUser from './ChildComponents/newUser';
 
 class Users extends React.Component {
     constructor() {
         super();
         this.state = {
-            employeesArray: []
+            employeesArray: [],
+            newEmployeeVisible: false,
         }
+        this.toggleNewEmployeeVis = this.toggleNewEmployeeVis.bind(this);
     }
 
     componentDidMount() {
-        if( this.props.usersArray.length === 0) {
+        if (this.props.usersArray.length === 0) {
             this.props.getUsersFromApi();
         }
-        // axios.get('/api/getEmployees').then( (axiosResults) => {
-            // this.setState({ employeesArray: axiosResults.data });
-        // }).catch( (err) => { console.log(err) });
     }
+    toggleNewEmployeeVis() { this.setState({ newEmployeeVisible: !this.state.newEmployeeVisible }); }
 
     render() {
-        // let dummyUser = {
-        //     employee_id: 1,
-        //     first_name: "Dave",
-        //     last_name: "Thomas",
-        //     id_pic: "https://amp.businessinsider.com/images/51ca1b176bb3f76b0e000004-750-563.jpg",
-        //     phone_number: "801-888-2541",
-        //     email: "dave@wendys.com",
-        //     address_line_1: "123 E Wendys Lane",
-        //     address_line_2: "Provo, UT 84601",
-        //     employee_role: "Shelf Stocker"
-        // }
-        let usersList = this.props.usersArray.length !== 0 ?  this.props.usersArray.map( element => {
+        let usersList = this.props.usersArray.length !== 0 ? this.props.usersArray.map(element => {
             return (<UserTiles key={element.employee_id} userProfile={element} />)
         }) : <h3 className={css(userCSS.h1Text, userCSS.extraTextSpace)} >No Employees Found. Please Refresh Browser.</h3>
-        
-        
+
+
         return (
             <div className={css(userCSS.usersMain)}>
+
+                <div className={css(userCSS.subNav)}><h4 className={css(userCSS.subHText)}
+                    onClick={() => this.toggleNewEmployeeVis()}>Add New Employee</h4></div>
                 <h1 className={css(userCSS.h1Text)}>Inventory Warehouse Employees</h1>
                 <section className={css(userCSS.usersTable)}>
-                { usersList }
+                    {usersList}
                 </section>
+                
+                <NewUser
+                    newEmployeeVisible={this.state.newEmployeeVisible}
+                    toggleNewEmployeeVis={this.toggleNewEmployeeVis} />
             </div>
         )
     }
@@ -54,20 +51,29 @@ const userCSS = StyleSheet.create({
     usersMain: {
         margin: 0,
         padding: 0,
-        paddingTop: '50px',
+        paddingTop: '80px',
         width: '100%',
-        // border: '1px solid black',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-
+    },
+    subNav: {
+        position: 'fixed',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        width: '100%',
+        height: '30px',
+        top: '54px',
+        background: 'rgb(128,128,90)',
+        zIndex: '99',
+        // background: 'green',
     },
     h1Text: {
         margin: 0,
         padding: 0,
         color: 'white',
         textShadow: '2px 2px 4px black',
-        // paddingTop: '51px',
     },
     extraTextSpace: {
         marginTop: '80px',
@@ -76,6 +82,19 @@ const userCSS = StyleSheet.create({
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'center',
+    },
+    subHText: {
+        margin: 0,
+        padding: 0,
+        marginRight: '30px',
+        textAlign: 'right',
+        color: 'white',
+        textShadow: '1px 1px 2px black',
+        cursor: 'pointer',
+        ':hover': {
+            color: 'rgb(169,169,169)',
+            transition: '0.5s all ease',
+        },
     },
 });
 
